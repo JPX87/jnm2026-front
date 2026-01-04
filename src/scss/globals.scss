@@ -1,0 +1,57 @@
+@use "tailwindcss";
+@use "./colors";
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+
+/*=============================
+=      GESTION DES THEMES     =
+==============================*/
+
+@layer base {
+  /* On définit ici les valeurs de --background et --foreground 
+     pour CHAQUE thème.
+  */
+
+  /* 1. Thème Clair (Défaut) */
+  :root, :root[data-theme="light"] {
+    --background: var(--color-secondary);
+    --foreground: var(--color-primary);
+  }
+
+  /* 2. Thème Sombre */
+  :root[data-theme="dark"] {
+    --background: var(--color-seconde-black);
+    --foreground: var(--color-secondary);
+  }
+}
+
+
+/*==============================
+=       OLDERS CLASSES         =
+==============================*/
+.bg-JNM-primary{
+  background-color: var(--color-primary);; 
+}
+.bg-JNM-secondary{
+  background-color: var(--color-secondary);; 
+}
+
+
+.text-JNM-primary{
+  color: var(--color-primary);; 
+}
+.text-JNM-secondary{
+  color: var(--color-secondary);; 
+}
+
+/*=============================
+=            BODY             =
+==============================*/
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: "Oswald", sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+}

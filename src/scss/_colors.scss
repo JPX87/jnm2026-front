@@ -1,0 +1,33 @@
+// Color variables
+@theme {
+    // Primary palette
+    --color-primary: #EF6A9F;
+    --color-primary-light: color-mix(in srgb, var(--color-primary) 70%, white);
+    --color-primary-dark: color-mix(in srgb, var(--color-primary) 70%, black);
+
+    // Secondary palette
+    --color-secondary: #FFF8F3;
+    --color-secondary-light: color-mix(in srgb, var(--color-secondary) 70%, white);
+    --color-secondary-dark: color-mix(in srgb, var(--color-secondary) 70%, black);
+
+    // Tertiary palette
+    --color-tertiary: #ff89b8;
+    --color-tertiary-light: color-mix(in srgb, var(--color-tertiary) 70%, white);
+    --color-tertiary-dark: color-mix(in srgb, var(--color-tertiary) 70%, black);
+
+    // Neutral palette
+    --color-white: #ffffff;
+    --color-black: #000000;
+    --color-seconde-black: #231f20;
+    --color-gray-100: #f7f7f7;
+    --color-gray-200: #e5e5e5;
+    --color-gray-300: #cccccc;
+    --color-gray-400: #999999;
+    --color-gray-500: #666666;
+    --color-gray-600: #333333;
+
+    // Feedback
+    --color-success: #82C49C;
+    --color-warning: #FFB86A;
+    --color-error: #DA5568;
+}

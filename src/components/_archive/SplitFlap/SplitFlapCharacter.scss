@@ -1,0 +1,82 @@
+/* SplitFlapCharacter.css */
+.split-flap-char-container {
+  font-family: monospace; /* Police mono pour un style "digital" */
+  font-size: 40px;
+  line-height: 1;
+  width: 30px; /* Largeur fixe pour chaque caractère */
+  height: 40px;
+  overflow: hidden;
+  position: relative;
+  margin: 0 1px;
+  display: inline-block;
+  background-color: black;
+  color: white;
+  border: 1px solid #333;
+  box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.1);
+}
+
+.char-static {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ------------------ Animation ------------------ */
+
+.char-flipper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  perspective: 100px; /* Donne une profondeur 3D */
+}
+
+.char-part {
+  position: absolute;
+  width: 100%;
+  height: 50%; /* Moitié de la hauteur */
+  overflow: hidden;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.top-half {
+  top: 0;
+  transform-origin: bottom;
+  /* L'animation fait pivoter la palette supérieure vers le haut (0 à 180deg) */
+  animation: flip-top 0.4s ease-in forwards;
+  z-index: 2; /* S'assurer qu'elle est au-dessus */
+}
+
+.bottom-half {
+  bottom: 0;
+}
+
+.next-half {
+  top: 0;
+  transform-origin: bottom;
+  /* Elle tourne *aussi* mais elle est cachée par top-half au départ */
+  transform: rotateX(180deg);
+  /* L'animation fait pivoter la palette de l'arrivée (qui est derrière) vers l'avant (180 à 0deg) */
+  animation: flip-next 0.4s ease-out 0.05s forwards; /* Petit délai */
+  z-index: 1;
+}
+
+/* Keyframes */
+@keyframes flip-top {
+  0% { transform: rotateX(0deg); }
+  100% { transform: rotateX(-180deg); }
+}
+
+@keyframes flip-next {
+  0% { transform: rotateX(180deg); }
+  100% { transform: rotateX(0deg); }
+}

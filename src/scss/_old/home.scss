@@ -1,0 +1,27 @@
+.back{
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.parallax {
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  //background-attachment: fixed; /* <-- parallax simple */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.content {
+  min-height: 60vh;
+  padding: 4rem;
+  background: white;
+}
+
+.bg  { background-image: url("../../img/background_v2.png"); z-index: 1; }
+.fg1  { background-image: url("../../img/foreground1.png"); z-index: 3;}
+
+.mid { background-image: url("../../img/midground.png"); z-index: 2; }
+.fg  { background-image: url("../../img/foreground.png"); z-index: 3;}
