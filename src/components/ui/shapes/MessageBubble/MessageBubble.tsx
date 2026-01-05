@@ -1,6 +1,6 @@
 interface messageBubbleProps {
-    classNameP: String;
-    className: String;
+    classNameP: string;
+    className: string;
     rounded?: boolean;
 }
 

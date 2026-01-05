@@ -13,7 +13,7 @@ interface TimeUnits {
 /**
  * Calculer le temps restant en un objet d'unités formatées (MM, JJ, HH, MM, SS).
  */
-export function calculateTimeRemaining(targetDate: String | Date): TimeUnits {
+export function calculateTimeRemaining(targetDate: string | Date): TimeUnits {
   const now = new Date();
   let future = new Date();
 

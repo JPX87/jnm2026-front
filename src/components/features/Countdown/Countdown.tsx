@@ -1,22 +1,28 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react";
-//import "./Countdown.css"
+import { useEffect, useState } from "react";
 import { calculateTimeRemaining } from "@/lib/formatTime";
 import TimeSection from "./TimeSection";
 
-interface targetDateProps {
+interface CountdownProps {
   targetDate: Date;
-  className?: String;
+  className?: string;
 }
 
-export default function Countdown({ targetDate, className }: targetDateProps) {
-   // Stocke le temps restant en millisecondes
-  const [timeRemaining, setTimeRemaining] = useState(calculateTimeRemaining(targetDate));
+const defaultTime = {
+  months: 0,
+  days: 0,
+  hours: 0,
+  minutes: 0,
+  seconds: 0,
+  isFinished: false,
+};
 
-  // Logique de décompte (Met à jour le temps restant à chaque seconde)
+export default function Countdown({ targetDate, className }: CountdownProps) {
+  const [timeRemaining, setTimeRemaining] = useState<ReturnType<typeof calculateTimeRemaining> | null>(defaultTime);
+
   useEffect(() => {
-    if (!timeRemaining) return;
+    setTimeRemaining(calculateTimeRemaining(targetDate));
 
     const interval = setInterval(() => {
       setTimeRemaining(calculateTimeRemaining(targetDate));
@@ -25,6 +31,7 @@ export default function Countdown({ targetDate, className }: targetDateProps) {
     return () => clearInterval(interval);
   }, [targetDate]);
 
+  if (!timeRemaining) return null; 
 
   return (
     <div className={`w-11/12 sm:w-9/12 flex flex-wrap gap-3 md:gap-4 ld:gap-5 xl:gap-7 font-sans md:w-max p-2 sm:p-4 md:p-6 justify-center rounded-3xl bg-(--color-primary) ${className}`}>      
