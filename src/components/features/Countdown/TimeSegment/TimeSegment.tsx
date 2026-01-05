@@ -38,13 +38,13 @@ export default function TimeSegment({ value }: TimeSegmentProps) {
         
         {/* .segment-display__top */}
         <div className="relative h-[50%] w-full overflow-hidden text-center bg-(--color-seconde-black) text-(--color-primary) rounded-t-lg md:rounded-t-xl leading-[1.5] transition-all">
-          <div suppressHydrationWarning className="fixTranslateTop">{currentValue_1}</div>
+          <div className="fixTranslateTop">{currentValue_1}</div>
         </div>
 
 
         {/* .segment-display__bottom */}
         <div className="relative bottom-1 h-[50%] w-full overflow-hidden text-center bg-(--color-seconde-black) text-(--color-primary) rounded-b-lg md:rounded-b-xl leading-[0] border-t-2 border-black transition-all">
-          <div suppressHydrationWarning className="fixTranslateBottom">{currentValue1}</div>
+          <div className="fixTranslateBottom">{currentValue1}</div>
         </div>
 
         {/* .segment-overlay */}
@@ -53,12 +53,12 @@ export default function TimeSegment({ value }: TimeSegmentProps) {
           
           {/* .segment-overlay__top */}
           <div className={`segment-overlay__top absolute z-10 top-0 h-[50%] w-full overflow-hidden text-center bg-(--color-seconde-black) text-(--color-primary) rounded-t-lg md:rounded-t-xl leading-[1.5] origin-bottom transition-all`}>
-            <div suppressHydrationWarning className="fixTranslateTop">{flip ? currentValue1 : currentValue_1}</div>
+            <div className="fixTranslateTop">{flip ? currentValue1 : currentValue_1}</div>
           </div>
 
           {/* .segment-overlay__bottom */}
           <div className={`segment-overlay__bottom absolute z-10 bottom-1 h-[50%] w-full overflow-hidden text-center bg-(--color-seconde-black) text-(--color-primary) rounded-b-lg md:rounded-b-xl leading-[0] border-t-2 border-black origin-top transition-all`}>
-            <div suppressHydrationWarning className="fixTranslateBottom">{currentValue_1}</div>
+            <div className="fixTranslateBottom">{currentValue_1}</div>
           </div>
         </div>
       </div>
