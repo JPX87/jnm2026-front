@@ -31,10 +31,10 @@ export default function Countdown({ targetDate, className }: CountdownProps) {
     return () => clearInterval(interval);
   }, [targetDate]);
 
-  if (!timeRemaining) return null; 
+  if (!timeRemaining) return null;
 
   return (
-    <div className={`w-11/12 sm:w-9/12 flex flex-wrap gap-3 md:gap-4 ld:gap-5 xl:gap-7 font-sans md:w-max p-2 sm:p-4 md:p-6 justify-center rounded-3xl bg-(--color-primary) ${className}`}>      
+    <div className={`w-11/12 sm:w-9/12 flex flex-wrap gap-2 sm:gap-3 md:gap-4 lg:gap-5 xl:gap-7 font-sans md:w-max p-2 sm:p-4 md:p-6 justify-center rounded-3xl bg-(--color-primary) ${className}`}>
       <TimeSection label="MOIS" value={timeRemaining.months} />
       <TimeSection label="JOURS" value={timeRemaining.days} />
       <TimeSection label="HEURES" value={timeRemaining.hours} />

@@ -12,7 +12,7 @@ export default function MessageBubble({ classNameP, className, rounded }: messag
                             transform rotate-54 md:rotate-55
                             bg-(--color-tertiary)
                             border-r-4 border-b-4 border-(--color-primary) 
-                            z-20 rounded-xs`}>
+                            z-0 rounded-xs`}>
                 </div>
             </div>
         </div>
