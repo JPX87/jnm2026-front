@@ -12,8 +12,8 @@ export default function Home() {
   return (
     <main className="home relative">
       <Slice absolute first>
-        <h1 className="text-center text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[150px] font-bold my-[20px] sm:my-[50px]">EMBARQUEMENT DANS</h1>
-        <Countdown className="mx-auto" targetDate={targetDate} />
+        <h1 className="text-center text-4xl 2xs:text-[55px] xs:text-6xl xs:text-7xl lg:text-8xl xl:text-[150px] sm:mt-0 mb-[20%] sm:m-auto font-bold my-[20px] sm:my-[50px]">EMBARQUEMENT DANS</h1>
+        <Countdown className="mx-auto mb-[30%] xs:mb-0" targetDate={targetDate} />
       </Slice>
       <Slice absolute>
         <div className="relative w-10/12 flex flex-col gap-3 py-14 px-6 justify-center rounded-3xl bg-(--color-tertiary) text-(--color-secondary) dark:text-(--color-seconde-black) m-auto">

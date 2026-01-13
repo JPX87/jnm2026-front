@@ -1,3 +1,7 @@
+.fixTranslateBottom{
+  transform: translate(0px, 2px);
+}
+
 @media screen and (min-width: 800px) {
   .fixTranslateTop{
     transform: translate(0px, -6px);
@@ -7,12 +11,31 @@
     transform: translate(0px, -6px);
   }
 }
-.segment-overlay.flip .segment-overlay__top {
-  animation: flip-top 0.62s linear;
-}
+.segment-overlay {
+  .segment-overlay__top,
+  .segment-overlay__bottom {
+    backface-visibility: hidden;
+  }
 
-.segment-overlay.flip .segment-overlay__bottom {
-  animation: flip-bottom 0.6s linear;
+  &.flip {
+    .segment-overlay__top {
+      animation: flip-top 0.52s ease-in;
+    }
+
+    .segment-overlay__bottom {
+      animation: flip-bottom 0.52s ease-in;
+    }
+
+    &.first-flip {
+      .segment-overlay__top {
+        animation: flip-top 0.3s ease-in infinite;
+      }
+
+      .segment-overlay__bottom {
+        animation: flip-bottom 0.3s ease-in infinite;
+      }
+    }
+  }
 }
 
 @keyframes flip-top {

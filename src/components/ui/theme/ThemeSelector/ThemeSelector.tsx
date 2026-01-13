@@ -3,7 +3,9 @@
 import * as React from "react"
 import { useTheme } from "next-themes"
 
-export function ThemeSelector() {
+
+
+export function ThemeSelector({className=""}: {className?: string}) {
   const [mounted, setMounted] = React.useState(false)
   const { theme, setTheme } = useTheme()
 
@@ -34,7 +36,7 @@ export function ThemeSelector() {
 
   return (
     <div 
-      className="relative flex items-center p-1 rounded-full bg-gray-200 dark:bg-black border border-gray-300 dark:border-gray-700 w-fit"
+      className={`relative flex items-center p-1 rounded-full bg-gray-200 dark:bg-black border border-gray-300 dark:border-gray-700 w-fit ${className}`}
       role="tablist"
       aria-label="Choix du thème"
     >

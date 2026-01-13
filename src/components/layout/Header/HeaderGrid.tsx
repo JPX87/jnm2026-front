@@ -5,15 +5,15 @@ import { useState } from "react";
 import { ThemeSelector } from "@/components/ui/theme/ThemeSelector/ThemeSelector";
 import { LogoSvg } from "@/components/ui/branding/logo/LogoSvg";
 
+const menuItems = [
+    { label: "ORGANIGRAMME", href: "/organigramme" },
+    { label: "NOUS CONTACTER", href: "/contact" },
+    { label: "INSCRIPTION", href: "/inscription" },
+    { label: "KESAKO", href: "/kesako" },
+];
+
 export default function HeaderGrid() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-    const menuItems = [
-        { label: "ORGANIGRAMME", href: "/organigramme" },
-        { label: "NOUS CONTACTER", href: "/contact" },
-        { label: "INSCRIPTION", href: "/inscription" },
-        { label: "KESAKO", href: "/kesako" },
-    ];
 
     return (
         <>
@@ -35,10 +35,10 @@ export default function HeaderGrid() {
                 {/* Actions */}
                 <div className="justify-self-end flex items-center gap-4 font-['Oswald'] relative">
                     {/*<button className="bg-black text-white text-2xl font-bold rounded-3xl py-2 px-10 hover:bg-gray-800 transition cursor-pointer">
-                TICKETS
-                </button>
-                <button className="text-gray-600 hover:text-black cursor-pointer">Menu</button>*/}
-                    <ThemeSelector />
+                    TICKETS
+                    </button>
+                    <button className="text-gray-600 hover:text-black cursor-pointer">Menu</button>*/}
+                    <ThemeSelector className="hidden xs:flex" />
 
                     {/* Hamburger Menu Button */}
                     <div className="relative z-[9999]">
@@ -68,27 +68,28 @@ export default function HeaderGrid() {
                                 ? "translate-x-0"
                                 : "translate-x-full"
                                 }`}
-                            style={{ top: '4rem' }}
+                            style={{ top: '5rem' }}
                         >
                             <nav className="flex flex-col h-full justify-start py-8 px-6 z-50">
+                                <ThemeSelector className="m-auto mt-4 mb-4 xs:hidden" />
                                 {menuItems.map((item, index) => (
                                     <Link
                                         key={index}
                                         href={item.href}
                                         onClick={() => setIsMenuOpen(false)}
-                                        className="flex items-center justify-between px-6 py-6 text-(--color-secondary) dark:text-(--color-seconde-black) hover:bg-(--color-secondary) hover:bg-opacity-10 transition-colors duration-200 font-bold text-2xl group border-b border-(--color-secondary) border-opacity-20"
+                                        className="flex items-center justify-between mx-2 my-2 px-6 py-6 text-(--color-secondary) dark:text-(--color-secondary) hover:bg-(--color-seconde-black) dark:hover:bg-(--color-seconde-black) hover:bg-opacity-10 transition-colors duration-200 font-bold text-2xl rounded-3xl group border-b border-(--color-secondary) border-opacity-20"
                                     >
                                         <span>{item.label}</span>
-                                        <div className="flex items-center justify-center w-10 h-10 bg-black rounded-full transition-transform duration-300 group-hover:scale-110">
+                                        <div className="flex items-center justify-center w-10 h-10 bg-white dark:bg-black rounded-full transition-transform duration-300 group-hover:scale-110">
                                             <svg
-                                                className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-0.5"
+                                                className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-0.5 text-(--color-primary)"
                                                 viewBox="0 0 24 24"
-                                                fill="none"
+                                                fill="currentColor"
                                                 xmlns="http://www.w3.org/2000/svg"
                                             >
                                                 <path
                                                     d="M5 12H19M19 12L12 5M19 12L12 19"
-                                                    stroke="#FF69B4"
+                                                    stroke="currentColor"
                                                     strokeWidth="2"
                                                     strokeLinecap="round"
                                                     strokeLinejoin="round"

@@ -3,11 +3,17 @@
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
+@theme {
+  /* Breakpoint "xs" (extra small) */
+  --breakpoint-xs: 30rem; /* ~480px */
+ 
+  /* Breakpoint "2xs" (extra small) */
+  --breakpoint-2xs: 24rem; /* ~384px */
+}
 
 /*=============================
 =      GESTION DES THEMES     =
 ==============================*/
-
 @layer base {
   /* On définit ici les valeurs de --background et --foreground 
      pour CHAQUE thème.
