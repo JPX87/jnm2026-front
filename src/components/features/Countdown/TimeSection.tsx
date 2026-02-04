@@ -18,7 +18,7 @@ export default function TimeSection({ label, value, maxDigits = 2 }: TimeSection
     const maxValue = Math.pow(10, maxDigits) - 1;
     const startValue = maxValue;
     const endValue = value;
-    const duration = 999; // 1 seconde d'animation
+    const duration = 990; // 1 seconde d'animation
     const startTime = Date.now();
 
     const animate = () => {
