@@ -5,7 +5,7 @@ import { useTheme } from "next-themes"
 
 
 
-export function ThemeSelector({className=""}: {className?: string}) {
+export function ThemeSelector({className="", big=false}: {className?: string, big?: boolean}) {
   const [mounted, setMounted] = React.useState(false)
   const { theme, setTheme } = useTheme()
 
@@ -15,7 +15,9 @@ export function ThemeSelector({className=""}: {className?: string}) {
 
   if (!mounted) {
     // Mini loading placeholder pour éviter le "flash" au chargement
-    return <div className="w-26 md:w-32 h-10 md:h-12 rounded-full bg-gray-200 dark:bg-black text-center text-2xl">...</div>
+    return <div className={className}>
+        <div className="w-26 md:w-32 h-10 md:h-12 rounded-full bg-gray-200 dark:bg-black text-center text-2xl">...</div>
+      </div>
   }
 
   // Configuration des options
@@ -36,7 +38,7 @@ export function ThemeSelector({className=""}: {className?: string}) {
 
   return (
     <div 
-      className={`relative flex items-center p-1 rounded-full bg-gray-200 dark:bg-black border border-gray-300 dark:border-gray-700 w-fit ${className}`}
+      className={`relative flex items-center p-1 rounded-full bg-gray-200 dark:bg-black border border-gray-300 dark:border-gray-700 ${big ? "w-60 h-16" : "w-fit"} ${className}`}
       role="tablist"
       aria-label="Choix du thème"
     >
@@ -62,7 +64,7 @@ export function ThemeSelector({className=""}: {className?: string}) {
             aria-selected={isActive}
             aria-label={`Activer le mode ${tab.label}`}
             className={`
-              relative z-10 flex items-center justify-center w-8 sm:w-10 h-8 sm:h-10 rounded-full 
+              relative z-10 flex items-center justify-center ${big ? "w-22 h-10" : "w-8 sm:w-10 h-8 sm:h-10"} rounded-full 
               transition-colors duration-200
               focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500
               ${isActive 

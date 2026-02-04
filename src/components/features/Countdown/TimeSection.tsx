@@ -1,24 +1,62 @@
-import TimeSegment from "./TimeSegment/TimeSegment";
+import { useEffect, useState } from 'react';
+import FlipDigit from "./FlipDigit";
 
 interface TimeSectionProps {
   label: string;
   value: number;
-  maxD?: number;
+  maxDigits?: number;
 }
 
-export default function TimeSection({ label, value, maxD }: TimeSectionProps) {
-  const firstNumber = Math.floor(value / 10);
-  const secondNumber = value % 10;
+export default function TimeSection({ label, value, maxDigits = 2 }: TimeSectionProps) {
+  const [displayValue, setDisplayValue] = useState(value);
+  const [isInitializing, setIsInitializing] = useState(true);
+
+  // Animation de démarrage : compter de MAX jusqu'à la vraie valeur avec requestAnimationFrame
+  useEffect(() => {
+    if (!isInitializing) return;
+
+    const maxValue = Math.pow(10, maxDigits) - 1;
+    const startValue = maxValue;
+    const endValue = value;
+    const duration = 999; // 1 seconde d'animation
+    const startTime = Date.now();
+
+    const animate = () => {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const currentValue = Math.floor(startValue - (startValue - endValue) * progress);
+      
+      setDisplayValue(currentValue);
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        setDisplayValue(endValue);
+        setIsInitializing(false);
+      }
+    };
+
+    requestAnimationFrame(animate);
+  }, [isInitializing, value, maxDigits]);
+
+  // Mettre à jour displayValue quand l'initialisation est terminée et que value change
+  useEffect(() => {
+    if (isInitializing) return;
+    setDisplayValue(value);
+  }, [value, isInitializing]);
+
+  const digits = displayValue.toString().padStart(maxDigits, '0').split('').map(Number);
 
   return (
     <div className="text-center flex-[0_1_max-content]">
-        <p className="text-start mb-1 md:mb-2 xl:mb-3 text-(--color-secondary) text-xs 2xs:text-md xs:text-lg md:text-2xl lg:text-3xl xl:text-4xl tracking-wide font-['Oswald'] font-bold">
-          {label}
-        </p>
-        <div className="flex gap-0.5 md:gap-1 xl:gap-2.5 justify-center">
-            <TimeSegment value={firstNumber} max={maxD} />
-            <TimeSegment value={secondNumber} />
-        </div>
+      <p className="text-start mb-1 md:mb-2 xl:mb-3 text-(--color-secondary) text-xs 2xs:text-md xs:text-lg md:text-2xl lg:text-3xl xl:text-4xl tracking-wide font-['Oswald'] font-bold">
+        {label}
+      </p>
+      <div className="flex gap-0.5 md:gap-1 xl:gap-2.5 justify-center">
+        {digits.map((digit, index) => (
+          <FlipDigit key={index} value={digit} skipFlip={isInitializing} />
+        ))}
+      </div>
     </div>
   );
 }

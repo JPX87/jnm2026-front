@@ -1,0 +1,139 @@
+.flip-digit-container {
+  /* Responsive sizing with clamp */
+  width: clamp(20px, 8vw, 120px);
+  height: clamp(140px, 136vw, 200px);
+  
+  /* 3D perspective */
+  perspective: 250px;
+  line-height: 0;
+  
+  /* Base styling */
+  font-weight: 900;
+  position: relative;
+  overflow: hidden;
+}
+
+.flip-digit-text {
+  /* Responsive font size that scales with viewport */
+  font-size: clamp(140px, 36vw, 100px);
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  overflow: hidden;
+}
+
+.flip-digit-text-top {
+  align-items: flex-end;
+  top: 0;
+  border-bottom: 1px solid var(--color-divider, #888);
+}
+
+.flip-digit-text-bottom {
+  align-items: flex-start;
+  bottom: 0;
+}
+
+.flip-digit-overlay {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 50%;
+  z-index: 10;
+  
+  /* 3D flip animation */
+  transform-style: preserve-3d;
+  transform-origin: center bottom;
+  transform: rotateX(0deg);
+  transition: none;
+}
+
+.flip-digit-overlay.flipping {
+  transition: transform 0.7s ease-in-out;
+  transform: rotateX(-180deg);
+}
+
+.flip-digit-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  backface-visibility: hidden;
+  font-size: clamp(140px, 36vw, 100px);
+}
+
+.flip-digit-face-front {
+  align-items: flex-end;
+  border-bottom: 1px solid var(--color-divider, #888);
+  top: 0;
+}
+
+.flip-digit-face-back {
+  align-items: flex-start;
+  transform: rotateX(-180deg);
+  top: 0;
+}
+
+/* Media query */
+@media (max-width: 1250px) {
+  .flip-digit-container {
+    width: clamp(80px, 7vw, 100px);
+    height: clamp(110px, 12vw, 200px);
+  }
+
+  .flip-digit-text,
+  .flip-digit-face {
+    font-size: clamp(80px, 5vw, 80px);
+  }
+}
+
+@media (max-width: 950px) {
+  .flip-digit-container {
+    width: clamp(60px, 7vw, 100px);
+    height: clamp(80px, 12vw, 200px);
+  }
+
+  .flip-digit-text,
+  .flip-digit-face {
+    font-size: clamp(60px, 5vw, 80px);
+  }
+}
+
+@media (max-width: 700px) {
+  .flip-digit-container {
+    width: clamp(50px, 7vw, 100px);
+    height: clamp(70px, 12vw, 200px);
+  }
+
+  .flip-digit-text,
+  .flip-digit-face {
+    font-size: clamp(50px, 5vw, 80px);
+  }
+}
+
+@media (max-width: 580px) {
+  .flip-digit-container {
+    width: clamp(30px, 7vw, 100px);
+    height: clamp(50px, 14vw, 200px);
+  }
+
+  .flip-digit-text,
+  .flip-digit-face {
+    font-size: clamp(30px, 5vw, 80px);
+  }
+}
+
+@media (max-width: 380px) {
+  .flip-digit-container {
+    width: clamp(25px, 7vw, 100px);
+    height: clamp(40px, 12vw, 200px);
+  }
+
+  .flip-digit-text,
+  .flip-digit-face {
+    font-size: clamp(25px, 5vw, 80px);
+  }
+}

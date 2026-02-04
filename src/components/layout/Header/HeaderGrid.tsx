@@ -68,10 +68,10 @@ export default function HeaderGrid() {
                                 ? "translate-x-0"
                                 : "translate-x-full"
                                 }`}
-                            style={{ top: '5rem' }}
+                            style={{ top: '4rem' }}
                         >
-                            <nav className="flex flex-col h-full justify-start py-8 px-6 z-50">
-                                <ThemeSelector className="m-auto mt-4 mb-4 xs:hidden" />
+                            <nav className="flex flex-col h-full max-h-min justify-start pt-4 pb-8 px-6 z-50 overflow-y-auto">
+                                <ThemeSelector className="m-auto mt-4 mb-4 xs:hidden" big />
                                 {menuItems.map((item, index) => (
                                     <Link
                                         key={index}
