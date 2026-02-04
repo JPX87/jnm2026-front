@@ -25,15 +25,13 @@ export default function KesakoPage() {
             </Section>
 
             {/* Statistics Section */}
-            <Section title="EN QUELQUES CHIFFRES" variant="primary" maxWidth="lg">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-                    <StatCard value={21} title="MIAGE" subtitle="En France" variant="tertiary" />
-                    <StatCard value="+1200" title="Diplômés par an" variant="secondary" />
-                    <StatCard value={1970} title="Création de la MIAGE" variant="tertiary" />
-                    <StatCard value={42} title="Journées Nationales Miagistes" variant="secondary" />
-                    <div className="md:col-span-2 lg:col-span-1">
-                        <StatCard value={10} title="Partenaires" subtitle="sur cet évènement" variant="tertiary" />
-                    </div>
+            <Section title="EN QUELQUES CHIFFRES" titleClassName="text-start" variant="primary" maxWidth="lg">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 md:gap-6">
+                    <StatCard value={1970} title="Création de la MIAGE" customClassName="lg:col-span-2 bg-[#0097b2] text-white"/>
+                    <StatCard value={"21 MIAGE"} title="En France" customClassName="lg:col-span-2 bg-[#000000] text-white"/>
+                    <StatCard value={"+1200"} title="Diplômés par an" customClassName="lg:col-span-2 bg-[#ffbd59] text-white"/>
+                    <StatCard value={42} title="Journées Nationales Miagistes" customClassName="lg:col-span-3 bg-[#00bf63] text-white"/>
+                    <StatCard value={"10"} title="Partenaires sur cet évènement" customClassName="lg:col-span-3 bg-[#5e17eb] text-white" />
                 </div>
             </Section>
         </PageTemplate>

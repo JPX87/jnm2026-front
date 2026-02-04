@@ -3,9 +3,10 @@ interface StatCardProps {
     title: string;
     subtitle?: string;
     variant?: 'primary' | 'secondary' | 'tertiary';
+    customClassName?: string;
 }
 
-export default function StatCard({ value, title, subtitle, variant = 'tertiary' }: StatCardProps) {
+export default function StatCard({ value, title, subtitle, variant = 'tertiary', customClassName }: StatCardProps) {
     const getBackgroundClass = () => {
         switch (variant) {
             case 'primary':
@@ -20,7 +21,7 @@ export default function StatCard({ value, title, subtitle, variant = 'tertiary' 
     };
 
     return (
-        <div className={`flex flex-col items-center text-center p-8 rounded-2xl shadow-lg ${getBackgroundClass()}`}>
+        <div className={`flex flex-col items-center text-center p-8 rounded-2xl shadow-lg ${customClassName ?? getBackgroundClass()}`}>
             <div className="text-5xl md:text-6xl lg:text-7xl font-bold mb-3">
                 {value}
             </div>
