@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile
     # Mappe le port 3002 de votre machine sur le port 3000 du conteneur
     ports:
-      - "3002:3000"
+      - "80:3000"
     environment:
       - NODE_ENV=production
     # Redémarre automatiquement le conteneur s'il plante ou si le serveur redémarre
@@ -15,5 +15,5 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '1'
-          memory: 1G
+          cpus: '2'
+          memory: 2G
