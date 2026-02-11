@@ -3,7 +3,6 @@ FROM node:23-alpine AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json package-lock.json* ./
-RUN ls -al
 RUN npm ci --verbose
 
 # Étape 2 : Construction de l'application
