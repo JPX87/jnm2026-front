@@ -7,6 +7,7 @@ import { LogoSvg } from "@/components/ui/branding/logo/LogoSvg";
 
 const menuItems = [
     { label: "ORGANIGRAMME", href: "/organigramme" },
+    { label: "PARTENAIRES", href: "/partenaires" },
     { label: "NOUS CONTACTER", href: "/contact" },
     { label: "INSCRIPTION", href: "/inscription" },
     { label: "KESAKO", href: "/kesako" },

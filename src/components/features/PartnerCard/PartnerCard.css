@@ -1,0 +1,341 @@
+.partner-card-wrapper {
+    perspective: 1000px;
+}
+
+/* ───── Card shell ───── */
+.partner-card {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    aspect-ratio: 1.586 / 1;
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.03, 0.98, 0.52, 0.99),
+        box-shadow 0.5s ease;
+    will-change: transform;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(170deg, #f5f0e8 0%, #ece5d8 50%, #e4ddd0 100%);
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.08),
+        0 8px 30px rgba(0, 0, 0, 0.12),
+        inset 0 0 0 1.5px rgba(0, 0, 0, 0.06);
+}
+
+:root[data-theme="dark"] .partner-card {
+    background: linear-gradient(170deg, #29261f 0%, #242119 50%, #1f1c16 100%);
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.3),
+        0 8px 30px rgba(0, 0, 0, 0.4),
+        inset 0 0 0 1.5px rgba(255, 255, 255, 0.05);
+}
+
+.partner-card:hover {
+    box-shadow:
+        0 30px 70px rgba(0, 0, 0, 0.2),
+        0 8px 20px rgba(0, 0, 0, 0.12),
+        inset 0 0 0 1.5px rgba(0, 0, 0, 0.06);
+}
+
+:root[data-theme="dark"] .partner-card:hover {
+    box-shadow:
+        0 30px 70px rgba(0, 0, 0, 0.5),
+        0 8px 20px rgba(0, 0, 0, 0.3),
+        inset 0 0 0 1.5px rgba(255, 255, 255, 0.08);
+}
+
+/* Link wrapper */
+.partner-card>a.contents {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ───── Watermark / Guilloche pattern ───── */
+.partner-card__watermark {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.025;
+    background-image:
+        repeating-conic-gradient(rgba(0, 0, 0, 0.4) 0% 25%,
+            transparent 0% 50%);
+    background-size: 6px 6px;
+}
+
+/* ───── Gloss overlay ───── */
+.partner-card__gloss {
+    position: absolute;
+    inset: 0;
+    z-index: 30;
+    pointer-events: none;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    background: radial-gradient(ellipse at var(--gloss-x, 50%) var(--gloss-y, 50%),
+            rgba(255, 255, 255, 0.25) 0%,
+            rgba(255, 255, 255, 0.08) 30%,
+            transparent 60%);
+}
+
+.partner-card:hover .partner-card__gloss {
+    opacity: 1;
+}
+
+/* ───── Tricolore stripe ───── */
+.partner-card__tricolore {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    height: 5px;
+    flex-shrink: 0;
+}
+
+.partner-card__tricolore-blue {
+    flex: 1;
+    background: #002654;
+}
+
+.partner-card__tricolore-white {
+    flex: 1;
+    background: #fff;
+}
+
+.partner-card__tricolore-red {
+    flex: 1;
+    background: #CE1126;
+}
+
+/* ───── Blue header band ───── */
+.partner-card__blue-header {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 16px;
+    background: linear-gradient(90deg, #002654 0%, #003a8c 100%);
+    flex-shrink: 0;
+}
+
+:root[data-theme="dark"] .partner-card__blue-header {
+    background: linear-gradient(90deg, #001a3d 0%, #002a6b 100%);
+}
+
+.partner-card__title-area {
+    display: flex;
+    flex-direction: column;
+}
+
+.partner-card__republic-text {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.5rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+}
+
+.partner-card__card-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.partner-card__category-pill {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 12px;
+    border-radius: 20px;
+    color: #fff;
+    white-space: nowrap;
+}
+
+/* ───── Card body ───── */
+.partner-card__body {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex: 1;
+    padding: 10px 16px;
+    gap: 16px;
+    min-height: 0;
+}
+
+/* Photo / logo frame */
+.partner-card__photo-frame {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+    border: 2.5px solid #b8b0a0;
+    border-radius: 6px;
+    background: #fff;
+    padding: 4px;
+    flex-shrink: 0;
+    align-self: stretch;
+}
+
+:root[data-theme="dark"] .partner-card__photo-frame {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: #5a5548;
+}
+
+.partner-card__photo-frame img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* Fields column */
+.partner-card__fields {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+    min-width: 0;
+    gap: 2px;
+}
+
+.partner-card__field {
+    display: flex;
+    flex-direction: column;
+}
+
+.partner-card__label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.45rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #8a8070;
+    line-height: 1;
+    margin-bottom: 1px;
+}
+
+:root[data-theme="dark"] .partner-card__label {
+    color: #7a7468;
+}
+
+.partner-card__value {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.25;
+}
+
+:root[data-theme="dark"] .partner-card__value {
+    color: #e0dbd3;
+}
+
+.partner-card__value--name {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.partner-card__value--desc {
+    font-weight: 400;
+    font-size: 0.65rem;
+    color: #555;
+    line-height: 1.3;
+}
+
+:root[data-theme="dark"] .partner-card__value--desc {
+    color: #a09889;
+}
+
+/* Signature line */
+.partner-card__signature {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 0 16px 2px;
+    flex-shrink: 0;
+}
+
+.partner-card__signature-line {
+    width: 35%;
+    border-top: 1px solid #b0a590;
+    padding-top: 2px;
+    text-align: center;
+}
+
+:root[data-theme="dark"] .partner-card__signature-line {
+    border-top-color: #5a5548;
+}
+
+.partner-card__signature-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.4rem;
+    letter-spacing: 0.08em;
+    color: #999;
+    text-transform: uppercase;
+}
+
+:root[data-theme="dark"] .partner-card__signature-label {
+    color: #706a60;
+}
+
+/* ───── MRZ — 2-line machine readable zone ───── */
+.partner-card__mrz {
+    position: relative;
+    z-index: 2;
+    padding: 4px 0 6px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.5rem;
+    letter-spacing: 0.12em;
+    color: #444;
+    opacity: 0.35;
+    line-height: 1.45;
+    background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.015) 100%);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+:root[data-theme="dark"] .partner-card__mrz {
+    color: #9a9080;
+    border-top-color: rgba(255, 255, 255, 0.04);
+    background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.1) 100%);
+}
+
+.partner-card__mrz-line {
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: center;
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+}
+
+/* ───── Responsive ───── */
+@media (max-width: 480px) {
+    .partner-card {
+        max-width: 350px;
+    }
+
+    .partner-card__value--name {
+        font-size: 0.95rem;
+    }
+
+    .partner-card__card-title {
+        font-size: 0.6rem;
+    }
+}
