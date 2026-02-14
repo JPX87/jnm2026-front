@@ -16,11 +16,11 @@ export default function MentionsLegalesPage() {
                     Le site <strong>jnm2026.fr</strong> est édité par :
                 </p>
                 <ul className="list-disc list-inside text-base md:text-lg leading-relaxed space-y-1">
-                    <li><strong>Nom :</strong> MIAGE de Toulouse</li>
-                    <li><strong>Statut :</strong> Association loi 1901</li>
-                    <li><strong>Siège social :</strong> 118 Rte de Narbonne, 31400 Toulouse</li>
-                    <li><strong>Email :</strong> guillaume.helg@gmail.com (envoyer de l'argent)</li>
-                    <li><strong>Directeur de publication :</strong> Guillaume HELG </li>
+                    <li><strong>Nom : </strong>JOURNÉES NATIONALES MIAGE 2026</li>
+                    <li><strong>Statut : </strong>Association loi 1901</li>
+                    <li><strong>Siège social : </strong> 118 route de Narbonne Bureau 112 Bâtiment U3 31400 Toulouse (a remplacer)</li>
+                    <li><strong>Email : </strong><a href="mailto:jnm26@miage.fr">jnm26@miage.fr</a></li>
+                    <li><strong>Directeur de publication : </strong>Jérémy PATAPY & Mathis Pilon</li>
                 </ul>
             </Section>
 
@@ -31,9 +31,9 @@ export default function MentionsLegalesPage() {
                     Ce site est hébergé par :
                 </p>
                 <ul className="list-disc list-inside text-base md:text-lg leading-relaxed space-y-1">
-                    <li><strong>Hébergeur :</strong> [À COMPLÉTER — Nom de l&apos;hébergeur]</li>
-                    <li><strong>Adresse :</strong> [À COMPLÉTER — Adresse de l&apos;hébergeur]</li>
-                    <li><strong>Site web :</strong> [À COMPLÉTER — URL de l&apos;hébergeur]</li>
+                    <li><strong>Hébergeur : </strong>OVH SAS</li>
+                    <li><strong>Adresse : </strong> 2 rue Kellermann, 59100 Roubaix - France</li>
+                    <li><strong>Site web : </strong><a href="https://www.ovhcloud.com" target="_blank" rel="noopener noreferrer">www.ovhcloud.com</a></li>
                 </ul>
             </Section>
 
@@ -55,7 +55,7 @@ export default function MentionsLegalesPage() {
                     Conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi Informatique et Libertés du 6 janvier 1978 modifiée, vous disposez d&apos;un droit d&apos;accès, de rectification, de suppression et d&apos;opposition aux données personnelles vous concernant.
                 </p>
                 <p className="text-base md:text-lg leading-relaxed">
-                    Pour exercer ces droits, vous pouvez nous contacter à l&apos;adresse suivante : <strong>[À COMPLÉTER — email de contact]</strong>.
+                    Pour exercer ces droits, vous pouvez nous contacter à l&apos;adresse suivante : <strong><a href="mailto:jnm26@miage.fr">jnm26@miage.fr</a></strong>.
                 </p>
                 <p className="text-base md:text-lg leading-relaxed">
                     Les données collectées via ce site ne sont utilisées que dans le cadre de l&apos;organisation des Journées Nationales Miagistes 2026 et ne sont en aucun cas cédées à des tiers.
