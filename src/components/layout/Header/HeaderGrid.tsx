@@ -17,7 +17,7 @@ export default function HeaderGrid() {
 
     return (
         <>
-            <header className="fixed z-10 top-0 grid grid-cols-3 items-center w-full h-16 md:h-20 px-3 sm:px-6 bg-(--color-primary)">
+            <header className="fixed z-90 top-0 grid grid-cols-3 items-center w-full h-16 md:h-20 px-3 sm:px-6 bg-(--color-primary)">
                 {/* Logo */}
                 <Link href="/#top" className="justify-self-start">
                     {/*
