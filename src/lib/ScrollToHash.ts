@@ -4,10 +4,9 @@ import { useEffect } from "react";
 import { useParams } from "next/navigation";
 
 export default function ScrollToHash() {
-    const params = useParams(); // Permet de réagir aux changements de route
+    const params = useParams();
 
     useEffect(() => {
-        // On extrait le hash manuellement car Next Navigation n'a pas de useHash
         const hash = window.location.hash;
 
         if (hash) {
@@ -15,16 +14,28 @@ export default function ScrollToHash() {
             const element = document.getElementById(id);
 
             if (element) {
-                // Petit timeout pour laisser le temps au DOM de finir de s'afficher
-                setTimeout(() => {
-                    element.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start",
-                    });
-                }, 100);
+                // Scroll vers l'élément
+                element.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                });
+
+                // Nettoyage de l'URL
+                if (id === "top") {
+                    const cleanupTimeout = setTimeout(() => {
+                        // ReplaceState pour retirer le hash sans rafraîchir
+                        window.history.replaceState(
+                            null,
+                            "",
+                            window.location.pathname + window.location.search
+                        );
+                    }, 800);
+                    return () => clearTimeout(cleanupTimeout);
+                }
+                return
             }
         }
-    }, [params]); // Se déclenche à chaque changement de navigation
+    }, [params]);
 
     return null;
 }
