@@ -1,5 +1,6 @@
 import Countdown from "@/components/features/Countdown/Countdown";
 import { Slice } from "@/components/layout/Slice/Slice";
+import { Avionn } from "@/components/ui/shapes/Avionn/Avionn";
 import MessageBubble from "@/components/ui/shapes/MessageBubble/MessageBubble";
 import Link from "next/link";
 
@@ -14,6 +15,7 @@ export default function Home() {
       <Slice absolute first>
         <h1 id="countdown" className="text-center text-4xl 2xs:text-[55px] xs:text-6xl xs:text-7xl lg:text-8xl xl:text-[150px] sm:mt-0 mb-[20%] sm:m-auto font-bold my-[20px] sm:my-[50px]">EMBARQUEMENT DANS</h1>
         <Countdown className="mx-auto mb-[30%] xs:mb-0" targetDate={targetDate} />
+        <Avionn className="absolute left-0 right-0 -bottom-70 sm:-bottom-80 m-auto rotate-90 -scale-x-100 w-56 sm:w-80 md:w-96 fill-(--color-primary)" />
       </Slice>
       <Slice absolute>
         <div className="relative w-10/12 flex flex-col gap-3 py-14 px-6 justify-center rounded-3xl bg-(--color-tertiary) text-(--color-secondary) dark:text-(--color-seconde-black) m-auto">
