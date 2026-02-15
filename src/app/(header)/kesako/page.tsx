@@ -31,9 +31,8 @@ export default function KesakoPage() {
                     <StatCard value="+1200" title="Diplômés par an" variant="secondary" />
                     <StatCard value={1970} title="Création de la MIAGE" variant="tertiary" />
                     <StatCard value={42} title="Journées Nationales Miagistes" variant="secondary" />
-                    <div className="md:col-span-2 lg:col-span-1">
-                        <StatCard value={10} title="Partenaires" subtitle="sur cet évènement" variant="tertiary" />
-                    </div>
+                    <StatCard value={4} title="Jours" variant="tertiary" />
+                    <StatCard value="+300" title="Participants" variant="secondary" />
                 </div>
             </Section>
         </PageTemplate>
