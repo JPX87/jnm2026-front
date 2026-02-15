@@ -16,7 +16,7 @@ export default function FlipDigit({ value, skipFlip = false }: FlipDigitProps) {
       setState({ current: value, next: value });
       return;
     }
-    
+
     if (!flipping && state.current !== value) {
       setState(prev => ({ ...prev, next: value }));
       setFlipping(true);
@@ -34,7 +34,7 @@ export default function FlipDigit({ value, skipFlip = false }: FlipDigitProps) {
   }, [flipping, value]);
 
   return (
-    <div 
+    <div
       className="flip-digit-container relative font-black text-(--color-primary) bg-(--color-seconde-black) rounded-md xs:rounded-lg md:rounded-xl"
     >
       {/* Moitié supérieure statique - affiche NEXT avec flex-end */}

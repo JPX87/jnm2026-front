@@ -27,7 +27,7 @@ const ColorSwatch: FC<ColorSwatchProps> = ({ name, varName }) => {
         style={{ backgroundColor: colorValue }}
         title={`${name} - ${varName}`}
       />
-      
+
       {/* Les infos textuelles */}
       <div className="text-center">
         <span className="block text-sm font-bold text-gray-900 dark:text-gray-100 truncate">
@@ -100,17 +100,17 @@ export const ColorPalette: FC = () => {
       <h1 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white flex items-center gap-2">
         <span>🎨</span> Charte Graphique
       </h1>
-      
+
       <div className="space-y-10">
         {colorGroups.map((group) => (
-          <section 
-            key={group.title} 
+          <section
+            key={group.title}
             className="pb-8 border-b border-gray-200 dark:border-gray-800 last:border-0"
           >
             <h2 className="text-xl font-semibold mb-6 text-gray-800 dark:text-gray-200">
               {group.title}
             </h2>
-            
+
             <div className="flex flex-wrap gap-6">
               {group.colors.map((color) => (
                 <ColorSwatch
