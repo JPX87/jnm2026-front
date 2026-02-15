@@ -7,7 +7,7 @@ import { LogoSvg } from "@/components/ui/branding/logo/LogoSvg";
 
 const menuItems = [
     { label: "ORGANIGRAMME", href: "/organigramme" },
-    { label: "NOUS CONTACTER", href: "/contact" },
+    { label: "NOUS CONTACTER", href: "/#contact" },
     { label: "INSCRIPTION", href: "/inscription" },
     { label: "KESAKO", href: "/kesako" },
 ];
@@ -19,7 +19,7 @@ export default function HeaderGrid() {
         <>
             <header className="fixed z-10 top-0 grid grid-cols-3 items-center w-full h-16 md:h-20 px-3 sm:px-6 bg-(--color-primary)">
                 {/* Logo */}
-                <Link href="/" className="justify-self-start">
+                <Link href="/#top" className="justify-self-start">
                     {/*
                 <img className='w-20 sm:w-24 md:w-32' src="LOGO_FINAL_SANS_FOND_SIMPLE_NOIR.png" alt='Logo' />
                 */}
