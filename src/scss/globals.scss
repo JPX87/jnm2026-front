@@ -5,10 +5,12 @@
 
 @theme {
   /* Breakpoint "xs" (extra small) */
-  --breakpoint-xs: 30rem; /* ~480px */
- 
+  --breakpoint-xs: 30rem;
+  /* ~480px */
+
   /* Breakpoint "2xs" (extra small) */
-  --breakpoint-2xs: 24rem; /* ~384px */
+  --breakpoint-2xs: 24rem;
+  /* ~384px */
 }
 
 /*=============================
@@ -20,7 +22,8 @@
   */
 
   /* 1. Thème Clair (Défaut) */
-  :root, :root[data-theme="light"] {
+  :root,
+  :root[data-theme="light"] {
     --background: var(--color-secondary);
     --foreground: var(--color-primary);
   }
@@ -36,24 +39,34 @@
 /*==============================
 =       OLDERS CLASSES         =
 ==============================*/
-.bg-JNM-primary{
-  background-color: var(--color-primary);; 
+.bg-JNM-primary {
+  background-color: var(--color-primary);
+  ;
 }
-.bg-JNM-secondary{
-  background-color: var(--color-secondary);; 
+
+.bg-JNM-secondary {
+  background-color: var(--color-secondary);
+  ;
 }
 
 
-.text-JNM-primary{
-  color: var(--color-primary);; 
+.text-JNM-primary {
+  color: var(--color-primary);
+  ;
 }
-.text-JNM-secondary{
-  color: var(--color-secondary);; 
+
+.text-JNM-secondary {
+  color: var(--color-secondary);
+  ;
 }
 
 /*=============================
-=            BODY             =
+=            BASES            =
 ==============================*/
+
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   background-color: var(--background);

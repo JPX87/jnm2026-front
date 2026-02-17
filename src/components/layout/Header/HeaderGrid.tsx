@@ -7,7 +7,7 @@ import { LogoSvg } from "@/components/ui/branding/logo/LogoSvg";
 
 const menuItems = [
     { label: "ORGANIGRAMME", href: "/organigramme" },
-    { label: "NOUS CONTACTER", href: "/contact" },
+    { label: "NOUS CONTACTER", href: "/#contact" },
     { label: "INSCRIPTION", href: "/inscription" },
     { label: "KESAKO", href: "/kesako" },
 ];
@@ -17,9 +17,9 @@ export default function HeaderGrid() {
 
     return (
         <>
-            <header className="fixed z-10 top-0 grid grid-cols-3 items-center w-full h-16 md:h-20 px-3 sm:px-6 bg-(--color-primary)">
+            <header className="fixed z-90 top-0 grid grid-cols-3 items-center w-full h-16 md:h-20 px-3 sm:px-6 bg-(--color-primary)">
                 {/* Logo */}
-                <Link href="/" className="justify-self-start">
+                <Link href="/#top" className="justify-self-start">
                     {/*
                 <img className='w-20 sm:w-24 md:w-32' src="LOGO_FINAL_SANS_FOND_SIMPLE_NOIR.png" alt='Logo' />
                 */}
@@ -38,7 +38,7 @@ export default function HeaderGrid() {
                     TICKETS
                     </button>
                     <button className="text-gray-600 hover:text-black cursor-pointer">Menu</button>*/}
-                    <ThemeSelector className="hidden xs:flex" />
+                    {/*<ThemeSelector className="hidden xs:flex" />*/}
 
                     {/* Hamburger Menu Button */}
                     <div className="relative z-[9999]">
@@ -71,7 +71,7 @@ export default function HeaderGrid() {
                             style={{ top: '4rem' }}
                         >
                             <nav className="flex flex-col h-full max-h-min justify-start pt-4 pb-8 px-6 z-50 overflow-y-auto">
-                                <ThemeSelector className="m-auto mt-4 mb-4 xs:hidden" big />
+                                <ThemeSelector className="m-auto mt-4 mb-4" big />
                                 {menuItems.map((item, index) => (
                                     <Link
                                         key={index}
