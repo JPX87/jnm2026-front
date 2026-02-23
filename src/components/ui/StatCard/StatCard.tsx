@@ -11,7 +11,7 @@ export default function StatCard({ value, title, subtitle, variant = 'tertiary' 
             case 'primary':
                 return 'bg-(--color-primary) text-(--color-secondary) dark:text-(--color-seconde-black)';
             case 'secondary':
-                return 'bg-(--color-secondary) text-(--color-primary)';
+                return 'bg-(--color-secondary) dark:bg-(--color-seconde-black) text-(--color-primary)';
             case 'tertiary':
                 return 'bg-(--color-tertiary) text-(--color-secondary) dark:text-(--color-seconde-black)';
             default:

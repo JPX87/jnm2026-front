@@ -3,12 +3,13 @@ import { Oswald, Open_Sans } from "next/font/google";
 import '@/scss/globals.scss'
 import HeaderGrid from "@/components/layout/Header/HeaderGrid";
 import { ThemeProvider } from "@/components/ui/theme/ThemeProvider/ThemeProvider";
+import ScrollToHash from "@/lib/ScrollToHash";
 
 // Configuration des polices
 const oswald = Oswald({
   variable: "--font-oswald",
   subsets: ["latin"],
-  display: "swap", 
+  display: "swap",
 });
 
 const openSans = Open_Sans({
@@ -30,7 +31,7 @@ export const metadata: Metadata = {
     template: "%s | JNM 2026", // Sur la page contact, le titre deviendra "Contact | JNM 2026"
   },
   description: "Site officiel des 42èmes Journées Nationales Miagites qui se tiendront à Toulouse du 26 au 29 Mai 2026.",
-  
+
   keywords: ["JNM 2026", "Miage", "Toulouse", "Journées Nationales Miagites", "Conférence", "Événement"],
   authors: [{ name: "Comité d'organisation JNM" }],
   //creator: "Votre Nom ou Agence",
@@ -42,7 +43,7 @@ export const metadata: Metadata = {
     shortcut: "/favicon-128x128.png",
     apple: "/apple-touch-icon.png",
   },
-  
+
   // Pour indiquer aux moteurs de recherche quelle est l'URL "principale"
   alternates: {
     canonical: "/",
@@ -72,13 +73,14 @@ export default function RootLayout({
   return (
     <html lang="fr" suppressHydrationWarning>
       <body
-         className={`${openSans.variable} ${oswald.variable} font-sans antialiased`}
+        className={`${openSans.variable} ${oswald.variable} font-sans antialiased`}
       >
         <ThemeProvider attribute="data-theme"
           defaultTheme="system"
           enableSystem
           themes={["light", "dark"]}
         >
+          <ScrollToHash />
           {header && <HeaderGrid />}
           {children}
         </ThemeProvider>
