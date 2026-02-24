@@ -1,8 +1,8 @@
 import { ColorPalette } from "@/components/ui/branding/debug/ColorPalette/ColorPalette";
-import {Metadata} from "next";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Couleurs",
+    title: "Couleurs",
 };
 
 export default function Color() {

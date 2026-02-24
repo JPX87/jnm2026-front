@@ -8,7 +8,7 @@ interface TimeSectionProps {
 }
 
 export default function TimeSection({ label, value, maxDigits = 2 }: TimeSectionProps) {
-  const [displayValue, setDisplayValue] = useState(value);
+  const [displayValue, setDisplayValue] = useState(0);
   const [isInitializing, setIsInitializing] = useState(true);
 
   // Animation de démarrage : compter de MAX jusqu'à la vraie valeur avec requestAnimationFrame
@@ -17,15 +17,18 @@ export default function TimeSection({ label, value, maxDigits = 2 }: TimeSection
 
     const maxValue = Math.pow(10, maxDigits) - 1;
     const startValue = maxValue;
-    const endValue = value;
-    const duration = 990; // 1 seconde d'animation
+    let endValue = value;
+    if (label === "SECONDES") {
+      endValue = value === 0 ? 59 : value - 1;
+    }
+    const duration = 1500; // 1.5 seconde d'animation
     const startTime = Date.now();
 
     const animate = () => {
       const elapsed = Date.now() - startTime;
       const progress = Math.min(elapsed / duration, 1);
       const currentValue = Math.floor(startValue - (startValue - endValue) * progress);
-      
+
       setDisplayValue(currentValue);
 
       if (progress < 1) {
@@ -36,7 +39,7 @@ export default function TimeSection({ label, value, maxDigits = 2 }: TimeSection
       }
     };
 
-    requestAnimationFrame(animate);
+    if (displayValue === 0) requestAnimationFrame(animate);
   }, [isInitializing, value, maxDigits]);
 
   // Mettre à jour displayValue quand l'initialisation est terminée et que value change
