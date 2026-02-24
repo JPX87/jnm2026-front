@@ -1,0 +1,83 @@
+import { LineId, MetroLine, MetroNode } from "./types";
+
+export const LINES: Record<LineId, MetroLine> = {
+    A: {
+        id: "A",
+        name: "Ligne Association",
+        color: "#ee6aa0",
+        nodes: ["AC", "JT", "NG", "PL"],
+    },
+    B: {
+        id: "B",
+        name: "Ligne Communication",
+        color: "#cb6ce6",
+        nodes: ["JP", "MP", "OR", "GH", "AS"],
+    },
+    C: {
+        id: "C",
+        name: "Ligne Logistique",
+        color: "#ff3131",
+        nodes: ["IB", "SZ", "JA", "TS", "ET", "GC"],
+    },
+    D: {
+        id: "D",
+        name: "Ligne Partenariat",
+        color: "#38b6ff",
+        nodes: ["NG", "PL", "LM", "CT"],
+    },
+    E: {
+        id: "E",
+        name: "Ligne Programme",
+        color: "#5e17eb",
+        nodes: ["LM", "KB", "IQ", "RB", "CG", "SB", "BB", "HA", "YL"],
+    },
+    F: {
+        id: "F",
+        name: "Ligne RSE Ecologie",
+        color: "#00bf63",
+        nodes: ["GF", "KP", "CG"],
+    },
+    G: {
+        id: "G",
+        name: "Ligne RSE Prévention",
+        color: "#ffd52b",
+        nodes: ["ET", "GF"],
+    },
+    H: {
+        id: "H",
+        name: "Ligne Gala",
+        color: "#ff751f",
+        nodes: ["TS", "ET", "GC", "VD", "AS"],
+    },
+};
+
+export const NODES: MetroNode[] = [
+    { id: "AC", label: "Andrew C.", sublabel: "...", x: 5, y: 20, line: "A" },
+    { id: "JT", label: "Justine T.", sublabel: "...", x: 20, y: 20, line: "A" },
+    { id: "NG", label: "Nathan G.", sublabel: "...", x: 35, y: 10, line: "A", isHub: true },
+    { id: "PL", label: "Paul L.", sublabel: "...", x: 50, y: 10, line: "A", isHub: true },
+    { id: "JP", label: "Jérémy P.", sublabel: "...", x: 5, y: 40, line: "B" },
+    { id: "MP", label: "Mathis P.", sublabel: "...", x: 15, y: 45, line: "B" },
+    { id: "OR", label: "Olivia R.", sublabel: "...", x: 25, y: 45, line: "B" },
+    { id: "GH", label: "Guillaume H.", sublabel: "...", x: 35, y: 45, line: "B" },
+    { id: "AS", label: "Anaïs S.", sublabel: "...", x: 45, y: 45, line: "B", isHub: true },
+    { id: "IB", label: "Ilann B.", sublabel: "...", x: 10, y: 60, line: "C" },
+    { id: "SZ", label: "Sellim Z.", sublabel: "...", x: 10, y: 70, line: "C" },
+    { id: "JA", label: "Julie A.", sublabel: "...", x: 20, y: 80, line: "C" },
+    { id: "TS", label: "Thomas S.", sublabel: "...", x: 30, y: 80, line: "C" },
+    { id: "ET", label: "Eliott T.", sublabel: "...", x: 45, y: 80, line: "C", isHub: true },
+    { id: "GC", label: "Géraldine C.", sublabel: "...", x: 45, y: 70, line: "C", isHub: true },
+    { id: "LM", label: "Lina M.", sublabel: "...", x: 60, y: 10, line: "D", isHub: true },
+    { id: "CT", label: "Cédric T.", sublabel: "...", x: 75, y: 10, line: "D" },
+    { id: "KB", label: "Katia B.", sublabel: "...", x: 60, y: 20, line: "E" },
+    { id: "IQ", label: "Imane Q.", sublabel: "...", x: 60, y: 30, line: "E" },
+    { id: "RB", label: "Romain B.", sublabel: "...", x: 60, y: 40, line: "E" },
+    { id: "CG", label: "Cyril G.", sublabel: "...", x: 60, y: 50, line: "E", isHub: true },
+    { id: "SB", label: "Salma B.", sublabel: "...", x: 67.5, y: 60, line: "E" },
+    { id: "BB", label: "Bogdan B.", sublabel: "...", x: 75, y: 60, line: "E" },
+    { id: "HA", label: "Halima A.", sublabel: "...", x: 85, y: 60, line: "E" },
+    { id: "YL", label: "Yann L.", sublabel: "...", x: 95, y: 50, line: "E" },
+    { id: "GF", label: "Guillaume F.", sublabel: "...", x: 60, y: 80, line: "F" },
+    { id: "KP", label: "Karen P.", sublabel: "...", x: 60, y: 65, line: "F" },
+    { id: "VD", label: "Valentin D.", sublabel: "...", x: 45, y: 60, line: "H" },
+];
