@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import './FlipDigit.css';
+import './FlipDigit.scss';
 
 interface FlipDigitProps {
   value: number;
