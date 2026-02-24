@@ -4,6 +4,8 @@ import '@/scss/globals.scss'
 import HeaderGrid from "@/components/layout/Header/HeaderGrid";
 import NavigationLoader from "@/components/ui/NavigationLoader/NavigationLoader";
 import { ThemeProvider } from "@/components/ui/theme/ThemeProvider/ThemeProvider";
+import ScrollToHash from "@/lib/ScrollToHash";
+import Footer from "../Footer/Footer";
 
 // Configuration des polices
 const oswald = Oswald({
@@ -80,9 +82,11 @@ export default function RootLayout({
           enableSystem
           themes={["light", "dark"]}
         >
+          <ScrollToHash />
           <NavigationLoader />
           {header && <HeaderGrid />}
           {children}
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

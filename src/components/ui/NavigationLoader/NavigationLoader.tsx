@@ -20,6 +20,10 @@ export default function NavigationLoader() {
             const href = anchor.getAttribute("href");
             if (!href) return;
 
+            // Don't trigger for hash-only links (scrollToHash)
+            const isHashOnly = href.startsWith("#") || href.startsWith("/#");
+            if (isHashOnly) return;
+
             // Only trigger for internal links (not external, not anchors, not same page)
             const isInternal = href.startsWith("/") || href.startsWith(".");
             const isSamePage = href === pathname || href === "";
@@ -88,8 +92,8 @@ export default function NavigationLoader() {
         >
             <div
                 className={`navigation-loader-bar h-full bg-[var(--color-secondary)] rounded-r-sm shadow-[0_0_8px_var(--color-secondary)] origin-left will-change-[transform,opacity] ${state === "loading"
-                        ? "animate-[loader-grow_2s_cubic-bezier(0.25,0.46,0.45,0.94)_forwards]"
-                        : "animate-[loader-complete_0.3s_ease-out_forwards]"
+                    ? "animate-[loader-grow_2s_cubic-bezier(0.25,0.46,0.45,0.94)_forwards]"
+                    : "animate-[loader-complete_0.3s_ease-out_forwards]"
                     }`}
             />
         </div>
