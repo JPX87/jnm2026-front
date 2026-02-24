@@ -22,7 +22,7 @@ export default function Home() {
           <h1 id="contact" className="text-center text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold my-[50px] transition-all">DES QUESTIONS SUR LES JNM ?</h1>
           <div className="py-2 sm:flex lg:mx-24">
             <Link href="kesako" rel="noopener noreferrer"
-              className="block m-auto w-max bg-(--color-secondary) dark:bg-(--color-seconde-black) text-(--color-tertiary) text-xl sm:text-2xl font-bold rounded-4xl py-2 sm:py-3 px-8 sm:px-10 lg:px-20 hover:bg-gray-800 transition-all cursor-pointer">
+              className="block mb-4 mx-auto sm:m-auto w-max bg-(--color-secondary) dark:bg-(--color-seconde-black) text-(--color-tertiary) text-xl sm:text-2xl font-bold rounded-4xl py-2 sm:py-3 px-8 sm:px-10 lg:px-20 hover:bg-gray-800 transition-all cursor-pointer">
               LES JNMS ?
             </Link>
             <Link target="_blank" href="https://ig.me/m/jnm2026_tls" rel="noopener noreferrer"
