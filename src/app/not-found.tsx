@@ -12,7 +12,7 @@ export default function Custom404() {
     <main className="flex flex-col items-center justify-center h-dvh text-center px-4">
       <BouncingLogo />
       <h1 className="text-center text-8xl xl:text-[150px] font-['Oswald'] font-bold text-(--color-primary) my-[20px]">404</h1>
-      <p className="text-xl xl:text-3xl font-['Oswald'] border-2 border-(--color-primary) rounded-2xl p-6">Oups! La page que vous recherchez n'existe pas.</p>
+      <p className="text-xl xl:text-3xl font-['Oswald'] border-2 border-(--color-primary) rounded-2xl p-6">Oups! La page que vous recherchez n&apos;existe pas.</p>
     </main>
   </PageLayout>
 }

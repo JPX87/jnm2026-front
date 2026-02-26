@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import FlipDigit from "./FlipDigit";
 
 interface TimeSectionProps {
@@ -11,9 +11,13 @@ export default function TimeSection({ label, value, maxDigits = 2 }: TimeSection
   const [displayValue, setDisplayValue] = useState(0);
   const [isInitializing, setIsInitializing] = useState(true);
 
+  const hasStartedAnimating = useRef(false);
+
   // Animation de démarrage : compter de MAX jusqu'à la vraie valeur avec requestAnimationFrame
   useEffect(() => {
     if (!isInitializing) return;
+    if (hasStartedAnimating.current) return;
+    hasStartedAnimating.current = true;
 
     const maxValue = Math.pow(10, maxDigits) - 1;
     const startValue = maxValue;
@@ -39,12 +43,13 @@ export default function TimeSection({ label, value, maxDigits = 2 }: TimeSection
       }
     };
 
-    if (displayValue === 0) requestAnimationFrame(animate);
-  }, [isInitializing, value, maxDigits]);
+    requestAnimationFrame(animate);
+  }, [isInitializing, value, maxDigits, displayValue, label]);
 
   // Mettre à jour displayValue quand l'initialisation est terminée et que value change
   useEffect(() => {
     if (isInitializing) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setDisplayValue(value);
   }, [value, isInitializing]);
 

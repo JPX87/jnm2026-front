@@ -8,7 +8,7 @@ export default function KesakoPage() {
             {/* Description Section */}
             <Section variant="tertiary" maxWidth="md" contentClassName="gap-4">
                 <p className="text-lg md:text-xl lg:text-2xl leading-relaxed">
-                    Un rendez-vous annuel qui rassemble l'ensemble du réseau international MIAGE.
+                    Un rendez-vous annuel qui rassemble l&apos;ensemble du réseau international MIAGE.
                 </p>
 
                 <p className="text-lg md:text-xl lg:text-2xl leading-relaxed">
