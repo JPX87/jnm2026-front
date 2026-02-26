@@ -2,8 +2,10 @@ import type { Metadata, Viewport } from "next";
 import { Oswald, Open_Sans } from "next/font/google";
 import '@/scss/globals.scss'
 import HeaderGrid from "@/components/layout/Header/HeaderGrid";
+import NavigationLoader from "@/components/ui/NavigationLoader/NavigationLoader";
 import { ThemeProvider } from "@/components/ui/theme/ThemeProvider/ThemeProvider";
 import ScrollToHash from "@/lib/ScrollToHash";
+import Footer from "../Footer/Footer";
 
 // Configuration des polices
 const oswald = Oswald({
@@ -81,8 +83,10 @@ export default function RootLayout({
           themes={["light", "dark"]}
         >
           <ScrollToHash />
+          <NavigationLoader />
           {header && <HeaderGrid />}
           {children}
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

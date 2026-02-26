@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import './FlipDigit.css';
+import './FlipDigit.scss';
 
 interface FlipDigitProps {
   value: number;
@@ -21,7 +21,8 @@ export default function FlipDigit({ value, skipFlip = false }: FlipDigitProps) {
       setState(prev => ({ ...prev, next: value }));
       setFlipping(true);
     }
-  }, [value, flipping, skipFlip]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value, flipping, skipFlip, state.current]);
 
   // Cleanup : réinitialiser l'état si le composant est démonté pendant un flip
   useEffect(() => {
