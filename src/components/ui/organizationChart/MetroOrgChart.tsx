@@ -3,24 +3,27 @@
 import { useState, useEffect, useRef } from "react";
 import { LINES, NODES } from "./data";
 import { LineId, NodeId, MetroLine } from "./types";
-import { buildLinePath } from "./helper";
+import { buildLinePath, getNodeState, getLineFlags } from "./helper";
+import { PPSvg } from "./PPSvg";
 
-// Map id → node
+// Map id → node for quick lookup
 const NODE_MAP = Object.fromEntries(NODES.map((n) => [n.id, n]));
+const PATH_IMG = "/img/orga/"
+
 
 export default function MetroOrgChart() {
     const [active, setActive] = useState<NodeId | null>(null);
     const [hoveredLine, setHoveredLine] = useState<LineId | null>(null);
     const [animOffset, setAnimOffset] = useState(0);
     const svgRef = useRef<SVGSVGElement>(null);
-    const [svgSize, setSvgSize] = useState({ w: 900, h: 500 });
+    const [svgSize, setSvgSize] = useState({ w: 1000, h: 500 });
 
     // Resize observer
     useEffect(() => {
         const update = () => {
             if (svgRef.current) {
                 const rect = svgRef.current.getBoundingClientRect();
-                setSvgSize({ w: rect.width || 900, h: rect.height || 500 });
+                setSvgSize({ w: rect.width || 1000, h: rect.height || 500 });
             }
         };
         update();
@@ -40,24 +43,21 @@ export default function MetroOrgChart() {
     }, []);
 
     const activeNode = active ? NODE_MAP[active] : null;
-    const activeLine = activeNode ? LINES[activeNode.line] : null;
+    const activeLine = activeNode ? LINES[Array.isArray(activeNode.line) ? activeNode.line[0] : activeNode.line] : null;
 
     return (
         <div className="min-h-[500px] w-full flex flex-col">
 
             {/* ── Header ── */}
-            <header className="px-8 pt-8 pb-4 flex items-end justify-between">
-                <div>
-                    <p
-                        className="text-xs tracking-[0.3em] uppercase mb-1 flicker"
-                        style={{ color: "#6B7280", fontFamily: "'Space Mono', monospace" }}
-                    >
-                        Plan du réseau
-                    </p>
-                </div>
-
+            <header className="px-8 pt-8 pb-4 flex flex-col lg:flex-row items-end justify-between">
+                <p
+                    className="text-xs tracking-[0.3em] m-auto uppercase mb-1 flicker"
+                    style={{ color: "#6B7280", fontFamily: "'Space Mono', monospace" }}
+                >
+                    Plan du réseau
+                </p>
                 {/* Legend */}
-                <div className="flex gap-5">
+                <div className="flex gap-5 w-full lg:w-auto overflow-x-auto pb-3 xl:pb-1">
                     {(Object.values(LINES) as MetroLine[]).map((line) => (
                         <button
                             key={line.id}
@@ -109,8 +109,7 @@ export default function MetroOrgChart() {
                     {/* ── Lines ── */}
                     {(Object.values(LINES) as MetroLine[]).map((line) => {
                         const path = buildLinePath(NODE_MAP, line, svgSize.w, svgSize.h);
-                        const isHighlighted = hoveredLine === line.id || (activeNode && activeNode.line === line.id);
-                        const isDimmed = (hoveredLine && hoveredLine !== line.id) || (activeNode && activeNode.line !== line.id);
+                        const { isHighlighted, isDimmed } = getLineFlags(line, hoveredLine, activeNode);
                         return (
                             <g
                                 onMouseEnter={() => setHoveredLine(line.id as LineId)}
@@ -158,11 +157,8 @@ export default function MetroOrgChart() {
                     {NODES.map((node) => {
                         const cx = (node.x / 100) * svgSize.w;
                         const cy = (node.y / 100) * svgSize.h;
-                        const lineColor = LINES[node.line].color;
-                        const isActive = active === node.id;
-                        const isDimmedNode =
-                            (hoveredLine && hoveredLine !== node.line) ||
-                            (active && activeNode && activeNode.line !== node.line && !node.isHub);
+                        const { lineColor, isActive, isDimmedNode } =
+                            getNodeState(node, active, activeNode, hoveredLine);
 
                         return (
                             <g
@@ -173,30 +169,19 @@ export default function MetroOrgChart() {
                                 style={{ transition: "opacity 0.3s" }}
                                 opacity={isDimmedNode ? 0.25 : 1}
 
-                                onMouseEnter={() => setHoveredLine(node.line as LineId)}
+                                onMouseEnter={() => setHoveredLine((Array.isArray(node.line) ? node.line[0] : node.line as LineId))}
                                 onMouseLeave={() => setHoveredLine(null)}
                             >
                                 {/* Pulse ring (active) */}
                                 {isActive && (
                                     <circle
                                         className="pulse-ring"
-                                        r={node.isHub ? 22 : 16}
+                                        r={22}
                                         fill="none"
                                         stroke={lineColor}
                                         strokeWidth={2}
                                     />
                                 )}
-
-                                {/* Hub outer ring 
-                                {node.isHub && (
-                                    <circle
-                                        r={18}
-                                        fill="none"
-                                        stroke={lineColor}
-                                        strokeWidth={3}
-                                        opacity={0.5}
-                                    />
-                                )}*/}
 
                                 {/* Main circle */}
                                 <circle
@@ -205,24 +190,19 @@ export default function MetroOrgChart() {
                                     stroke={lineColor}
                                     strokeWidth={node.isHub ? 3 : 2}
                                     style={{
-                                        filter: isActive ? `drop-shadow(0 0 8px ${lineColor})` : "none",
+                                        filter: isActive ? `drop-shadow(0 0 8px #FFF)` : "none",
                                         transition: "fill 0.2s",
                                     }}
-                                    className="sm:[r:25px]"
+                                    className="sm:[r:25px] lg:[r:40px]"
                                 />
-
-                                {/* Hub inner dot */}
-                                {node.isHub && (
-                                    <circle r={4} fill={lineColor} />
-                                )}
 
                                 {/* Label */}
                                 <text
                                     className="node-label"
                                     x={0}
-                                    y={node.isHub ? -22 : -17}
+                                    y={-30}
                                     textAnchor="middle"
-                                    fontSize={node.isHub ? 13 : 11}
+                                    fontSize={13}
                                     fontWeight={700}
                                     fill={isActive ? "#FFF" : "#E5E7EB"}
                                     style={{
@@ -233,33 +213,20 @@ export default function MetroOrgChart() {
                                     {node.label}
                                 </text>
 
-                                {/* Sublabel */}
-                                {node.sublabel && (
-                                    <>
-                                        <text
-                                            x={0}
-                                            y={node.isHub ? -10 : -7}
-                                            textAnchor="middle"
-                                            fontSize={8}
-                                            fill="#6B7280"
-                                            style={{ fontFamily: "'Space Mono', monospace", pointerEvents: "none" }}
-                                        >
-                                            {node.sublabel}
-                                        </text>
-                                        <defs>
-                                            <rect id="rect" x="-2%" y="-3.5%" width="40" height="40" rx="40" />
-                                            <clipPath id="clip">
-                                                <use xlinkHref="#rect" />
-                                            </clipPath>
-                                        </defs>
-
-                                        <image
-                                            x="-20" y="-20"
-                                            href="https://static.thenounproject.com/png/3901062-200.png"
-                                            height="40" width="40"
-                                            clipPath="url(#clip)"
+                                {/* Image */}
+                                {node.imageUrl ? (
+                                    <foreignObject x="-20" y="-16" height="56" width="56" className="sm:w-14 sm:h-14 sm:[x:-23px] [y:-19px] lg:w-16 lg:h-16 lg:[x:-32px] lg:[y:-25px]" pointerEvents="none">
+                                        <img
+                                            src={`${PATH_IMG}${node.imageUrl}`}
+                                            alt={node.label}
+                                            loading="lazy"
+                                            className="max-w-full h-full m-auto rounded-full object-cover"
                                         />
-                                    </>
+                                    </foreignObject>
+                                ) : (
+                                    <foreignObject x="-20" y="-16" height="40" width="40" pointerEvents="none">
+                                        <PPSvg className="w-9 h-9 text-white m-auto" />
+                                    </foreignObject>
                                 )}
                             </g>
                         );
@@ -268,7 +235,7 @@ export default function MetroOrgChart() {
             </div>
 
             {/* ── Info Panel ── */}
-            <div className="fixed bottom-0 left-0 right-0 px-8 pb-8" style={{ minHeight: 90 }}>
+            <div className={`${activeNode && activeLine ? "fixed" : ""} bottom-0 left-0 right-0 px-8 pb-8`} style={{ minHeight: 90 }}>
                 {activeNode && activeLine ? (
                     <div
                         className="slide-in rounded-2xl px-6 py-4 flex items-center gap-6"
@@ -306,7 +273,7 @@ export default function MetroOrgChart() {
                     </div>
                 ) : (
                     <p
-                        className="text-center text-sm flicker"
+                        className={`${hoveredLine ? "hidden" : "block"} text-center text-sm flicker`}
                         style={{ color: "#374151", fontFamily: "'Space Mono', monospace" }}
                     >
                         ↑ Cliquez sur une station pour explorer · Survolez une ligne pour la mettre en valeur

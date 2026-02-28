@@ -1,4 +1,5 @@
-import { MetroNode, MetroLine } from "./types";
+import { MetroNode, MetroLine, LineId, NodeId, NodeState, LineFlags } from "./types";
+import { LINES } from "./data";
 
 export function buildLinePath(nodeMap: Record<string, MetroNode>, line: MetroLine, svgW: number, svgH: number): string {
     const pts = line.nodes.map((id) => nodeMap[id]).filter(Boolean);
@@ -15,4 +16,42 @@ export function buildLinePath(nodeMap: Record<string, MetroNode>, line: MetroLin
         d += ` C ${mx} ${toY(prev.y)}, ${mx} ${toY(curr.y)}, ${toX(curr.x)} ${toY(curr.y)}`;
     }
     return d;
+}
+
+// additional helpers extracted from MetroOrgChart
+export const normalizeLines = (line: LineId | LineId[]): LineId[] =>
+    Array.isArray(line) ? line : [line];
+
+export function getNodeState(
+    node: MetroNode,
+    active: NodeId | null,
+    activeNode: MetroNode | null,
+    hoveredLine: LineId | null
+): NodeState {
+    const nodeLines = normalizeLines(node.line);
+    const activeNodeLines = activeNode ? normalizeLines(activeNode.line) : [];
+    const isActive = active === node.id;
+    const isDimmedByHover = !!hoveredLine && !nodeLines.includes(hoveredLine);
+    const isDimmedByActive = !!active && !nodeLines.some((l) => activeNodeLines.includes(l));
+    return {
+        nodeLines,
+        activeNodeLines,
+        lineColor: LINES[nodeLines[0]].color,
+        isActive,
+        isDimmedNode: isDimmedByHover || isDimmedByActive,
+    };
+}
+
+export function getLineFlags(
+    line: MetroLine,
+    hoveredLine: LineId | null,
+    activeNode: MetroNode | null
+): LineFlags {
+    const isHighlighted =
+        hoveredLine === line.id ||
+        (!!activeNode && normalizeLines(activeNode.line).includes(line.id));
+    const isDimmed =
+        (!!hoveredLine && hoveredLine !== line.id) ||
+        (!!activeNode && !normalizeLines(activeNode.line).includes(line.id));
+    return { isHighlighted, isDimmed };
 }
