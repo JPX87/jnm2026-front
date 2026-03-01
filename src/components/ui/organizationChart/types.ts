@@ -4,6 +4,7 @@ export type NodeId = string;
 export interface MetroNode {
     id: NodeId;
     label: string;
+    shortLabel: string;
     sublabel?: string;
     imageUrl?: string;
     x: number; // 0–100 grid unit
@@ -25,6 +26,8 @@ export interface NodeState {
     activeNodeLines: LineId[];
     lineColor: string;
     isActive: boolean;
+    isDimmedByHover: boolean;
+    isDimmedByActive: boolean;
     isDimmedNode: boolean;
 }
 

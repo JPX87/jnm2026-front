@@ -22,6 +22,10 @@ export function buildLinePath(nodeMap: Record<string, MetroNode>, line: MetroLin
 export const normalizeLines = (line: LineId | LineId[]): LineId[] =>
     Array.isArray(line) ? line : [line];
 
+export function getLineIdFromNode(node: MetroNode): LineId {
+    return Array.isArray(node.line) ? node.line[0] : node.line as LineId;
+}
+
 export function getNodeState(
     node: MetroNode,
     active: NodeId | null,
@@ -30,15 +34,20 @@ export function getNodeState(
 ): NodeState {
     const nodeLines = normalizeLines(node.line);
     const activeNodeLines = activeNode ? normalizeLines(activeNode.line) : [];
+    const lineColor = LINES[nodeLines[0]].color;
     const isActive = active === node.id;
     const isDimmedByHover = !!hoveredLine && !nodeLines.includes(hoveredLine);
     const isDimmedByActive = !!active && !nodeLines.some((l) => activeNodeLines.includes(l));
+    const isLineHighlighted = !!hoveredLine && nodeLines.includes(hoveredLine);
+
     return {
         nodeLines,
         activeNodeLines,
-        lineColor: LINES[nodeLines[0]].color,
+        lineColor,
         isActive,
-        isDimmedNode: isDimmedByHover || isDimmedByActive,
+        isDimmedByHover,
+        isDimmedByActive,
+        isDimmedNode: (isDimmedByHover || isDimmedByActive) && !isLineHighlighted,
     };
 }
 

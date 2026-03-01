@@ -1,0 +1,36 @@
+/* globals.css */
+.node-circle {
+    fill: color-mix(in srgb, var(--line-color) 30%, var(--background));
+
+
+    &.active {
+        fill: var(--line-color);
+    }
+}
+
+@media (min-width: 640px) {
+    .info-panel {
+        &:hover {
+            display: flex;
+
+            .profile {
+                width: 200px;
+                height: 200px;
+            }
+
+            .close {
+                font-size: 40px;
+            }
+        }
+
+    }
+
+    .node-circle,
+    .node-image {
+        scale: 1;
+
+        &:hover {
+            scale: 1.1;
+        }
+    }
+}
