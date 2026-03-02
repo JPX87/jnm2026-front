@@ -267,7 +267,7 @@ export default function MetroOrgChart() {
                             {activeNode?.label}
                         </p>
                         <p className="text-sm" style={{ color: "#9CA3AF", fontFamily: "'Space Mono', monospace" }}>
-                            {activeNode?.sublabel} · {activeLine?.name}
+                            {activeNode?.sublabel ?? "Membre"} · {activeLine?.name}
                         </p>
                     </div>
                     <div className="hidden sm:block ml-auto text-right text-[#374151] dark:text-[#9CA3AF]"
