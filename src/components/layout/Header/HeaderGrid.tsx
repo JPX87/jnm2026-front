@@ -6,6 +6,7 @@ import { ThemeSelector } from "@/components/ui/theme/ThemeSelector/ThemeSelector
 import { LogoSvg } from "@/components/ui/branding/logo/LogoSvg";
 
 const menuItems = [
+    { label: "PROGRAMME", href: "/programme" },
     { label: "ORGANIGRAMME", href: "/organigramme" },
     { label: "NOUS CONTACTER", href: "/#contact" },
     { label: "INSCRIPTION", href: "/inscription" },
