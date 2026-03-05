@@ -1,6 +1,11 @@
+import { Metadata } from 'next'
 import PageTemplate from "@/components/layout/PageTemplate/PageTemplate";
 import Section from "@/components/layout/Section/Section";
 import StatCard from "@/components/ui/StatCard/StatCard";
+
+export const metadata: Metadata = {
+    title: "KESAKO",
+}
 
 export default function KesakoPage() {
     return (
