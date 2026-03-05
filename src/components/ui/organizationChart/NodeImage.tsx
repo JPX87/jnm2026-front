@@ -10,6 +10,7 @@ interface ImageWithLoadingProps {
     imgSize: number;
     quality?: number;
     priority?: boolean;
+    fixedSize?: boolean;
 }
 
 function ImageWithLoading({
@@ -19,13 +20,14 @@ function ImageWithLoading({
     className,
     imgSize,
     quality = 85,
-    priority = false
+    priority = false,
+    fixedSize = false
 }: ImageWithLoadingProps) {
     const [isLoading, setIsLoading] = useState(true);
     const [hasError, setHasError] = useState(false);
 
     return (
-        <div className={`relative w-full h-full ${className || ""}`}>
+        <div className={`${fixedSize ? 'fixed' : 'relative'} w-full h-full ${className || ""}`}>
             {/* Loading skeleton */}
             {isLoading && (
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700 rounded-full animate-pulse" />
@@ -105,23 +107,26 @@ export function NodeImage({
         }
 
         return (
-            <foreignObject
-                x={-half}
-                y={-half}
-                width={imgSize}
-                height={imgSize}
-                pointerEvents="none"
-            >
-                <ImageWithLoading
-                    pathImg={pathImg}
-                    imageUrl={imageUrl}
-                    label={label}
-                    className={className}
-                    imgSize={imgSize}
-                    quality={quality}
-                    priority={priority}
-                />
-            </foreignObject>
+            <g transform={`translate(${-half},${-half})`}>
+                <foreignObject
+                    x={0}
+                    y={0}
+                    width={imgSize}
+                    height={imgSize}
+                    pointerEvents="none"
+                >
+                    <ImageWithLoading
+                        pathImg={pathImg}
+                        imageUrl={imageUrl}
+                        label={label}
+                        className={className}
+                        imgSize={imgSize}
+                        quality={quality}
+                        priority={priority}
+                        fixedSize
+                    />
+                </foreignObject>
+            </g>
         );
     }
 
