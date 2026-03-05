@@ -11,8 +11,7 @@ export function ArrowRight({ className = "" }: { className?: string }) {
 export default function FormLink({ href, label }: { href: string; label: string }) {
     return (
         <a href={href} target="_blank" rel="noopener noreferrer"
-            className="group flex items-center gap-3 bg-(--color-primary) text-(--color-secondary) dark:text-(--color-seconde-black) rounded-xl px-5 py-4 
-                       hover:scale-[1.02] hover:shadow-lg active:scale-[0.98] transition-all duration-200 cursor-pointer">
+            className="group flex items-center gap-3 bg-(--color-primary) text-(--color-secondary) dark:text-(--color-seconde-black) rounded-xl px-5 py-4 hover:scale-[1.02] hover:shadow-lg active:scale-[0.98] transition-all duration-200 cursor-pointer">
             <span className="text-xl">📝</span>
             <p className="text-base sm:text-lg font-bold uppercase flex-1">{label}</p>
             <ArrowRight className="w-7 h-7 group-hover:translate-x-1 transition-transform" />
