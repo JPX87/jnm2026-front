@@ -254,20 +254,20 @@
   }
 
   .circle {
-    width: 70px;
-    height: 70px;
-    font-size: 0.5rem;
+    width: 120px;
+    height: 120px;
+    font-size: 0.9rem;
     padding: 0.5rem;
   }
 
   .arrowConnector {
-    min-width: 30px;
-    max-width: 60px;
+    min-width: 45px;
+    max-width: 80px;
   }
 
   /* Reset absolute positioning for mobile wrapping */
   .middleZone {
-    min-width: 60px;
+    min-width: 80px;
     align-self: center;
   }
 
@@ -284,23 +284,31 @@
     top: auto;
     left: auto;
     transform: none;
-    font-size: 0.4rem;
-    max-width: 70px;
-    padding: 0.3rem 0.5rem;
+    font-size: 0.8rem;
+    max-width: 140px;
+    padding: 0.6rem 0.8rem;
     width: 100%;
-    margin-top: 0.4rem;
+    margin-top: 0.5rem;
   }
 
   .stepDate {
-    font-size: 0.5rem;
+    font-size: 0.95rem;
+    margin-bottom: 0.4rem;
   }
 
   .ctaLink {
-    font-size: 0.5rem;
+    font-size: 0.95rem;
+    margin-top: 0.4rem;
   }
 
   .limitNote {
-    font-size: 0.45rem;
+    font-size: 0.85rem;
+  }
+
+  .validationAlert {
+    font-size: 0.95rem;
+    padding: 0.8rem 1rem;
+    max-width: 320px;
   }
 }
 
