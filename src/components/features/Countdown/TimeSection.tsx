@@ -25,7 +25,7 @@ export default function TimeSection({ label, value, maxDigits = 2 }: TimeSection
     if (label === "SECONDES") {
       endValue = value === 0 ? 59 : value - 1;
     }
-    const duration = 1500; // 1.5 seconde d'animation
+    const duration = 1800; // 1.8 seconde d'animation
     const startTime = Date.now();
 
     const animate = () => {

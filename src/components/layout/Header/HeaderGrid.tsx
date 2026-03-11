@@ -20,7 +20,9 @@ export default function HeaderGrid() {
         <>
             <header className="fixed z-90 top-0 grid grid-cols-3 items-center w-full h-16 md:h-20 px-3 sm:px-6 bg-(--color-primary)">
                 {/* Logo */}
-                <Link href="/#top" className="justify-self-start">
+                <Link href="/#top"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="justify-self-start">
                     {/*
                 <img className='w-20 sm:w-24 md:w-32' src="LOGO_FINAL_SANS_FOND_SIMPLE_NOIR.png" alt='Logo' />
                 */}
@@ -65,14 +67,13 @@ export default function HeaderGrid() {
 
                         {/* Dropdown Menu */}
                         <div
-                            className={`fixed right-0 top-0 h-full w-full sm:w-96 bg-(--color-primary) shadow-2xl transition-transform duration-300 ease-in-out z-[9999] ${isMenuOpen
+                            className={`fixed right-0 top-0 h-[calc(100vh-4rem)] w-full sm:w-96 bg-(--color-primary) shadow-2xl transition-transform duration-300 ease-in-out z-[9999] ${isMenuOpen
                                 ? "translate-x-0"
                                 : "translate-x-full"
                                 }`}
                             style={{ top: '4rem' }}
                         >
-                            <nav className="flex flex-col h-full max-h-min justify-start pt-4 pb-8 px-6 z-50 overflow-y-auto">
-                                <ThemeSelector className="m-auto mt-4 mb-4" big />
+                            <nav className="flex flex-col h-full justify-start pt-4 pb-8 px-6 z-50 overflow-y-auto">
                                 {menuItems.map((item, index) => (
                                     <Link
                                         key={index}
@@ -99,6 +100,7 @@ export default function HeaderGrid() {
                                         </div>
                                     </Link>
                                 ))}
+                                <ThemeSelector className="mx-auto mt-auto mb-1" big />
                             </nav>
                         </div>
                     </div>
