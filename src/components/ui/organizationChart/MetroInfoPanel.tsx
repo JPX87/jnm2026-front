@@ -47,10 +47,10 @@ export function MetroInfoPanel({
                     />
                 </div>
                 <div>
-                    <p className="font-bold text-lg node-label" style={{ color: activeLine?.color }}>
+                    <p className="label font-bold text-lg node-label" style={{ color: activeLine?.color }}>
                         {activeNode?.label}
                     </p>
-                    <p className="text-sm" style={{ color: "#9CA3AF", fontFamily: "'Space Mono', monospace" }}>
+                    <p className="sublabel text-sm" style={{ color: "#9CA3AF", fontFamily: "'Space Mono', monospace" }}>
                         {activeNode?.sublabel ?? "Membre"} · {activeNodeLines.map((lineId) => LINES[lineId].name).join("/")}
                     </p>
                 </div>
