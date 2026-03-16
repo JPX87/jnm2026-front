@@ -24,7 +24,7 @@ export default function KesakoPage() {
                 </p>
 
                 <p className="text-lg md:text-xl lg:text-2xl leading-relaxed">
-                    Pour clôturer cette <strong>46ème édition des JNM</strong>, un gala est prévu sur un des plus beaux rooftop de notre ville !
+                    Pour clôturer cette <strong>42ème édition des JNM</strong>, un gala est prévu sur un des plus beaux rooftop de notre ville !
                 </p>
 
                 <p className="text-lg md:text-xl lg:text-2xl leading-relaxed font-semibold">
@@ -38,7 +38,7 @@ export default function KesakoPage() {
                     <StatCard value={1970} title="Création de la MIAGE" variant="tertiary" />
                     <StatCard value={21} title="MIAGE" subtitle="En France" variant="secondary" />
                     <StatCard value="+1200" title="Diplômés MIAGE par an" variant="tertiary" />
-                    <StatCard value={46} title="Journées Nationales Miagistes" variant="secondary" />
+                    <StatCard value={42} title="Journées Nationales Miagistes" variant="secondary" />
                     <StatCard value={4} title="Jours" variant="tertiary" />
                     <StatCard value="+300" title="Participants" variant="secondary" />
                 </div>
