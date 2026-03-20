@@ -10,7 +10,7 @@ export function MetroHeader({ hoveredLine, setHoveredLine }: MetroHeaderProps) {
     return (
         <header className="px-2 sm:px-8 pt-1 pb-4 flex flex-col lg:flex-row items-end justify-between">
             <p
-                className="text-sm tracking-[0.3em] m-auto uppercase mb-1 flicker"
+                className="text-sm sm:text-lg lg:text-xl tracking-[0.3em] m-auto uppercase mb-1 flicker"
                 style={{ color: "#6B7280", fontFamily: "'Space Mono', monospace" }}
             >
                 Plan du réseau

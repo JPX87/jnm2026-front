@@ -62,12 +62,12 @@ export default function MetroOrgChart() {
                 activeNodeLines={activeNodeLines}
                 setActive={setActive}
             />
-
             <p
                 className={`${hoveredLine || activeLine ? "opacity-0" : "opacity-100"} text-center text-sm flicker transition-opacity py-6`}
                 style={{ color: "#374151", fontFamily: "'Space Mono', monospace" } as React.CSSProperties}
             >
-                ↑ Cliquez sur une station pour explorer · Survolez une ligne pour la mettre en valeur
+                <span className="hidden sm:block">↑ Survoler une ligne pour plus d’information et cliquez sur une station pour plus d’informations.</span>
+                <span className="block sm:hidden">↑ Cliquez sur une station pour plus d’informations.</span>
             </p>
         </div>
     );
