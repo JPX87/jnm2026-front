@@ -42,25 +42,27 @@ export default function InscriptionContent() {
                 </h2>
 
                 <div className="flex flex-wrap sm:flex-nowrap items-start justify-center sm:justify-between gap-2 sm:gap-4 relative">
-                    
+
                     {/* Step 1 — Pré-inscription */}
                     <div className="flex flex-col items-center gap-[0.6rem] flex-none relative z-10">
-                        <span className="text-[0.95rem] sm:text-[clamp(0.65rem,1.8vw,0.85rem)] font-bold uppercase text-(--color-primary) dark:text-(--color-primary-light) tracking-[0.04em] text-center whitespace-nowrap mb-1.5 sm:mb-0">
+                        <span className="text-[0.95rem] sm:text-[clamp(0.55rem,1.4vw,1.3rem)]  font-bold uppercase text-(--color-primary) dark:text-(--color-primary-light) tracking-[0.04em] text-center whitespace-nowrap mb-1.5 sm:mb-0">
                             25 janvier au 15 mars
                         </span>
+                        <div className="p-3 border-[3px] rounded-[50%] border-(--color-primary)">
+                            <a
+                                href="https://www.helloasso.com/associations/journees-nationales-miage-2026/evenements/pre-inscriptions-jnm-2026"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-[120px] h-[120px] sm:w-[clamp(90px,18vw,150px)] sm:h-[clamp(90px,18vw,150px)] rounded-full flex items-center justify-center text-center p-2 sm:p-4 text-[1rem] sm:text-[clamp(0.55rem,1.5vw,1.1rem)] font-extrabold uppercase tracking-[0.04em] leading-[1.3] transition-all duration-200 hover:scale-105 bg-(--color-primary) text-(--color-secondary) shadow-[0_4px_20px_rgba(239,106,159,0.35)] dark:shadow-[0_4px_24px_rgba(239,106,159,0.25)] cursor-pointer no-underline"
+                            >
+                                Pré-inscription
+                            </a>
+                        </div>
                         <a
                             href="https://www.helloasso.com/associations/journees-nationales-miage-2026/evenements/pre-inscriptions-jnm-2026"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="w-[120px] h-[120px] sm:w-[clamp(90px,18vw,150px)] sm:h-[clamp(90px,18vw,150px)] rounded-full flex items-center justify-center text-center p-2 sm:p-4 text-[0.9rem] sm:text-[clamp(0.55rem,1.5vw,0.8rem)] font-extrabold uppercase tracking-[0.04em] leading-[1.3] transition-all duration-200 hover:scale-105 bg-(--color-primary) text-(--color-secondary) shadow-[0_4px_20px_rgba(239,106,159,0.35)] dark:shadow-[0_4px_24px_rgba(239,106,159,0.25)] cursor-pointer no-underline"
-                        >
-                            Pré-inscription
-                        </a>
-                        <a
-                            href="https://www.helloasso.com/associations/journees-nationales-miage-2026/evenements/pre-inscriptions-jnm-2026"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-[0.3rem] text-[0.95rem] sm:text-[clamp(0.6rem,1.6vw,0.8rem)] font-bold text-(--color-seconde-black) dark:text-(--color-secondary) uppercase tracking-[0.02em] transition-colors duration-200 mt-1.5 sm:mt-0 whitespace-nowrap hover:text-(--color-primary) dark:hover:text-(--color-primary-light)"
+                            className="inline-flex items-center gap-[0.3rem] text-[0.95rem] sm:text-[clamp(0.55rem,1.4vw,1rem)] font-bold text-(--color-seconde-black) dark:text-(--color-secondary) uppercase tracking-[0.02em] transition-colors duration-200 mt-1.5 sm:mt-0 whitespace-nowrap hover:text-(--color-primary) dark:hover:text-(--color-primary-light)"
                         >
                             → Me pré-inscrire
                         </a>
@@ -70,21 +72,21 @@ export default function InscriptionContent() {
 
                     {/* Step 2 — Inscription définitive */}
                     <div className="flex flex-col items-center gap-[0.6rem] flex-none relative z-10">
-                        <span className="text-[0.95rem] sm:text-[clamp(0.65rem,1.8vw,0.85rem)] font-bold uppercase text-(--color-primary) dark:text-(--color-primary-light) tracking-[0.04em] text-center whitespace-nowrap mb-1.5 sm:mb-0">
+                        <span className="text-[0.95rem] sm:text-[clamp(0.55rem,1.4vw,1.3rem)] font-bold uppercase text-(--color-primary) dark:text-(--color-primary-light) tracking-[0.04em] text-center whitespace-nowrap mb-1.5 sm:mb-0">
                             À partir du 30 mars
                         </span>
-                        <div className="w-[120px] h-[120px] sm:w-[clamp(90px,18vw,150px)] sm:h-[clamp(90px,18vw,150px)] rounded-full flex items-center justify-center text-center p-2 sm:p-4 text-[0.9rem] sm:text-[clamp(0.55rem,1.5vw,0.8rem)] font-extrabold uppercase tracking-[0.04em] leading-[1.3] transition-all duration-200 hover:scale-105 bg-transparent border-[3px] border-dashed border-(--color-primary) dark:border-(--color-primary-light) text-(--color-seconde-black) dark:text-(--color-secondary)">
+                        <div className="w-[150px] h-[150px] sm:w-[clamp(90px,18vw,170px)] sm:h-[clamp(90px,18vw,170px)] rounded-full flex items-center justify-center text-center p-2 sm:p-4 text-[1rem] sm:text-[clamp(0.55rem,1.5vw,1.1rem)] font-extrabold uppercase tracking-[0.04em] leading-[1.3] transition-all duration-200 hover:scale-105 bg-transparent border-[3px] border-dashed border-(--color-primary) dark:border-(--color-primary-light) text-(--color-seconde-black) dark:text-(--color-secondary)">
                             Inscription définitive
                         </div>
-                        <span className="text-[0.85rem] sm:text-[clamp(0.55rem,1.4vw,0.75rem)] font-bold uppercase text-center text-(--color-seconde-black) dark:text-(--color-secondary) tracking-[0.03em] leading-[1.3]">
+                        <span className="text-[0.85rem] sm:text-[clamp(0.55rem,1.4vw,1rem)] font-bold uppercase text-center text-(--color-seconde-black) dark:text-(--color-secondary) tracking-[0.03em] leading-[1.3]">
                             Max 10 étudiants
                             <br />par MIAGE
                         </span>
                     </div>
                 </div>
-                
+
                 {/* Alert box at the bottom middle */}
-                <div className="bg-(--color-gray-100) dark:bg-white/10 rounded-lg py-3 px-4 sm:py-1.5 sm:px-3 mt-2 sm:mt-8 mx-auto text-[0.95rem] sm:text-[clamp(0.5rem,1.2vw,0.65rem)] font-extrabold uppercase text-center text-(--color-seconde-black) dark:text-(--color-secondary) tracking-[0.03em] leading-[1.4] w-full max-w-[320px] sm:w-fit sm:max-w-[280px] shadow-[0_4px_15px_rgba(0,0,0,0.05)] flex justify-center items-center">
+                <div className="bg-(--color-seconde-black) dark:bg-(--color-gray-100) rounded-lg py-3 px-4 sm:py-1.5 sm:px-3 mt-2 mx-auto text-[1rem] sm:text-[clamp(0.55rem,1.5vw,1.1rem)] font-extrabold uppercase text-center text-(--color-secondary) dark:text-(--color-seconde-black) tracking-[0.03em] leading-[1.4] w-full max-w-[320px] sm:w-fit sm:max-w-[280px] shadow-[0_4px_15px_rgba(0,0,0,0.05)] flex justify-center items-center">
                     Validation des listes par vos directeurs de MIAGE
                 </div>
             </section>
@@ -98,22 +100,25 @@ export default function InscriptionContent() {
                 <div className="flex flex-wrap sm:flex-nowrap items-start justify-center sm:justify-between gap-2 sm:gap-4 relative">
                     {/* Step 1 — Inscription */}
                     <div className="flex flex-col items-center gap-[0.6rem] flex-none relative z-10">
-                        <span className="text-[0.95rem] sm:text-[clamp(0.65rem,1.8vw,0.85rem)] font-bold uppercase text-(--color-primary) dark:text-(--color-primary-light) tracking-[0.04em] text-center whitespace-nowrap mb-1.5 sm:mb-0">
+                        <span className="text-[0.95rem] sm:text-[clamp(0.55rem,1.4vw,1.3rem)]  font-bold uppercase text-(--color-primary) dark:text-(--color-primary-light) tracking-[0.04em] text-center whitespace-nowrap mb-1.5 sm:mb-0">
                             Du 2 mars au 17 avril
                         </span>
+                        <div className="p-3 border-[3px] rounded-[50%] border-(--color-primary)">
+
+                            <a
+                                href="https://www.helloasso.com/associations/journees-nationales-miage-2026/evenements/inscriptions-gala"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-[120px] h-[120px] sm:w-[clamp(90px,18vw,150px)] sm:h-[clamp(90px,18vw,150px)] rounded-full flex items-center justify-center text-center p-2 sm:p-4 text-[1rem] sm:text-[clamp(0.55rem,1.5vw,1.1rem)] font-extrabold uppercase tracking-[0.04em] leading-[1.3] transition-all duration-200 hover:scale-105 bg-(--color-primary) text-(--color-secondary) shadow-[0_4px_20px_rgba(239,106,159,0.35)] dark:shadow-[0_4px_24px_rgba(239,106,159,0.25)] cursor-pointer no-underline"
+                            >
+                                Inscription
+                            </a>
+                        </div>
                         <a
                             href="https://www.helloasso.com/associations/journees-nationales-miage-2026/evenements/inscriptions-gala"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="w-[120px] h-[120px] sm:w-[clamp(90px,18vw,150px)] sm:h-[clamp(90px,18vw,150px)] rounded-full flex items-center justify-center text-center p-2 sm:p-4 text-[0.9rem] sm:text-[clamp(0.55rem,1.5vw,0.8rem)] font-extrabold uppercase tracking-[0.04em] leading-[1.3] transition-all duration-200 hover:scale-105 bg-(--color-primary) text-(--color-secondary) shadow-[0_4px_20px_rgba(239,106,159,0.35)] dark:shadow-[0_4px_24px_rgba(239,106,159,0.25)] cursor-pointer no-underline"
-                        >
-                            Inscription
-                        </a>
-                        <a
-                            href="https://www.helloasso.com/associations/journees-nationales-miage-2026/evenements/inscriptions-gala"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-[0.3rem] text-[0.95rem] sm:text-[clamp(0.6rem,1.6vw,0.8rem)] font-bold text-(--color-seconde-black) dark:text-(--color-secondary) uppercase tracking-[0.02em] transition-colors duration-200 mt-1.5 sm:mt-0 whitespace-nowrap hover:text-(--color-primary) dark:hover:text-(--color-primary-light)"
+                            className="inline-flex items-center gap-[0.3rem] text-[0.95rem] sm:text-[clamp(0.55rem,1.4vw,1rem)] font-bold text-(--color-seconde-black) dark:text-(--color-secondary) uppercase tracking-[0.02em] transition-colors duration-200 mt-1.5 sm:mt-0 whitespace-nowrap hover:text-(--color-primary) dark:hover:text-(--color-primary-light)"
                         >
                             → M&apos;inscrire
                         </a>
@@ -124,10 +129,10 @@ export default function InscriptionContent() {
 
                     {/* Step 2 — RDV */}
                     <div className="flex flex-col items-center gap-[0.6rem] flex-none relative z-10">
-                        <span className="text-[0.95rem] sm:text-[clamp(0.65rem,1.8vw,0.85rem)] font-bold uppercase text-(--color-primary) dark:text-(--color-primary-light) tracking-[0.04em] text-center whitespace-nowrap mb-1.5 sm:mb-0">
+                        <span className="text-[0.95rem] sm:text-[clamp(0.55rem,1.4vw,1.3rem)] font-bold uppercase text-(--color-primary) dark:text-(--color-primary-light) tracking-[0.04em] text-center whitespace-nowrap mb-1.5 sm:mb-0">
                             RDV le 29 mai
                         </span>
-                        <div className="w-[120px] h-[120px] sm:w-[clamp(90px,18vw,150px)] sm:h-[clamp(90px,18vw,150px)] rounded-full flex items-center justify-center text-center p-2 sm:p-4 text-[0.9rem] sm:text-[clamp(0.55rem,1.5vw,0.8rem)] font-extrabold uppercase tracking-[0.04em] leading-[1.3] transition-all duration-200 hover:scale-105 bg-(--color-primary) text-(--color-primary) shadow-[0_4px_24px_rgba(239,106,159,0.4)] dark:shadow-[0_4px_28px_rgba(239,106,159,0.3)]" />
+                        <div className="w-[150px] h-[150px] sm:w-[clamp(90px,18vw,170px)] sm:h-[clamp(90px,18vw,170px)] rounded-full flex items-center justify-center text-center p-2 sm:p-4 text-[1rem] sm:text-[clamp(0.55rem,1.5vw,1.1rem)] font-extrabold uppercase tracking-[0.04em] leading-[1.3] transition-all duration-200 hover:scale-105 bg-(--color-primary) text-(--color-primary) shadow-[0_4px_24px_rgba(239,106,159,0.4)] dark:shadow-[0_4px_28px_rgba(239,106,159,0.3)]" />
                     </div>
                 </div>
             </section>
