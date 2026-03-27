@@ -86,7 +86,7 @@ export default function InscriptionContent() {
                 </div>
 
                 {/* Alert box at the bottom middle */}
-                <div className="bg-(--color-seconde-black) dark:bg-(--color-gray-100) rounded-lg py-3 px-4 sm:py-1.5 sm:px-3 mt-2 mx-auto text-[1rem] sm:text-[clamp(0.55rem,1.5vw,1.1rem)] font-extrabold uppercase text-center text-(--color-secondary) dark:text-(--color-seconde-black) tracking-[0.03em] leading-[1.4] w-full max-w-[320px] sm:w-fit sm:max-w-[280px] shadow-[0_4px_15px_rgba(0,0,0,0.05)] flex justify-center items-center">
+                <div className="bg-(--color-seconde-black) dark:bg-(--color-gray-100) rounded-lg py-3 px-4 sm:py-1.5 sm:px-3 mt-2 mx-auto text-[0.8rem] sm:text-[clamp(0.55rem,1.5vw,1.1rem)] font-extrabold uppercase text-center text-(--color-secondary) dark:text-(--color-seconde-black) tracking-[0.03em] leading-[1.4] w-full max-w-[200px] sm:w-fit sm:max-w-[280px] shadow-[0_4px_15px_rgba(0,0,0,0.05)] flex justify-center items-center">
                     Validation des listes par vos directeurs de MIAGE
                 </div>
             </section>
