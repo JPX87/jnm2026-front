@@ -46,7 +46,7 @@ export default function InscriptionContent() {
                     {/* Step 1 — Pré-inscription */}
                     <div className="flex flex-col items-center gap-[0.6rem] flex-none relative z-10">
                         <span className="absolute text-[0.95rem] sm:text-[clamp(0.55rem,1.4vw,1.3rem)]  font-bold uppercase text-(--color-primary) dark:text-(--color-primary-light) tracking-[0.04em] text-center whitespace-nowrap mb-1.5 sm:mb-0">
-                            Jusqu'au 13 avril
+                            Jusqu&apos;au 13 avril
                         </span>
                         <div className="mt-9 p-3 border-[3px] rounded-[50%] border-(--color-primary)">
                             <a
