@@ -46,7 +46,7 @@ export default function InscriptionContent() {
                     {/* Step 1 — Pré-inscription */}
                     <div className="flex flex-col items-center gap-[0.6rem] flex-none relative z-10">
                         <span className="absolute text-[0.95rem] sm:text-[clamp(0.55rem,1.4vw,1.3rem)]  font-bold uppercase text-(--color-primary) dark:text-(--color-primary-light) tracking-[0.04em] text-center whitespace-nowrap mb-1.5 sm:mb-0">
-                            25 janvier au 15 mars
+                            Jusqu'au 13 avril
                         </span>
                         <div className="mt-9 p-3 border-[3px] rounded-[50%] border-(--color-primary)">
                             <a
@@ -72,9 +72,6 @@ export default function InscriptionContent() {
 
                     {/* Step 2 — Inscription définitive */}
                     <div className="flex flex-col items-center gap-[0.6rem] flex-none relative z-10">
-                        <span className="absolute text-[0.95rem] sm:text-[clamp(0.55rem,1.4vw,1.3rem)] font-bold uppercase text-(--color-primary) dark:text-(--color-primary-light) tracking-[0.04em] text-center whitespace-nowrap mb-1.5 sm:mb-0">
-                            À partir du 30 mars
-                        </span>
                         <div className="mt-9 w-[130px] h-[130px] sm:w-[clamp(90px,18vw,170px)] sm:h-[clamp(90px,18vw,170px)] rounded-full flex items-center justify-center text-center p-2 sm:p-4 text-[1rem] sm:text-[clamp(0.55rem,1.5vw,1.1rem)] font-extrabold uppercase tracking-[0.04em] leading-[1.3] transition-all duration-200 hover:scale-105 bg-transparent border-[3px] border-dashed border-(--color-primary) dark:border-(--color-primary-light) text-(--color-seconde-black) dark:text-(--color-secondary)">
                             Inscription définitive
                         </div>
@@ -86,7 +83,7 @@ export default function InscriptionContent() {
                 </div>
 
                 {/* Alert box at the bottom middle */}
-                <div className="bg-(--color-seconde-black) dark:bg-(--color-gray-100) rounded-lg py-3 px-4 sm:py-1.5 sm:px-3 mt-2 mx-auto text-[0.8rem] sm:text-[clamp(0.55rem,1.5vw,1.1rem)] font-extrabold uppercase text-center text-(--color-secondary) dark:text-(--color-seconde-black) tracking-[0.03em] leading-[1.4] w-full max-w-[200px] sm:w-fit sm:max-w-[280px] shadow-[0_4px_15px_rgba(0,0,0,0.05)] flex justify-center items-center">
+                <div className="bg-(--color-seconde-black) dark:bg-(--color-secondary) rounded-lg py-3 px-4 sm:py-1.5 sm:px-3 mt-2 mx-auto text-[0.8rem] sm:text-[clamp(0.55rem,1.5vw,1.1rem)] font-extrabold uppercase text-center text-(--color-secondary) dark:text-(--color-seconde-black) tracking-[0.03em] leading-[1.4] w-full max-w-[200px] sm:w-fit sm:max-w-[280px] shadow-[0_4px_15px_rgba(0,0,0,0.05)] flex justify-center items-center">
                     Validation des listes par vos directeurs de MIAGE
                 </div>
             </section>
@@ -101,7 +98,7 @@ export default function InscriptionContent() {
                     {/* Step 1 — Inscription */}
                     <div className="flex flex-col items-center gap-[0.6rem] flex-none relative z-10">
                         <span className="absolute text-[0.95rem] sm:text-[clamp(0.55rem,1.4vw,1.3rem)]  font-bold uppercase text-(--color-primary) dark:text-(--color-primary-light) tracking-[0.04em] text-center whitespace-nowrap mb-1.5 sm:mb-0">
-                            Du 2 mars au 17 avril
+                            Du 2 mars au 13 avril
                         </span>
                         <div className="mt-9 p-3 border-[3px] rounded-[50%] border-(--color-primary)">
 
@@ -137,7 +134,7 @@ export default function InscriptionContent() {
                                 width="271.000000pt" height="282.000000pt" viewBox="0 0 271.000000 282.000000"
                                 preserveAspectRatio="xMidYMid meet" className="w-[70%] h-auto">
                                 <g transform="translate(0.000000,282.000000) scale(0.050000,-0.050000)" >
-                                    <path fill="#FFF"
+                                    <path className="fill-(--color-secondary)"
                                         d={`M3286 5118 c-274 -79 -696 -907 -814 -1599 -10 -57 -35 -87 -135
                                             -159 -125 -92 -315 -287 -373 -385 -23 -39 -53 -58 -103 -65 -346 -48 -782
                                             -202 -1073 -377 -568 -344 -629 -457 -427 -790 462 -761 1331 -1442 1614
@@ -168,7 +165,7 @@ export default function InscriptionContent() {
                     </div>
                 </div>
                 {/* Alert box at the bottom middle */}
-                <div className="bg-(--color-seconde-black) dark:bg-(--color-gray-100) rounded-lg py-3 px-4 sm:py-1.5 sm:px-3 mt-2 mx-auto text-[0.8rem] sm:text-[clamp(0.55rem,1.5vw,1.1rem)] font-extrabold uppercase text-center text-(--color-secondary) dark:text-(--color-seconde-black) tracking-[0.03em] leading-[1.4] w-full max-w-[200px] sm:w-fit sm:max-w-[280px] shadow-[0_4px_15px_rgba(0,0,0,0.05)] flex justify-center items-center">
+                <div className="bg-(--color-seconde-black) dark:bg-(--color-secondary) rounded-lg py-3 px-4 sm:py-1.5 sm:px-3 mt-2 mx-auto text-[0.8rem] sm:text-[clamp(0.55rem,1.5vw,1.1rem)] font-extrabold uppercase text-center text-(--color-secondary) dark:text-(--color-seconde-black) tracking-[0.03em] leading-[1.4] w-full max-w-[200px] sm:w-fit sm:max-w-[280px] shadow-[0_4px_15px_rgba(0,0,0,0.05)] flex justify-center items-center">
                     Validation des listes par vos directeurs de MIAGE
                 </div>
             </section>
