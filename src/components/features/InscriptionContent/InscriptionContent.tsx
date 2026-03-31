@@ -5,7 +5,7 @@ import React from "react";
 /* ── Dashed waving arrow SVG (horizontal, desktop only) ── */
 function DashedArrow({ id = "arrowhead", large = false }: { id?: string; large?: boolean }) {
     return (
-        <div className={`hidden sm:flex flex-1 self-start items-center mt-[4.5rem] min-w-[40px] ${large ? "" : "max-w-[90px]"}`}>
+        <div className={`hidden sm:flex self-start items-center mt-[4.5rem] ${large ? "w-[260px]" : "flex-1 min-w-[40px] max-w-[90px]"}`}>
             <svg viewBox="0 0 200 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto overflow-visible">
                 <defs>
                     <marker id={id} markerWidth="6" markerHeight="6"
@@ -185,7 +185,7 @@ export default function InscriptionContent() {
                     Pack Gala
                 </h2>
 
-                <div className="flex flex-col sm:flex-row items-center sm:items-start justify-center sm:justify-between gap-0 sm:gap-2">
+                <div className="flex flex-col sm:flex-row items-center sm:items-start justify-center gap-0 sm:gap-6">
                     <Step
                         title="Inscription"
                         description="Inscris-toi directement via HelloAsso pour réserver ta place au Gala."
