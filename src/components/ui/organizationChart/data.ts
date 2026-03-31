@@ -53,7 +53,7 @@ export const LINES: Record<LineId, MetroLine> = {
 
 export const NODES: MetroNode[] = [
     { id: "AC", label: "Andrew C.", shortLabel: "Andrew", sublabel: "Secrétaire Général", x: 10, y: 20, line: "A", imageUrl: "AC.png" },
-    { id: "JT", label: "Justine T.", shortLabel: "Justine", sublabel: "Vice-Présidente/Référente Partenariats", x: 25, y: 20, line: "A", imageUrl: "JT.png" },
+    { id: "JT", label: "Justine T.", shortLabel: "Justine", sublabel: "Vice-Présidente/Logistique et Gala", x: 25, y: 20, line: "A", imageUrl: "JT.png" },
     { id: "NG", label: "Nathan G.", shortLabel: "Nathan", sublabel: "Trésorier", x: 35, y: 10, line: ["A", "D"], isHub: true, imageUrl: "NG.png" },
     { id: "PL", label: "Paul L.", shortLabel: "Paul", sublabel: "Président", x: 50, y: 10, line: ["A", "D"], isHub: true, imageUrl: "PL.png" },
     { id: "JP", label: "Jérémy P.", shortLabel: "Jérémy", sublabel: "Référent adjoint COM", x: 5, y: 60, line: "B", imageUrl: "JP.png" },
