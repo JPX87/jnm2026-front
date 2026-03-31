@@ -1,9 +1,11 @@
 "use client";
 
-/* ── Dashed waving arrow SVG ── */
-function DashedArrow({ id = "arrowhead-gala" }: { id?: string }) {
+import React from "react";
+
+/* ── Dashed waving arrow SVG (horizontal, desktop only) ── */
+function DashedArrow({ id = "arrowhead", large = false }: { id?: string; large?: boolean }) {
     return (
-        <div className="flex-1 w-full self-center flex items-center min-w-[45px] max-w-[80px] sm:min-w-[150px] sm:max-w-none relative">
+        <div className={`hidden sm:flex self-start items-center mt-[4.5rem] ${large ? "w-[260px]" : "flex-1 min-w-[40px] max-w-[90px]"}`}>
             <svg viewBox="0 0 200 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto overflow-visible">
                 <defs>
                     <marker id={id} markerWidth="6" markerHeight="6"
@@ -11,7 +13,6 @@ function DashedArrow({ id = "arrowhead-gala" }: { id?: string }) {
                         <path d="M0 0 L6 3 L0 6 Z" fill="var(--color-primary)" />
                     </marker>
                 </defs>
-                {/* Waving curve perfectly centered at Y=40 for alignment */}
                 <path
                     d="M 5 40 C 40 10, 60 10, 100 40 C 140 70, 160 70, 195 40"
                     stroke="var(--color-primary)"
@@ -22,6 +23,109 @@ function DashedArrow({ id = "arrowhead-gala" }: { id?: string }) {
                     markerEnd={`url(#${id})`}
                 />
             </svg>
+        </div>
+    );
+}
+
+/* ── Vertical dashed connector (mobile only) ── */
+function VerticalConnector() {
+    return (
+        <div className="flex sm:hidden justify-center py-1">
+            <svg viewBox="0 0 20 54" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-10 w-auto">
+                {/* Dashed line */}
+                <line
+                    x1="10" y1="2" x2="10" y2="44"
+                    stroke="var(--color-primary)"
+                    strokeWidth="2"
+                    strokeDasharray="6 5"
+                    strokeLinecap="round"
+                />
+                {/* Arrowhead drawn inline */}
+                <path
+                    d="M 5 44 L 10 52 L 15 44"
+                    stroke="var(--color-primary)"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    fill="none"
+                />
+            </svg>
+        </div>
+    );
+}
+
+/* ── Step circle component ── */
+interface StepProps {
+    number?: string;
+    title: string;
+    description?: string;
+    variant: "filled" | "dashed" | "outlined";
+    date?: string;
+    href?: string;
+    ctaLabel?: string;
+    icon?: React.ReactNode;
+    ring?: boolean;
+}
+
+function Step({ number, title, description, variant, date, href, ctaLabel, icon, ring }: StepProps) {
+    const circleSize = "w-[110px] h-[110px] sm:w-[clamp(100px,15vw,140px)] sm:h-[clamp(100px,15vw,140px)]";
+    const circleBase = `${circleSize} rounded-full flex flex-col items-center justify-center transition-all duration-200`;
+
+    const circleStyle = {
+        filled: `bg-(--color-primary) text-(--color-secondary) shadow-[0_4px_20px_rgba(239,106,159,0.35)] dark:shadow-[0_4px_24px_rgba(239,106,159,0.25)] ${href ? "hover:scale-105 cursor-pointer" : ""}`,
+        dashed: "bg-transparent border-[3px] border-dashed border-(--color-primary) dark:border-(--color-primary-light) text-(--color-seconde-black) dark:text-(--color-secondary)",
+        outlined: `bg-transparent border-[3px] border-(--color-primary) dark:border-(--color-primary-light) text-(--color-seconde-black) dark:text-(--color-secondary) ${href ? "hover:scale-105 cursor-pointer" : ""}`,
+    }[variant];
+
+    const circleEl = (
+        <div className={`${circleBase} ${circleStyle}`}>
+            {icon ?? (
+                <span className="text-[2rem] sm:text-[clamp(1.6rem,3vw,2.2rem)] font-black leading-none">
+                    {number}
+                </span>
+            )}
+        </div>
+    );
+
+    const circle = ring
+        ? <div className="p-[10px] border-[3px] rounded-full border-(--color-primary)">{circleEl}</div>
+        : circleEl;
+
+    return (
+        <div className="flex flex-col items-center gap-2 flex-none w-[160px] sm:w-[clamp(140px,18vw,190px)] text-center">
+            {/* Date badge */}
+            <span className={`text-[0.8rem] sm:text-[clamp(0.6rem,1.2vw,0.85rem)] font-bold uppercase tracking-[0.04em] text-(--color-primary) dark:text-(--color-primary-light) ${date ? "visible" : "invisible"}`}>
+                {date ?? "placeholder"}
+            </span>
+
+            {/* Circle */}
+            {href ? (
+                <a href={href} target="_blank" rel="noopener noreferrer" className="no-underline">
+                    {circle}
+                </a>
+            ) : circle}
+
+            {/* Title */}
+            <h3 className="text-[0.9rem] sm:text-[clamp(0.7rem,1.5vw,1rem)] font-extrabold uppercase tracking-[0.05em] text-(--color-seconde-black) dark:text-(--color-secondary) leading-tight mt-1">
+                {title}
+            </h3>
+
+            {/* Description */}
+            <p className="text-[0.78rem] sm:text-[clamp(0.62rem,1.2vw,0.82rem)] font-normal text-(--color-seconde-black) dark:text-(--color-secondary) opacity-65 leading-[1.55]">
+                {description}
+            </p>
+
+            {/* CTA */}
+            {href && ctaLabel && (
+                <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-[0.8rem] sm:text-[clamp(0.62rem,1.2vw,0.85rem)] font-bold uppercase tracking-[0.02em] text-(--color-seconde-black) dark:text-(--color-secondary) transition-colors duration-200 hover:text-(--color-primary) dark:hover:text-(--color-primary-light) mt-1"
+                >
+                    → {ctaLabel}
+                </a>
+            )}
         </div>
     );
 }
@@ -41,50 +145,37 @@ export default function InscriptionContent() {
                     Pack JNM
                 </h2>
 
-                <div className="flex flex-wrap sm:flex-nowrap items-start justify-center sm:justify-between gap-2 sm:gap-4 relative">
+                <div className="flex flex-col sm:flex-row items-center sm:items-start justify-center sm:justify-between gap-0 sm:gap-2">
 
-                    {/* Step 1 — Pré-inscription */}
-                    <div className="flex flex-col items-center gap-[0.6rem] flex-none relative z-10">
-                        <span className="absolute text-[0.95rem] sm:text-[clamp(0.55rem,1.4vw,1.3rem)]  font-bold uppercase text-(--color-primary) dark:text-(--color-primary-light) tracking-[0.04em] text-center whitespace-nowrap mb-1.5 sm:mb-0">
-                            Jusqu&apos;au 13 avril
-                        </span>
-                        <div className="mt-9 p-3 border-[3px] rounded-[50%] border-(--color-primary)">
-                            <a
-                                href="https://www.helloasso.com/associations/journees-nationales-miage-2026/evenements/pre-inscriptions-jnm-2026"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="w-[100px] h-[100px] sm:w-[clamp(90px,18vw,150px)] sm:h-[clamp(90px,18vw,150px)] rounded-full flex items-center justify-center text-center p-2 sm:p-4 text-[1rem] sm:text-[clamp(0.55rem,1.5vw,1.1rem)] font-extrabold uppercase tracking-[0.04em] leading-[1.3] transition-all duration-200 hover:scale-105 bg-(--color-primary) text-(--color-secondary) shadow-[0_4px_20px_rgba(239,106,159,0.35)] dark:shadow-[0_4px_24px_rgba(239,106,159,0.25)] cursor-pointer no-underline"
-                            >
-                                Pré-inscription
-                            </a>
-                        </div>
-                        <a
-                            href="https://www.helloasso.com/associations/journees-nationales-miage-2026/evenements/pre-inscriptions-jnm-2026"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-[0.3rem] text-[0.95rem] sm:text-[clamp(0.55rem,1.4vw,1rem)] font-bold text-(--color-seconde-black) dark:text-(--color-secondary) uppercase tracking-[0.02em] transition-colors duration-200 mt-1.5 sm:mt-0 whitespace-nowrap hover:text-(--color-primary) dark:hover:text-(--color-primary-light)"
-                        >
-                            → Me pré-inscrire
-                        </a>
-                    </div>
+                    <Step
+                        number="01"
+                        title="Pré-inscription"
+                        description="Les pré-inscriptions sont toujours ouvertes ! Aucun paiement requis à cette étape."
+                        variant="outlined"
+                        href="https://www.helloasso.com/associations/journees-nationales-miage-2026/evenements/pre-inscriptions-jnm-2026"
+                        ctaLabel="Me pré-inscrire"
+                    />
 
-                    <DashedArrow />
+                    <VerticalConnector />
+                    <DashedArrow id="arrow-jnm-1" />
 
-                    {/* Step 2 — Inscription définitive */}
-                    <div className="flex flex-col items-center gap-[0.6rem] flex-none relative z-10">
-                        <div className="mt-9 w-[130px] h-[130px] sm:w-[clamp(90px,18vw,170px)] sm:h-[clamp(90px,18vw,170px)] rounded-full flex items-center justify-center text-center p-2 sm:p-4 text-[1rem] sm:text-[clamp(0.55rem,1.5vw,1.1rem)] font-extrabold uppercase tracking-[0.04em] leading-[1.3] transition-all duration-200 hover:scale-105 bg-transparent border-[3px] border-dashed border-(--color-primary) dark:border-(--color-primary-light) text-(--color-seconde-black) dark:text-(--color-secondary)">
-                            Inscription définitive
-                        </div>
-                        <span className="text-[0.85rem] sm:text-[clamp(0.55rem,1.4vw,1rem)] font-bold uppercase text-center text-(--color-seconde-black) dark:text-(--color-secondary) tracking-[0.03em] leading-[1.3]">
-                            Max 10 étudiants
-                            <br />par MIAGE
-                        </span>
-                    </div>
-                </div>
+                    <Step
+                        number="02"
+                        title="Validation de la place"
+                        description="Si tu tardes à recevoir le mail de confirmation, c'est peut-être que ton directeur de MIAGE n'a pas encore validé ta place, pense à le relancer !"
+                        variant="dashed"
+                    />
 
-                {/* Alert box at the bottom middle */}
-                <div className="bg-(--color-seconde-black) dark:bg-(--color-secondary) rounded-lg py-3 px-4 sm:py-1.5 sm:px-3 mt-2 mx-auto text-[0.8rem] sm:text-[clamp(0.55rem,1.5vw,1.1rem)] font-extrabold uppercase text-center text-(--color-secondary) dark:text-(--color-seconde-black) tracking-[0.03em] leading-[1.4] w-full max-w-[200px] sm:w-fit sm:max-w-[280px] shadow-[0_4px_15px_rgba(0,0,0,0.05)] flex justify-center items-center">
-                    Validation des listes par vos directeurs de MIAGE
+                    <VerticalConnector />
+                    <DashedArrow id="arrow-jnm-2" />
+
+                    <Step
+                        number="03"
+                        title="Inscription définitive"
+                        description="Tu recevras un mail avec toutes les informations ainsi que le lien de paiement (si tu es concerné) pour finaliser ton inscription."
+                        variant="filled"
+                        date="Jusqu'au 13 avril"
+                    />
                 </div>
             </section>
 
@@ -94,46 +185,28 @@ export default function InscriptionContent() {
                     Pack Gala
                 </h2>
 
-                <div className="flex flex-wrap sm:flex-nowrap items-start justify-center sm:justify-between gap-2 sm:gap-4 relative">
-                    {/* Step 1 — Inscription */}
-                    <div className="flex flex-col items-center gap-[0.6rem] flex-none relative z-10">
-                        <span className="absolute text-[0.95rem] sm:text-[clamp(0.55rem,1.4vw,1.3rem)]  font-bold uppercase text-(--color-primary) dark:text-(--color-primary-light) tracking-[0.04em] text-center whitespace-nowrap mb-1.5 sm:mb-0">
-                            Du 2 mars au 13 avril
-                        </span>
-                        <div className="mt-9 p-3 border-[3px] rounded-[50%] border-(--color-primary)">
+                <div className="flex flex-col sm:flex-row items-center sm:items-start justify-center gap-0 sm:gap-6">
+                    <Step
+                        title="Inscription"
+                        description="Inscris-toi directement via HelloAsso pour réserver ta place au Gala."
+                        variant="filled"
+                        date="Du 2 mars au 13 avril"
+                        href="https://www.helloasso.com/associations/journees-nationales-miage-2026/evenements/inscriptions-gala"
+                        ctaLabel="M'inscrire"
+                        ring
+                    />
 
-                            <a
-                                href="https://www.helloasso.com/associations/journees-nationales-miage-2026/evenements/inscriptions-gala"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="w-[100px] h-[100px] sm:w-[clamp(90px,18vw,150px)] sm:h-[clamp(90px,18vw,150px)] rounded-full flex items-center justify-center text-center p-2 sm:p-4 text-[1rem] sm:text-[clamp(0.55rem,1.5vw,1.1rem)] font-extrabold uppercase tracking-[0.04em] leading-[1.3] transition-all duration-200 hover:scale-105 bg-(--color-primary) text-(--color-secondary) shadow-[0_4px_20px_rgba(239,106,159,0.35)] dark:shadow-[0_4px_24px_rgba(239,106,159,0.25)] cursor-pointer no-underline"
-                            >
-                                Inscription
-                            </a>
-                        </div>
-                        <a
-                            href="https://www.helloasso.com/associations/journees-nationales-miage-2026/evenements/inscriptions-gala"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-[0.3rem] text-[0.95rem] sm:text-[clamp(0.55rem,1.4vw,1rem)] font-bold text-(--color-seconde-black) dark:text-(--color-secondary) uppercase tracking-[0.02em] transition-colors duration-200 mt-1.5 sm:mt-0 whitespace-nowrap hover:text-(--color-primary) dark:hover:text-(--color-primary-light)"
-                        >
-                            → M&apos;inscrire
-                        </a>
-                    </div>
+                    <VerticalConnector />
+                    <DashedArrow id="arrow-gala" large />
 
-                    {/* Arrow */}
-                    <DashedArrow />
-
-                    {/* Step 2 — RDV */}
-                    <div className="flex flex-col items-center gap-[0.6rem] flex-none relative z-10">
-                        <span className="absolute text-[0.95rem] sm:text-[clamp(0.55rem,1.4vw,1.3rem)] font-bold uppercase text-(--color-primary) dark:text-(--color-primary-light) tracking-[0.04em] text-center whitespace-nowrap mb-1.5 sm:mb-0">
-                            RDV le 29 mai
-                        </span>
-                        <div className="mt-9 w-[130px] h-[130px] sm:w-[clamp(90px,18vw,170px)] sm:h-[clamp(90px,18vw,170px)] rounded-full flex items-center justify-center text-center p-2 sm:p-4 text-[1rem] sm:text-[clamp(0.55rem,1.5vw,1.1rem)] font-extrabold uppercase tracking-[0.04em] leading-[1.3] transition-all duration-200 hover:scale-105 bg-(--color-primary) text-(--color-primary) shadow-[0_4px_24px_rgba(239,106,159,0.4)] dark:shadow-[0_4px_28px_rgba(239,106,159,0.3)]">
+                    <Step
+                        title="RDV le 29 mai"
+                        variant="filled"
+                        icon={
                             <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                                width="271.000000pt" height="282.000000pt" viewBox="0 0 271.000000 282.000000"
-                                preserveAspectRatio="xMidYMid meet" className="w-[70%] h-auto">
-                                <g transform="translate(0.000000,282.000000) scale(0.050000,-0.050000)" >
+                                viewBox="0 0 271 282"
+                                preserveAspectRatio="xMidYMid meet" className="w-[65%] h-auto">
+                                <g transform="translate(0,282) scale(0.05,-0.05)">
                                     <path className="fill-(--color-secondary)"
                                         d={`M3286 5118 c-274 -79 -696 -907 -814 -1599 -10 -57 -35 -87 -135
                                             -159 -125 -92 -315 -287 -373 -385 -23 -39 -53 -58 -103 -65 -346 -48 -782
@@ -160,13 +233,8 @@ export default function InscriptionContent() {
                                             14 100 -14z`} />
                                 </g>
                             </svg>
-
-                        </div>
-                    </div>
-                </div>
-                {/* Alert box at the bottom middle */}
-                <div className="bg-(--color-seconde-black) dark:bg-(--color-secondary) rounded-lg py-3 px-4 sm:py-1.5 sm:px-3 mt-2 mx-auto text-[0.8rem] sm:text-[clamp(0.55rem,1.5vw,1.1rem)] font-extrabold uppercase text-center text-(--color-secondary) dark:text-(--color-seconde-black) tracking-[0.03em] leading-[1.4] w-full max-w-[200px] sm:w-fit sm:max-w-[280px] shadow-[0_4px_15px_rgba(0,0,0,0.05)] flex justify-center items-center">
-                    Validation des listes par vos directeurs de MIAGE
+                        }
+                    />
                 </div>
             </section>
         </div>
