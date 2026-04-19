@@ -9,6 +9,7 @@ const menuItems = [
     { label: "INSCRIPTION", href: "/inscription" },
     { label: "KESAKO", href: "/kesako" },
     { label: "PROGRAMME", href: "/programme" },
+    { label: "LES CONCOURS", href: "/concours" },
     { label: "ORGANIGRAMME", href: "/organigramme" },
     { label: "NOUS CONTACTER", href: "/#contact" },
 ];
@@ -73,35 +74,39 @@ export default function HeaderGrid() {
                                 }`}
                             style={{ top: '4rem' }}
                         >
-                            <nav className="flex flex-col h-full justify-start pt-4 pb-8 px-6 z-50 overflow-y-auto">
-                                {menuItems.map((item, index) => (
-                                    <Link
-                                        key={index}
-                                        href={item.href}
-                                        onClick={() => setIsMenuOpen(false)}
-                                        className="flex items-center justify-between mx-2 my-2 px-6 py-6 text-(--color-secondary) dark:text-(--color-secondary) hover:bg-(--color-seconde-black) dark:hover:bg-(--color-seconde-black) hover:bg-opacity-10 transition-colors duration-200 font-bold text-2xl rounded-3xl group border-b border-(--color-secondary) border-opacity-20"
-                                    >
-                                        <span>{item.label}</span>
-                                        <div className="flex items-center justify-center w-10 h-10 bg-white dark:bg-black rounded-full transition-transform duration-300 group-hover:scale-110">
-                                            <svg
-                                                className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-0.5 text-(--color-primary)"
-                                                viewBox="0 0 24 24"
-                                                fill="currentColor"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path
-                                                    d="M5 12H19M19 12L12 5M19 12L12 19"
-                                                    stroke="currentColor"
-                                                    strokeWidth="2"
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                />
-                                            </svg>
-                                        </div>
-                                    </Link>
-                                ))}
-                                <ThemeSelector className="mx-auto mt-auto mb-1" big />
-                            </nav>
+                            <div
+                                className={`h-[calc(100dvh-4rem)] transition-height duration-300 ease-in-out`}
+                            >
+                                <nav className="flex flex-col h-full justify-start pt-4 pb-2 px-6 z-50 overflow-y-auto">
+                                    {menuItems.map((item, index) => (
+                                        <Link
+                                            key={index}
+                                            href={item.href}
+                                            onClick={() => setIsMenuOpen(false)}
+                                            className="flex items-center justify-between mx-2 my-1 px-6 py-5 text-(--color-secondary) dark:text-(--color-secondary) hover:bg-(--color-seconde-black) dark:hover:bg-(--color-seconde-black) hover:bg-opacity-10 transition-colors duration-200 font-bold text-2xl rounded-3xl group border-b border-(--color-secondary) border-opacity-20"
+                                        >
+                                            <span>{item.label}</span>
+                                            <div className="flex items-center justify-center w-10 h-10 bg-white dark:bg-black rounded-full transition-transform duration-300 group-hover:scale-110">
+                                                <svg
+                                                    className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-0.5 text-(--color-primary)"
+                                                    viewBox="0 0 24 24"
+                                                    fill="currentColor"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <path
+                                                        d="M5 12H19M19 12L12 5M19 12L12 19"
+                                                        stroke="currentColor"
+                                                        strokeWidth="2"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                    />
+                                                </svg>
+                                            </div>
+                                        </Link>
+                                    ))}
+                                    <ThemeSelector className="mx-auto mt-auto mb-1" big />
+                                </nav>
+                            </div>
                         </div>
                     </div>
                 </div>

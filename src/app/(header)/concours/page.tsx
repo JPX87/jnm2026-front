@@ -1,8 +1,11 @@
 'use client';
 import PageTemplate from "@/components/layout/PageTemplate/PageTemplate";
 import Section from "@/components/layout/Section/Section";
+import { Arrow } from "@/components/ui/Arrow/Arrow";
 import DirectiveCard from "@/components/ui/DirectiveCard/DirectiveCard";
 import { PeopleAndCam } from "@/components/ui/PeopleAndCam/PeopleAndCam";
+import { RugbyBall } from "@/components/ui/RugbyBall/RugbyBall";
+import { RugbyPitch } from "@/components/ui/RugbyPitch/RugbyPitch";
 
 const Corner = ({ position }: { position: 'tl' | 'tr' | 'bl' | 'br' }) => {
     const posClass = {
@@ -64,7 +67,7 @@ export default function ConcourPage() {
     ];
 
     return (
-        <PageTemplate className="!bg-(--color-secondary) dark:!bg-(--color-seconde-black) transition-all" titleClassName="!text-(--color-primary)">
+        <PageTemplate className="!bg-(--color-secondary) dark:!bg-(--color-seconde-black) transition-all duration-300" titleClassName="!text-(--color-primary)">
             <section>
                 <h1 className="text-4xl sm:text-xl md:text-5xl xl:text-6xl sm:text-left font-black text-(--color-tertiary) dark:text-white tracking-wider text-center mx-8 transition-all duration-300">
                     CONCOURS VIDÉO
@@ -100,11 +103,48 @@ export default function ConcourPage() {
 
                     {/* Deadline */}
                     <div className="absolute bottom-8 left-0 right-0 text-center text-(--color-primary)">
-                        <p className="text-lg md:text-xl font-bold">Lien de la vidéo à transmettre avant le</p>
-                        <p className="text-xl md:text-2xl font-black tracking-wide">24/05/2026 23h59m59s</p>
+                        <p className="text-lg md:text-xl lg:text-2xl font-bold">Lien de la vidéo à transmettre avant le</p>
+                        <p className="text-xl md:text-2xl lg:text-3xl font-black tracking-wide">24/05/2026 23h59m59s</p>
                     </div>
                 </Section>
             </section>
+
+            <section>
+                <h1 className="text-4xl sm:text-xl md:text-5xl xl:text-6xl sm:text-left font-black text-(--color-tertiary) dark:text-white tracking-wider text-center mx-8 transition-all duration-300">
+                    CONCOURS BALLON DE RUGBY
+                </h1>
+                <Section variant="neutral" maxWidth="full" contentClassName="!relative !w-full gap-4">
+                    <div className="relative flex flex-col h-[70vh] items-center gap-4 border-4 border-(--color-seconde-black) dark:border-white">
+                        <div className="relative w-full h-2/18 border-b-4 border-(--color-seconde-black) dark:border-white">
+                            <RugbyPitch className="absolute -bottom-[20px] w-full h-25 fill-(--color-seconde-black) dark:fill-white transition-all duration-300" />
+                        </div>
+                        <div className="w-full h-5/18 border-b-4 border-(--color-seconde-black) dark:border-white" />
+                        <div className="w-full h-4/18 border-b-4 border-(--color-seconde-black) dark:border-white">
+                            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-auto h-1/2">
+                                <RugbyBall className="w-full h-full fill-(--color-seconde-black) dark:fill-white transition-all duration-300" />
+
+                                <Arrow className="absolute bottom-15 xs:bottom-6 sm:-bottom-1 md:-bottom-3 lg:-bottom-2 -left-10 w-25 h-25 sm:w-30 sm:h-30 md:w-40 md:h-40 fill-(--color-seconde-black) dark:fill-white" />
+                                <p className="absolute -bottom-1 xs:-bottom-3 sm:-bottom-6 md:-bottom-7 -left-20 sm:-left-30 text-lg md:text-xl lg:text-2xl w-2/3 xl:w-2/3 text-(--color-primary) text-center">
+                                    Inclure le nom de la ville de ta MIAGE
+                                </p>
+
+                                <Arrow className="absolute top-12 xs:top-2 sm:-top-4 md:-top-9 -right-10 w-25 h-25 sm:w-30 sm:h-30 md:w-40 md:h-40 rotate-160 xs:rotate-180 fill-(--color-primary)" />
+                                <p className="absolute -top-1 xs:-top-5 sm:-top-12 -right-20 xs:-right-30 sm:-right-40 text-lg md:text-xl lg:text-2xl w-full sm:w-4/5 text-(--color-primary) text-center">
+                                    Personnaliser le ballon pour représenter votre ville
+                                </p>
+                            </div>
+                        </div>
+                        <div className="relative w-full h-5/18 border-b-4 border-(--color-seconde-black) dark:border-white">
+                            <RugbyPitch className="absolute -bottom-[20px] w-full h-25 fill-(--color-seconde-black) dark:fill-white transition-all duration-300" />
+                        </div>
+                        <div className="w-full h-2/18" />
+                    </div>
+                    <p className="text-2xl md:text-3xl font-bold text-center text-(--color-primary)">
+                        Le ballon devra obligatoirement être présenté en physique
+                    </p>
+                </Section>
+            </section>
+
         </PageTemplate>
     );
 }
