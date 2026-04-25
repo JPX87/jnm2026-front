@@ -90,7 +90,7 @@ export default function ConcourPage() {
                         </div>
 
                         {/* Row 2 - 2 cards */}
-                        <div className="flex gap-4 justify-center">
+                        <div className="flex gap-4 justify-center mx-4 xs:mx-10 sm:mx-20 lg:mx-40 xl:mx-60">
                             {directives2.map(text => <DirectiveCard key={text} content={text} />)}
                         </div>
 
@@ -129,7 +129,7 @@ export default function ConcourPage() {
                                 </p>
 
                                 <Arrow className="absolute top-12 xs:top-2 sm:-top-4 md:-top-9 -right-10 w-25 h-25 sm:w-30 sm:h-30 md:w-40 md:h-40 rotate-160 xs:rotate-180 fill-(--color-primary)" />
-                                <p className="absolute -top-1 xs:-top-5 sm:-top-12 -right-20 xs:-right-30 sm:-right-40 text-lg md:text-xl lg:text-2xl w-full sm:w-4/5 text-(--color-primary) text-center">
+                                <p className="absolute -top-1 xs:-top-5 sm:-top-12 -right-20 xs:-right-30 sm:-right-40 text-lg md:text-xl lg:text-2xl w-10/9 sm:w-4/5 text-(--color-primary) text-center">
                                     Personnaliser le ballon pour représenter votre ville
                                 </p>
                             </div>
