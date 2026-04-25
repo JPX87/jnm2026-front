@@ -24,9 +24,6 @@ export default function HeaderGrid() {
                 <Link href="/#top"
                     onClick={() => setIsMenuOpen(false)}
                     className="justify-self-start">
-                    {/*
-                <img className='w-20 sm:w-24 md:w-32' src="LOGO_FINAL_SANS_FOND_SIMPLE_NOIR.png" alt='Logo' />
-                */}
                     <LogoSvg className="h-16 md:h-20 w-20 sm:w-24 md:w-32 fill-(--color-secondary) dark:fill-(--color-seconde-black)" />
                 </Link>
 
