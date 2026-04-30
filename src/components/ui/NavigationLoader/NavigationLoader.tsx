@@ -48,6 +48,7 @@ export default function NavigationLoader() {
             prevPathname.current = pathname;
 
             // Only transition to complete if we were loading
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setState((current) => {
                 if (current === "loading") {
                     return "complete";

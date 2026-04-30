@@ -9,21 +9,10 @@ interface CountdownProps {
   className?: string;
 }
 
-const defaultTime = {
-  months: 0,
-  days: 0,
-  hours: 0,
-  minutes: 0,
-  seconds: 0,
-  isFinished: false,
-};
-
 export default function Countdown({ targetDate, className }: CountdownProps) {
-  const [timeRemaining, setTimeRemaining] = useState<ReturnType<typeof calculateTimeRemaining> | null>(defaultTime);
+  const [timeRemaining, setTimeRemaining] = useState<ReturnType<typeof calculateTimeRemaining> | null>(() => calculateTimeRemaining(targetDate));
 
   useEffect(() => {
-    setTimeRemaining(calculateTimeRemaining(targetDate));
-
     const interval = setInterval(() => {
       setTimeRemaining(calculateTimeRemaining(targetDate));
     }, 1000);

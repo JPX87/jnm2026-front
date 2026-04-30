@@ -13,14 +13,14 @@ export default function MentionsLegalesPage() {
             <Section variant="tertiary" maxWidth="md" contentClassName="gap-4">
                 <h2 className="text-2xl md:text-3xl font-bold">Éditeur du site</h2>
                 <p className="text-base md:text-lg leading-relaxed">
-                    Le site <strong>jnm2026.fr</strong> est édité par :
+                    Le site <strong>jnm2026.miage.fr</strong> est édité par :
                 </p>
                 <ul className="list-disc list-inside text-base md:text-lg leading-relaxed space-y-1">
                     <li><strong>Nom : </strong>JOURNÉES NATIONALES MIAGE 2026</li>
                     <li><strong>Statut : </strong>Association loi 1901</li>
-                    <li><strong>Siège social : </strong> 118 route de Narbonne Bureau 112 Bâtiment U3 31400 Toulouse (a remplacer)</li>
+                    <li><strong>Siège social : </strong> 180 Avenue de Muret, 31300 Toulouse</li>
                     <li><strong>Email : </strong><a href="mailto:jnm26@miage.fr">jnm26@miage.fr</a></li>
-                    <li><strong>Directeur de publication : </strong>Jérémy PATAPY & Mathis Pilon</li>
+                    <li><strong>Directeur de publication : </strong>Jérémy PATAPY & Mathis PILON</li>
                 </ul>
             </Section>
 

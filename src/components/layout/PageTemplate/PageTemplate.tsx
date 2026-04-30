@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 interface PageTemplateProps {
-    title: string;
+    title?: string;
     children: ReactNode;
     className?: string;
     titleClassName?: string;
@@ -34,11 +34,13 @@ export default function PageTemplate({
         <main className={`relative ${getBackgroundClass()} min-h-screen ${className}`}>
             <div className="flex flex-col gap-8 md:gap-12 py-8 md:py-12 pt-24 md:pt-32">
                 {/* Hero Section - Title */}
-                <div className="w-full">
+                {title && (<div className="w-full">
+
                     <h1 className={`text-center text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold my-[20px] md:my-[30px] ${titleClassName}`}>
                         {title}
                     </h1>
                 </div>
+                )}
 
                 {/* Content Section */}
                 {children}

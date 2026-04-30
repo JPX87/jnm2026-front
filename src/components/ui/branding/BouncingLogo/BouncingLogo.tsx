@@ -17,23 +17,33 @@ const COLORS = [
 export function BouncingLogo() {
   const containerRef = useRef<HTMLDivElement>(null)
   const logoRef = useRef<HTMLDivElement>(null)
-  
+
   // États pour la position et la couleur
   const [position, setPosition] = useState({ x: 0, y: 0 })
   const [colorIndex, setColorIndex] = useState(0)
-  
+
   // Références mutables pour la physique (évite les re-renders inutiles)
   const physics = useRef({
-    x: Math.random() * 100, // Position initiale aléatoire
-    y: Math.random() * 100,
+    x: 0,
+    y: 0,
     dx: 2, // Vitesse horizontale (pixels par frame)
     dy: 2, // Vitesse verticale
   })
+  const physicsInitialized = useRef(false)
 
   useEffect(() => {
     const container = containerRef.current
     const logo = logoRef.current
     if (!container || !logo) return
+
+    // Initialize random position only once (impure call safe inside effect)
+    if (!physicsInitialized.current) {
+      const containerRect = container.getBoundingClientRect()
+      const logoRect = logo.getBoundingClientRect()
+      physics.current.x = Math.random() * (containerRect.width - logoRect.width)
+      physics.current.y = Math.random() * (containerRect.height - logoRect.height)
+      physicsInitialized.current = true
+    }
 
     let animationFrameId: number
 
@@ -41,10 +51,10 @@ export function BouncingLogo() {
       // 1. Récupérer les dimensions
       const containerRect = container.getBoundingClientRect()
       const logoRect = logo.getBoundingClientRect()
-      
+
       const maxWidth = containerRect.width - logoRect.width
       const maxHeight = containerRect.height - logoRect.height
-      
+
       let { x, y, dx, dy } = physics.current
       let hasBounced = false
 
@@ -58,7 +68,7 @@ export function BouncingLogo() {
         x = maxWidth
         dx = -dx
         hasBounced = true
-      } 
+      }
       // Rebond à gauche
       else if (x <= 0) {
         x = 0
@@ -71,7 +81,7 @@ export function BouncingLogo() {
         y = maxHeight
         dy = -dy
         hasBounced = true
-      } 
+      }
       // Rebond en haut
       else if (y <= 0) {
         y = 0
@@ -101,8 +111,8 @@ export function BouncingLogo() {
 
   return (
     // Conteneur qui prend toute la place disponible
-    <div 
-      ref={containerRef} 
+    <div
+      ref={containerRef}
       className="absolute top-15 sm:top-18 inset-0 overflow-hidden pointer-events-none z-0"
       aria-hidden="true" // Cacher aux lecteurs d'écran car c'est décoratif
     >

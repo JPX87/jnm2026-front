@@ -4,13 +4,22 @@
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 @theme {
+  /* Breakpoint "2xs" (extra small) */
+  --breakpoint-2xs: 24rem;
+  /* ~384px */
+
   /* Breakpoint "xs" (extra small) */
   --breakpoint-xs: 30rem;
   /* ~480px */
 
-  /* Breakpoint "2xs" (extra small) */
-  --breakpoint-2xs: 24rem;
-  /* ~384px */
+  /* Breakpoint "2xl" (extra large) */
+  --breakpoint-2xl: 100rem;
+
+  /* Breakpoint "3xl" (extra large) */
+  --breakpoint-3xl: 130rem;
+
+  /* Breakpoint "4xl" (extra large) */
+  --breakpoint-4xl: 160rem;
 }
 
 /*=============================

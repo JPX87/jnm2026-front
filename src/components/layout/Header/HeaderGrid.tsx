@@ -6,10 +6,12 @@ import { ThemeSelector } from "@/components/ui/theme/ThemeSelector/ThemeSelector
 import { LogoSvg } from "@/components/ui/branding/logo/LogoSvg";
 
 const menuItems = [
-    { label: "ORGANIGRAMME", href: "/organigramme" },
-    { label: "NOUS CONTACTER", href: "/#contact" },
     { label: "INSCRIPTION", href: "/inscription" },
     { label: "KESAKO", href: "/kesako" },
+    { label: "PROGRAMME", href: "/programme" },
+    { label: "LES CONCOURS", href: "/concours" },
+    { label: "ORGANIGRAMME", href: "/organigramme" },
+    { label: "NOUS CONTACTER", href: "/#contact" },
 ];
 
 export default function HeaderGrid() {
@@ -19,10 +21,9 @@ export default function HeaderGrid() {
         <>
             <header className="fixed z-90 top-0 grid grid-cols-3 items-center w-full h-16 md:h-20 px-3 sm:px-6 bg-(--color-primary)">
                 {/* Logo */}
-                <Link href="/#top" className="justify-self-start">
-                    {/*
-                <img className='w-20 sm:w-24 md:w-32' src="LOGO_FINAL_SANS_FOND_SIMPLE_NOIR.png" alt='Logo' />
-                */}
+                <Link href="/#top"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="justify-self-start">
                     <LogoSvg className="h-16 md:h-20 w-20 sm:w-24 md:w-32 fill-(--color-secondary) dark:fill-(--color-seconde-black)" />
                 </Link>
 
@@ -64,41 +65,45 @@ export default function HeaderGrid() {
 
                         {/* Dropdown Menu */}
                         <div
-                            className={`fixed right-0 top-0 h-full w-full sm:w-96 bg-(--color-primary) shadow-2xl transition-transform duration-300 ease-in-out z-[9999] ${isMenuOpen
+                            className={`fixed right-0 top-0 h-[calc(100vh-4rem)] w-full sm:w-96 bg-(--color-primary) shadow-2xl transition-transform duration-300 ease-in-out z-[9999] ${isMenuOpen
                                 ? "translate-x-0"
                                 : "translate-x-full"
                                 }`}
                             style={{ top: '4rem' }}
                         >
-                            <nav className="flex flex-col h-full max-h-min justify-start pt-4 pb-8 px-6 z-50 overflow-y-auto">
-                                <ThemeSelector className="m-auto mt-4 mb-4" big />
-                                {menuItems.map((item, index) => (
-                                    <Link
-                                        key={index}
-                                        href={item.href}
-                                        onClick={() => setIsMenuOpen(false)}
-                                        className="flex items-center justify-between mx-2 my-2 px-6 py-6 text-(--color-secondary) dark:text-(--color-secondary) hover:bg-(--color-seconde-black) dark:hover:bg-(--color-seconde-black) hover:bg-opacity-10 transition-colors duration-200 font-bold text-2xl rounded-3xl group border-b border-(--color-secondary) border-opacity-20"
-                                    >
-                                        <span>{item.label}</span>
-                                        <div className="flex items-center justify-center w-10 h-10 bg-white dark:bg-black rounded-full transition-transform duration-300 group-hover:scale-110">
-                                            <svg
-                                                className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-0.5 text-(--color-primary)"
-                                                viewBox="0 0 24 24"
-                                                fill="currentColor"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path
-                                                    d="M5 12H19M19 12L12 5M19 12L12 19"
-                                                    stroke="currentColor"
-                                                    strokeWidth="2"
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                />
-                                            </svg>
-                                        </div>
-                                    </Link>
-                                ))}
-                            </nav>
+                            <div
+                                className={`h-[calc(100dvh-4rem)] transition-height duration-300 ease-in-out`}
+                            >
+                                <nav className="flex flex-col h-full justify-start pt-4 pb-2 px-6 z-50 overflow-y-auto">
+                                    {menuItems.map((item, index) => (
+                                        <Link
+                                            key={index}
+                                            href={item.href}
+                                            onClick={() => setIsMenuOpen(false)}
+                                            className="flex items-center justify-between mx-2 my-1 px-6 py-5 text-(--color-secondary) dark:text-(--color-secondary) hover:bg-(--color-seconde-black) dark:hover:bg-(--color-seconde-black) hover:bg-opacity-10 transition-colors duration-200 font-bold text-2xl rounded-3xl group border-b border-(--color-secondary) border-opacity-20"
+                                        >
+                                            <span>{item.label}</span>
+                                            <div className="flex items-center justify-center w-10 h-10 bg-white dark:bg-black rounded-full transition-transform duration-300 group-hover:scale-110">
+                                                <svg
+                                                    className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-0.5 text-(--color-primary)"
+                                                    viewBox="0 0 24 24"
+                                                    fill="currentColor"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <path
+                                                        d="M5 12H19M19 12L12 5M19 12L12 19"
+                                                        stroke="currentColor"
+                                                        strokeWidth="2"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                    />
+                                                </svg>
+                                            </div>
+                                        </Link>
+                                    ))}
+                                    <ThemeSelector className="mx-auto mt-auto mb-1" big />
+                                </nav>
+                            </div>
                         </div>
                     </div>
                 </div>
