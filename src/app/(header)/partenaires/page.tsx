@@ -21,9 +21,9 @@ const majorPartnerData: PartnerData = {
     back: {
         title: "Plus qu’un emploi, choisissez une carrière.",
         classNameDescription: "tracking-[0.079em]",
-        description: `Aujourd'hui, nous sommes une équipe mondiale, leader du conseil et des services numériques,
+        description: `Aujourd&aposhui, nous sommes une équipe mondiale, leader du conseil et des services numériques,
      qui possèdent une connaissance fine des différents secteurs d’activité et une expertise technologique 
-     qui nous permettent d'anticiper les changements du marché, de fournir des conseils pertinents et des 
+     qui nous permettent d&aposanticiper les changements du marché, de fournir des conseils pertinents et des 
      services complets, pour accompagner nos clients dans leur transformation à travers quatre métiers : 
      le conseil, l’intégration de systèmes, les business solutions et les services managés. 
      Perfectionnez vos compétences. Partagez vos perspectives. Libérez votre potentiel.`
@@ -44,7 +44,7 @@ export default function PartenairesPage() {
                     Leader :
                 </h2>
                 <p className="text-lg md:text-xl lg:text-2xl leading-relaxed">
-                    Un rendez-vous annuel qui rassemble l'ensemble du réseau international MIAGE.
+                    Un rendez-vous annuel qui rassemble l&aposensemble du réseau international MIAGE.
                 </p>
             </Section>
             <Section variant="none" maxWidth="md" contentClassName="gap-4 border-r-4 border-b-4 border-(--color-primary) p-4 w-fit">
@@ -52,7 +52,7 @@ export default function PartenairesPage() {
                     Acteur :
                 </h2>
                 <p className="text-lg md:text-xl lg:text-2xl leading-relaxed">
-                    Un rendez-vous annuel qui rassemble l'ensemble du réseau international MIAGE.
+                    Un rendez-vous annuel qui rassemble l&aposensemble du réseau international MIAGE.
                 </p>
             </Section>
             <Section variant="none" maxWidth="md" contentClassName="gap-4 border-l-4 border-b-4 border-(--color-primary) p-4 w-fit">
@@ -60,7 +60,7 @@ export default function PartenairesPage() {
                     Associé :
                 </h2>
                 <p className="text-lg md:text-xl lg:text-2xl leading-relaxed">
-                    Un rendez-vous annuel qui rassemble l'ensemble du réseau international MIAGE.
+                    Un rendez-vous annuel qui rassemble l&aposensemble du réseau international MIAGE.
                 </p>
             </Section>
         </PageTemplate>
