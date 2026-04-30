@@ -3,8 +3,8 @@ import { Card } from "../Card";
 import { CardLogo } from "./CardLogo";
 import { ToulouseLogo } from "./ToulouseLogo";
 import { SvgSource } from "@/components/ui/branding/logo/SvgSource";
-import { LogoSvg } from "@/components/ui/branding/logo/LogoSvg";
-import { title } from "process";
+import { PartnerData, PartnerInfo } from "../types";
+import { formatDateToFrench, renderCardEnd } from "../helpers";
 
 const top = (
     <div className="pt-1 px-3 flex items-center gap-2">
@@ -24,23 +24,23 @@ const info = (title: string, data: string) => (
     </div>
 )
 
-const middle = (
+const middle = (logo: React.ReactNode, infos: PartnerInfo) => (
     <>
         <div className="w-9/20 h-full relative">
-            <LogoSvg fill="#d75d91" className="absolute inset-0 w-26 h-18 m-auto bg-white dark:bg-(--color-seconde-black) px-1 rounded-lg" />
+            {logo}
         </div>
         <div className="w-11/20 h-full relative">
             <div className="flex flex-end">
                 <div className="w-2/5">
-                    {info("Type", "Asso")}
-                    {info("Nom", "JNM 2026")}
-                    {info("Nationalité", "Française")}
-                    {info("Date de délivrance", "26 Mai 2026")}
+                    {info("Type", infos.type)}
+                    {info("Nom", infos.name)}
+                    {info("Nationalité", infos.nationality)}
+                    {info("Date de délivrance", formatDateToFrench(infos.issueDate))}
                 </div>
                 <div className="w-3/5">
-                    {info("Domicile", "Toulouse")}
-                    {info("Date de naissance", "26 Mai 2026")}
-                    {info("Date d’expiration", "29 Mai 2026")}
+                    {info("Domicile", infos.address)}
+                    {info("Date de naissance", formatDateToFrench(infos.birthDate))}
+                    {info("Date d'expiration", formatDateToFrench(infos.expirationDate))}
                 </div>
             </div>
             <span className="absolute top-1/2 right-3 -rotate-90 translate-x-[50%] -translate-y-1/2 text-[#ff89b8]"
@@ -49,13 +49,6 @@ const middle = (
             </span>
         </div>
     </>
-)
-
-const end = (
-    <h1 className="text-[9px] tracking-[0.15em] p-1 text-white dark:text-(--color-seconde-black)">{`
-        PARTENAIRE<<JNM<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< `}< br />{`
-        2605202629052026JNM2026TOULOUSE<<<<<<<<<<<<<<<<<<<<<<<<<01
-    `}</h1>
 )
 
 const getSvgBackground = (color: string): string => {
@@ -69,14 +62,15 @@ const getSvgBackground = (color: string): string => {
     return `url("data:image/svg+xml;utf8,${encodeURIComponent(render)}")`;
 };
 
-export function FrontCard() {
+export function FrontCard(pros: { data: PartnerData }) {
+    const { data } = pros;
     return (
         <Card
             top={top}
-            middle={middle}
+            middle={middle(data.mainLogo, data.infos)}
             middleClassName="flex bg-repeat bg-[length:50px_27px] bg-top-left pb-1"
             middleStyle={{ backgroundImage: getSvgBackground("#fdc9d8") }}
-            end={end}
+            end={renderCardEnd({ number: data.number, issueDate: data.infos.issueDate, expirationDate: data.infos.expirationDate })}
             endClassName="bg-[#ef6a9f]"
         />
     )
