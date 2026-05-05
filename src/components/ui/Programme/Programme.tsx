@@ -32,23 +32,10 @@ const programme: DaySchedule[] = [
         day: "Mardi 26/05",
         events: [
             {
-                title: "Logistique Arrivées",
-                content: "Récupération & Dépôt Hôtel\nRéception et orientation",
-                startTime: "9h",
-                duration: 3,
-            },
-            {
-                title: "PAUSE",
-                startTime: "12h",
-                duration: 2,
-                borderDisable: true,
-            },
-            {
-                title: "Accueil & Ouverture",
-                location: "Amphi CONCORDE, Bât. U4",
-                content: "14h: Étiquetage bagages & jeux d'attente\n15h: Ouverture JNM26 & Discours\n16h - 18h: Activité « Ice Breaker »",
-                startTime: "14h",
-                duration: 4,
+                title: "Arrivée des participants → Université de Toulouse",
+                content: "",
+                startTime: "5h",
+                duration: 9,
             },
             {
                 title: "PAUSE",
@@ -57,9 +44,16 @@ const programme: DaySchedule[] = [
                 borderDisable: true,
             },
             {
+                title: "Accueil et Ouverture des JNM 2026",
+                location: "Bât. U4 ou U5",
+               // content: "14h: Étiquetage bagages & jeux d'attente\n15h: Ouverture JNM26 & Discours\n16h - 18h: Activité « Ice Breaker »",
+                startTime: "14h",
+                duration: 4,
+            },
+            {
                 title: "Soirée d'Accueil",
                 location: "Esplanade ou l'Upsidom",
-                content: "Détails à définir",
+               // content: "Détails à définir",
                 startTime: "20h",
                 duration: 3,
             },
@@ -71,20 +65,21 @@ const programme: DaySchedule[] = [
             {
                 title: "Rencontres ALUMNI & Forum",
                 location: "Amphi GRIGNARD & Salles 2A",
-                content: "09h - 10h30: Tables rondes Alumni (Perspectives métiers, carrières, VIE, consulting, influence)\n11h - 12h30: Forum des entreprises (Rencontres MIAGE/Alumni)",
+               // content: "09h - 10h30: Tables rondes Alumni (Perspectives métiers, carrières, VIE, consulting, influence)\n11h - 12h30: Forum des entreprises (Rencontres MIAGE/Alumni)",
                 startTime: "9h",
                 duration: 3.5,
             },
             {
                 title: "PAUSE",
-                content: "Buffet avec entreprises\nLieu: Bât. 2A (pergola + pelouse)",
+                location: "Bât. 2A",
+              //  content: "Buffet avec les partenaires",
                 startTime: "12h30",
                 duration: 1.5,
                 borderDisable: true,
             },
             {
                 title: "Ateliers & Challenges",
-                content: "14h - 15h30: Green IT (IA & empreinte carbone / IA conscientisée)\n16h - 18h: E-Sport (Étudiants vs Entreprises avec CGI & EXTIA)",
+             //   content: "14h - 15h30: Green IT (IA & empreinte carbone / IA conscientisée)\n16h - 18h: E-Sport (Étudiants vs Entreprises avec CGI & EXTIA)",
                 startTime: "14h",
                 duration: 4,
             },
@@ -95,7 +90,7 @@ const programme: DaySchedule[] = [
                 borderDisable: true,
             },
             {
-                title: "Bowling",
+                title: "Soirée",
                 startTime: "20h",
                 duration: 3,
             },
@@ -105,15 +100,22 @@ const programme: DaySchedule[] = [
         day: "Jeudi 28/05",
         events: [
             {
+                title: "Petit déjeuner",
+                location: "Bât. 2A",
+                startTime: "9h",
+                duration: 3,
+            },
+            {
                 title: "Team building",
                 location: "Centre-ville",
-                content: "Découverte de Toulouse / Jeux de piste\n\nAG CDM en parallèle.",
+              //  content: "Découverte de Toulouse / Jeux de piste\n\nAG CDM en parallèle.",
                 startTime: "9h",
                 duration: 3,
             },
             {
                 title: "PAUSE",
-                content: "Déjeuner sur l'herbe (Prairie des filtres)\nou Pique-nique (Jardin des Plantes)",
+                content: "Pique-nique",
+                location: "Prairie des filtres ou Jardin des plantes",
                 startTime: "12h",
                 duration: 3,
                 borderDisable: true,
@@ -121,7 +123,7 @@ const programme: DaySchedule[] = [
             {
                 title: "Conférences & Ateliers",
                 location: "Amphi CONCORDE / GRIGNARD",
-                content: "15h - 16h30: Conférence Table Ronde (Aéronautique / Cyberdéfense)\n16h45 - 18h: Atelier Pitch en ascenseur (Pecha Kucha)",
+              //  content: "15h - 16h30: Conférence Table Ronde (Aéronautique / Cyberdéfense)\n16h45 - 18h: Atelier Pitch en ascenseur (Pecha Kucha)",
                 startTime: "15h",
                 duration: 3,
             },
@@ -134,7 +136,7 @@ const programme: DaySchedule[] = [
             {
                 title: "Soirée conviviale",
                 location: "« Central » de la fac",
-                content: "Quizz MIAGE & JNM (Kahoot)",
+             //   content: "Quizz MIAGE & JNM (Kahoot)",
                 startTime: "20h",
                 duration: 3,
             },
@@ -146,7 +148,7 @@ const programme: DaySchedule[] = [
             {
                 title: "Concours MIAGE",
                 location: "Amphi Médecine (Allées Jules Guesde)",
-                content: "Présentation des vidéos / ballon de rugby Concours MIAGE",
+             //   content: "Présentation des vidéos / ballon de rugby Concours MIAGE",
                 startTime: "9h",
                 duration: 3,
             },
@@ -158,20 +160,20 @@ const programme: DaySchedule[] = [
             },
             {
                 title: "Clôture",
-                content: "Résultats « Concours MIAGE »\nClôture de l'événement",
+               // content: "Résultats « Concours MIAGE »\nClôture de l'événement",
                 startTime: "14h",
-                duration: 2,
+                duration: 1,
             },
             {
                 title: "PAUSE",
-                startTime: "16h",
-                duration: 4,
+                startTime: "15h",
+                duration: 5,
                 borderDisable: true,
             },
             {
                 title: "GALA",
                 startTime: "20h",
-                duration: 3,
+                duration: 4,
             },
         ],
     },
@@ -208,9 +210,11 @@ interface EventCardProps {
     isPositioned?: boolean; // Si true, utilise le positionnement absolu (desktop)
     minTime?: number;
     maxTime?: number;
+    column?: number;
+    totalColumns?: number;
 }
 
-function EventCard({ event, isPositioned = false, minTime = 0, maxTime = 1440 }: EventCardProps) {
+function EventCard({ event, isPositioned = false, minTime = 0, maxTime = 1440, column = 0, totalColumns = 1 }: EventCardProps) {
     let topPercent = 0;
     let heightPercent = 100;
 
@@ -223,36 +227,48 @@ function EventCard({ event, isPositioned = false, minTime = 0, maxTime = 1440 }:
     }
 
     const isEmptyBlock = event.borderDisable;
+    const isAside = totalColumns > 1;
+
+    const positionedStyle = isPositioned ? {
+        top: `${topPercent}%`,
+        height: `${heightPercent}%`,
+        left: `calc(${(column / totalColumns) * 100}% + 0.5rem)`,
+        width: `calc(${(100 / totalColumns)}% - 1rem)`,
+    } : {};
+
+    const paddingClass = isAside ? "p-2" : "p-3";
+    const gapClass = isAside ? "gap-0.5" : "gap-1";
+    const titleClass = isAside ? "text-[0.95rem] leading-tight" : "text-[1.2rem] leading-[1.2]";
+    const locationClass = isAside ? "text-xs mt-0.5" : "text-md mt-1";
+    const timeClass = isAside ? "text-[0.65rem] mb-0" : "text-xs mb-[0.15rem]";
+    const contentClass = isAside ? "text-[0.75rem] leading-tight mt-0.5" : "text-[0.85rem] leading-[1.3] mt-1";
+    const iconProps = isAside ? { width: "10", height: "12" } : { width: "15", height: "18" };
 
     return (
         <div
-            className={`${isPositioned ? "absolute" : ""} ${isEmptyBlock ? "border-0" : "bg-(--color-secondary) border-2 border-(--color-seconde-black) rounded-lg p-3 shadow-md"
-                } ${!isPositioned && !isEmptyBlock ? "border-2 border-(--color-seconde-black) rounded-lg p-3 text-(--color-seconde-black) flex flex-col gap-1 shadow-md" : ""} text-(--color-seconde-black) flex flex-col gap-1 overflow-hidden`}
-            style={
-                isPositioned
-                    ? {
-                        top: `${topPercent}%`,
-                        height: `${heightPercent}%`,
-                        left: "0.5rem",
-                        right: "0.5rem",
-                    }
-                    : {}
-            }
+            className={`${isPositioned ? "absolute" : ""} ${isEmptyBlock ? "border-0" : `bg-(--color-secondary) border-2 border-(--color-seconde-black) rounded-lg ${paddingClass} shadow-md`
+                } ${!isPositioned && !isEmptyBlock ? `border-2 border-(--color-seconde-black) rounded-lg ${paddingClass} text-(--color-seconde-black) flex flex-col ${gapClass} shadow-md` : ""} text-(--color-seconde-black) flex flex-col ${gapClass} overflow-hidden`}
+            style={positionedStyle}
         >
             {!isEmptyBlock ? (
                 <>
-                    <div className="font-bold text-xs text-(--color-seconde-black) opacity-60 mb-[0.15rem] flex items-center gap-1">
+                    <div className={`font-bold ${timeClass} text-(--color-seconde-black) opacity-60 flex items-center gap-1`}>
                         {event.startTime} - {getEndTime(event.startTime, event.duration)}
                     </div>
                     {event.title && (
-                        <div className="text-(--color-primary) font-extrabold text-[1.2rem] leading-[1.2]">{event.title}</div>
+                        <div className={`text-(--color-primary) font-extrabold ${titleClass}`}>{event.title}</div>
                     )}
                     {event.location && (
-                        <div className="font-bold text-md text-(--color-seconde-black) flex items-center gap-1 mt-1">
-                            <svg width="15" height="18" viewBox="0 0 10 14" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-none flex-shrink-0">
+                        <div className={`font-bold ${locationClass} text-(--color-seconde-black) flex items-center gap-1`}>
+                            <svg width={iconProps.width} height={iconProps.height} viewBox="0 0 10 14" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-none flex-shrink-0">
                                 <path d="M5 0C2.24 0 0 2.24 0 5C0 8.75 5 14 5 14C5 14 10 8.75 10 5C10 2.24 7.76 0 5 0ZM5 6.8C4.01 6.8 3.2 5.99 3.2 5C3.2 4.01 4.01 3.2 5 3.2C5.99 3.2 6.8 4.01 6.8 5C6.8 5.99 5.99 6.8 5 6.8Z" fill="#E86A92" />
                             </svg>
                             <span className="overflow-hidden text-ellipsis line-clamp-2">{event.location}</span>
+                        </div>
+                    )}
+                    {event.content && (
+                        <div className={`text-(--color-seconde-black) opacity-90 ${contentClass} overflow-hidden text-ellipsis line-clamp-3`}>
+                            {renderContent(event.content)}
                         </div>
                     )}
                 </>
@@ -264,15 +280,15 @@ function EventCard({ event, isPositioned = false, minTime = 0, maxTime = 1440 }:
                         </div>
                     )}
                     {event.location && (
-                        <div className="font-bold text-3xl text-(--color-seconde-black) flex items-center gap-1 mt-1">
-                            <svg width="10" height="12" viewBox="0 0 10 14" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-none flex-shrink-0">
+                        <div className="font-bold text-md text-(--color-seconde-black) flex items-center justify-center gap-1 mt-1">
+                            <svg width="15" height="18" viewBox="0 0 10 14" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-none flex-shrink-0">
                                 <path d="M5 0C2.24 0 0 2.24 0 5C0 8.75 5 14 5 14C5 14 10 8.75 10 5C10 2.24 7.76 0 5 0ZM5 6.8C4.01 6.8 3.2 5.99 3.2 5C3.2 4.01 4.01 3.2 5 3.2C5.99 3.2 6.8 4.01 6.8 5C6.8 5.99 5.99 6.8 5 6.8Z" fill="#E86A92" />
                             </svg>
                             <span className="overflow-hidden text-ellipsis line-clamp-2">{event.location}</span>
                         </div>
                     )}
                     {event.content && (
-                        <div className="text-center text-md leading-[1.3] mt-1 overflow-hidden text-ellipsis line-clamp-3">
+                        <div className="text-center text-[0.85rem] leading-[1.3] mt-1 overflow-hidden text-ellipsis line-clamp-3">
                             {renderContent(event.content)}
                         </div>
                     )}
@@ -294,8 +310,26 @@ export default function Programme() {
     const globalMaxTime = Math.ceil(Math.max(...allTimes) / 60) * 60; // Arrondir à l'heure sup
     const totalHours = (globalMaxTime - globalMinTime) / 60;
 
-    const renderEventBlock = (event: EventBlock, minTime: number, maxTime: number) => {
-        return <EventCard key={event.startTime} event={event} isPositioned={true} minTime={minTime} maxTime={maxTime} />;
+    const renderDayEvents = (day: DaySchedule, minTime: number, maxTime: number) => {
+        const groups: Record<string, EventBlock[]> = {};
+        day.events.forEach(event => {
+            if (!groups[event.startTime]) groups[event.startTime] = [];
+            groups[event.startTime].push(event);
+        });
+
+        return Object.values(groups).flatMap((group) => 
+            group.map((event, index) => (
+                <EventCard 
+                    key={`${event.startTime}-${event.title || index}`} 
+                    event={event} 
+                    isPositioned={true} 
+                    minTime={minTime} 
+                    maxTime={maxTime} 
+                    column={index}
+                    totalColumns={group.length}
+                />
+            ))
+        );
     };
 
     return (
@@ -341,7 +375,7 @@ export default function Programme() {
                                     minHeight: `${dayHours * 55}px`,
                                 }}
                             >
-                                {day.events.map((event) => renderEventBlock(event, timeRange.minTime, timeRange.maxTime))}
+                                {renderDayEvents(day, timeRange.minTime, timeRange.maxTime)}
                             </div>
                         </div>
                     );
@@ -356,8 +390,8 @@ export default function Programme() {
                             {day.day}
                         </div>
                         <div className="flex flex-col gap-3">
-                            {day.events.map((event) => (
-                                <div key={event.startTime} className="flex flex-col gap-1">
+                            {day.events.map((event, index) => (
+                                <div key={`${event.startTime}-${index}`} className="flex flex-col gap-1">
                                     <EventCard event={event} isPositioned={false} />
                                 </div>
                             ))}
