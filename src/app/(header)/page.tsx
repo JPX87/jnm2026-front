@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Countdown from "@/components/features/Countdown/Countdown";
+import PartenairesCarousel from "@/components/features/PartenairesCarousel/PartenairesCarousel";
 import { Slice } from "@/components/layout/Slice/Slice";
 import { Avionn } from "@/components/ui/shapes/Avionn/Avionn";
 import MessageBubble from "@/components/ui/shapes/MessageBubble/MessageBubble";
@@ -10,6 +11,7 @@ import {
   getOrganizationSchema,
   SITE_CONFIG
 } from '@/lib/seo';
+import Image from "next/image";
 import Link from "next/link";
 
 const dateJNM = "2026-05-26T06:00:00";
@@ -79,6 +81,21 @@ export default function Home() {
       />
 
       <main className="home relative" id="top">
+        {/* Section Partenaires - hors du Slice pour éviter le chevauchement avec le header fixe */}
+        <div className="flex flex-col items-center gap-3 pt-20 md:pt-24 pb-4 px-4">
+          <p className="text-sm font-semibold uppercase tracking-widest opacity-60">en étroite collaboration avec</p>
+          <Image
+            src="/img/partenaires/soprasteria.png"
+            alt="Sopra Steria"
+            width={280}
+            height={80}
+            className="object-contain h-16 sm:h-20"
+              style={{ width: 'auto' }}
+            priority
+          />
+          <PartenairesCarousel />
+        </div>
+
         {/* Section Countdown - Section critique pour l'engagement */}
         <Slice absolute first>
           <h1 id="countdown" className="text-center text-4xl 2xs:text-[55px] xs:text-6xl xs:text-7xl lg:text-8xl xl:text-[150px] sm:mt-0 mb-[20%] sm:m-auto font-bold my-[20px] sm:my-[50px]">
