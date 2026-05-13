@@ -11,7 +11,6 @@ import {
   getOrganizationSchema,
   SITE_CONFIG
 } from '@/lib/seo';
-import Image from "next/image";
 import Link from "next/link";
 
 const dateJNM = "2026-05-26T06:00:00";
@@ -82,17 +81,7 @@ export default function Home() {
 
       <main className="home relative" id="top">
         {/* Section Partenaires - hors du Slice pour éviter le chevauchement avec le header fixe */}
-        <div className="flex flex-col items-center gap-3 pt-20 md:pt-24 pb-4 px-4">
-          <p className="text-sm font-semibold uppercase tracking-widest opacity-60">en étroite collaboration avec</p>
-          <Image
-            src="/img/partenaires/soprasteria.png"
-            alt="Sopra Steria"
-            width={280}
-            height={80}
-            className="object-contain h-16 sm:h-20"
-              style={{ width: 'auto' }}
-            priority
-          />
+        <div className="pt-20 md:pt-24 pb-2 px-6 w-full max-w-3xl mx-auto">
           <PartenairesCarousel />
         </div>
 
