@@ -48,6 +48,11 @@ function MovingRectangle({
 
   const target = getTarget();
 
+  // Calcule l'échelle de zoom dynamique pour s'adapter aux petits écrans (mobile/paysage)
+  const maxZoomWidth = (viewport.width * 0.9) / (MESH_WIDTH / 100); // 90% de la largeur de l'écran
+  const maxZoomHeight = (viewport.height * 0.8) / (MESH_HEIGHT / 100); // 80% de la hauteur de l'écran
+  const zoomScaleValue = Math.min(15, maxZoomWidth, maxZoomHeight);
+
   // Animation React Spring (Position, Scale & Rotation)
   const { position, scale, rotation } = useSpring({
     from: {
@@ -57,7 +62,7 @@ function MovingRectangle({
     },
     to: {
       position: isZoomed ? [0, 0, 2] : target.pos,
-      scale: isZoomed ? [15, 15, 15] : target.scale,
+      scale: isZoomed ? [zoomScaleValue, zoomScaleValue, zoomScaleValue] : target.scale,
       rotation: isZoomed ? [rotationX, rotationY, 0] : [0, 0, 0],
     },
     config: { mass: 1, tension: 170, friction: 20 },
@@ -157,6 +162,20 @@ export function PartenaitCard({ data, className = "" }: { data: PartnerData; cla
     setIsDragging(false);
   };
 
+  // Remet la carte parfaitement de face
+  const handleResetRotation = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setRotationX(-0.01);
+    setRotationY(0);
+  };
+
+  // Fait tourner la carte de 180° (Math.PI) sur l'axe Y à partir de sa position actuelle
+  const handleFlipCard = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setRotationX(-0.01);
+    setRotationY(prev => prev + Math.PI);
+  };
+
   // Clic pour ouvrir
   const handleOpen = () => {
     if (!isZoomed && trackerRef.current) {
@@ -222,6 +241,26 @@ export function PartenaitCard({ data, className = "" }: { data: PartnerData; cla
         >
           {/* Fond sombre */}
           <div className={`absolute inset-0 bg-black transition-opacity duration-500 pointer-events-none ${isZoomed ? 'opacity-60' : 'opacity-0'}`} />
+
+          {/* Boutons de contrôle (Visibles uniquement si zoomé) */}
+          <div
+            className={`absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2 flex gap-4 transition-opacity duration-300 z-[110] ${isZoomed ? 'opacity-100' : 'opacity-0 pointer-events-none'
+              }`}
+            onPointerDown={(e) => e.stopPropagation()} // Empêche de déclencher la rotation 3D quand on clique sur la zone
+          >
+            <button
+              onClick={handleResetRotation}
+              className="px-4 sm:px-6 py-2 bg-white/10 hover:bg-white/20 text-white text-sm sm:text-base backdrop-blur-md border border-white/20 rounded-full font-medium transition-colors shadow-lg cursor-pointer"
+            >
+              De face
+            </button>
+            <button
+              onClick={handleFlipCard}
+              className="px-4 sm:px-6 py-2 bg-white/10 hover:bg-white/20 text-white text-sm sm:text-base backdrop-blur-md border border-white/20 rounded-full font-medium transition-colors shadow-lg, cursor-pointer"
+            >
+              Retourner
+            </button>
+          </div>
 
           <Canvas
             camera={{ position: [0, 0, 50], fov: 40 }}
