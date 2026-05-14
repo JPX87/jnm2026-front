@@ -6,11 +6,11 @@ import { SvgSource } from "@/components/ui/branding/logo/SvgSource";
 import { PartnerData, PartnerInfo } from "../types";
 import { formatDateToFrench, renderCardEnd } from "../helpers";
 
-const top = (
+const top = (type: string) => (
     <div className="pt-1 px-3 flex items-center gap-2">
         <div className="pt-2">
-            <h2 className="text-[9px] text-white dark:text-(--color-seconde-black) leading-[4px]">PARTENAIRE</h2>
-            <span className="text-[7px]">PARTENAIRE</span>
+            <h2 className="text-[9px] text-white leading-[4px]">PARTENAIRE</h2>
+            <span className="text-[7px]">{type.toUpperCase()}</span>
         </div>
         <ToulouseLogo fill="#ef6a9f" className="m-auto w-16 h-8" />
         <CardLogo fill="#ef6a9f" className="w-10 h-8" />
@@ -66,7 +66,7 @@ export function FrontCard(pros: { data: PartnerData }) {
     const { data } = pros;
     return (
         <Card
-            top={top}
+            top={top(data.partnerType)}
             middle={middle(data.mainLogo, data.infos)}
             middleClassName="flex bg-repeat bg-[length:50px_27px] bg-top-left pb-1"
             middleStyle={{ backgroundImage: getSvgBackground("#fdc9d8") }}

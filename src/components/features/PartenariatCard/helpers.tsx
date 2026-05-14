@@ -19,7 +19,7 @@ export function renderCardEnd(endData: CardEndData): React.ReactNode {
     const formattedIssueDate = formatDateToDDMMYYYY(endData.issueDate);
     const formattedExpirationDate = formatDateToDDMMYYYY(endData.expirationDate);
     return (
-        <h1 className="text-[9px] tracking-[0.15em] p-1 text-white dark:text-(--color-seconde-black)">{`
+        <h1 className="text-[9px] tracking-[0.15em] p-1 text-white">{`
             PARTENAIRE<<JNM<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< `}<br />{`
             ${formattedIssueDate}<${formattedExpirationDate}<JNM2026TOULOUSE<<<<<<<<<<<<<<<<<<<<<<<${endData.number < 10 ? `0${endData.number}` : endData.number}
         `}</h1>
