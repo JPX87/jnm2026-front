@@ -1,7 +1,7 @@
 'use client'; // Indispensable pour Three.js dans Next.js
 
-import { useRef, useState, useEffect, useMemo } from 'react';
-import { Canvas, ThreeEvent, useThree } from '@react-three/fiber';
+import { useRef, useState, useEffect } from 'react';
+import { Canvas, ThreeEvent, useThree, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { Html } from '@react-three/drei';
 import { useSpring, a } from '@react-spring/three';
@@ -15,74 +15,48 @@ function MovingRectangle({
   data,
   isZoomed,
   onZoomChange,
+  rotationX,
+  rotationY,
+  trackerRef,
 }: {
   data: PartnerData
   isZoomed: boolean
   onZoomChange: (zoomed: boolean) => void
+  rotationX: number
+  rotationY: number
+  trackerRef: React.RefObject<HTMLDivElement | null>
 }) {
   const meshRef = useRef<THREE.Mesh>(null!);
-  const { viewport } = useThree();
-  const [isDragging, setIsDragging] = useState(false);
+  const { viewport, size } = useThree();
+  const [targetPos, setTargetPos] = useState<[number, number, number]>([0, 0, 0]);
 
-  // Sensibilité de la rotation
-  const rotationSensitivity = 0.01;
+  // Suit la position de la div invisible dans le HTML normal
+  useFrame(() => {
+    if (!isZoomed && trackerRef.current) {
+      const rect = trackerRef.current.getBoundingClientRect();
 
-  // 1. Début du drag (Clic droit UNIQUEMENT)
-  const handlePointerDown = (e: ThreeEvent<PointerEvent>) => {
-    if (e.button === 2) {
-      e.stopPropagation();
-      setIsDragging(true);
-      (e.target as HTMLElement).setPointerCapture(e.pointerId);
+      const pixelX = (rect.left + rect.width / 2) - size.width / 2;
+      const pixelY = size.height / 2 - (rect.top + rect.height / 2); // Inversé sur l'axe Y en 3D
+
+      const x = (pixelX / size.width) * viewport.width;
+      const y = (pixelY / size.height) * viewport.height;
+
+      setTargetPos([x, y, 0]);
     }
-  };
+  });
 
-  // 2. Mouvement (Drag)
-  const handlePointerMove = (e: ThreeEvent<PointerEvent>) => {
-    if (isDragging && meshRef.current) {
-      e.stopPropagation();
-      const movementX = e.movementX || 0;
-      const movementY = e.movementY || 0;
-      meshRef.current.rotation.y += movementX * rotationSensitivity;
-      meshRef.current.rotation.x += movementY * rotationSensitivity;
-    }
-  };
-
-  // 3. Fin du drag
-  const handlePointerUp = (e: ThreeEvent<PointerEvent>) => {
-    if (isDragging) {
-      setIsDragging(false);
-      (e.target as HTMLElement).releasePointerCapture(e.pointerId);
-    }
-  };
-
-  // Réinitialise la rotation à 0 quand on dézoome (retour en haut à droite)
-  useEffect(() => {
-    if (!isZoomed && meshRef.current) {
-      meshRef.current.rotation.set(0, -0.001, 0);
-    }
-  }, [isZoomed]);
-
-  // Calcul position en haut à droite
-  const topRightPosition = useMemo(() => {
-    const horizontalMargin = viewport.width * 0.12;
-    const verticalMargin = viewport.height * 0.12;
-    const x = (viewport.width / 2) - 0.5 - horizontalMargin;
-    const y = (viewport.height / 2) - 0.5 - verticalMargin;
-    return [x, y, 0] as [number, number, number];
-  }, [viewport.width, viewport.height]);
-
-  // Animation React Spring (Position & Scale)
-  const { position, scale } = useSpring({
-    position: isZoomed ? [0, 0, 2] : topRightPosition,
+  // Animation React Spring (Position, Scale & Rotation)
+  const { position, scale, rotation } = useSpring({
+    position: isZoomed ? [0, 0, 2] : targetPos,
     scale: isZoomed ? [1.5, 1.5, 1.5] : [1, 1, 1],
+    rotation: isZoomed ? [rotationX, rotationY, 0] : [0, -0.001, 0],
     config: { mass: 1, tension: 170, friction: 20 },
   });
 
-  // Gestionnaire de Zoom (Clic gauche UNIQUEMENT)
+  // Empêcher l'event de fermer la carte si on clique dessus pendant le zoom
   const handleClick = (e: ThreeEvent<MouseEvent>) => {
-    if (e.button === 0) {
+    if (e.button === 0 && isZoomed) {
       e.stopPropagation();
-      onZoomChange(!isZoomed);
     }
   };
 
@@ -91,24 +65,16 @@ function MovingRectangle({
       ref={meshRef}
       position={position as any}
       scale={scale as any}
+      rotation={rotation as any}
       onClick={handleClick}
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}
-      // Sécurité : on annule le drag si la souris sort brutalement de l'écran
-      onPointerOut={(e) => {
-        document.body.style.cursor = 'auto';
-        handlePointerUp(e);
-      }}
-      onPointerOver={() => (document.body.style.cursor = 'pointer')}
+      onPointerOver={() => { if (isZoomed) document.body.style.cursor = 'grab'; }}
+      onPointerOut={() => { document.body.style.cursor = 'auto'; }}
     >
       {/* ⚠️ CRUCIAL : La hitbox 3D (invisible) */}
-      {/* Three.js a besoin d'une géométrie pour détecter les clics. */}
-      {/* Ajuste les dimensions (2.5, 3.5, 0.2) selon la taille de tes composants HTML */}
       <boxGeometry args={[4, 2.6, 0.2]} />
       <meshBasicMaterial transparent opacity={0} />
 
-      {/* Faces de la carte HTML (pointerEvents: 'none' empêche le HTML de bloquer le clic 3D) */}
+      {/* Faces de la carte HTML */}
       <Html transform occlude position={[0, 0, 0.05]} scale={0.125} wrapperClass="[&>div>div]:!pointer-events-none" style={{ pointerEvents: 'none' }}>
         <div className='scale-[4] select-none'>
           <FrontCard data={data} />
@@ -133,22 +99,105 @@ function MovingRectangle({
 // ========== COMPOSANT PAGE ==========
 export function PartenaitCard({ data, className = "" }: { data: PartnerData; className?: string }) {
   const [isZoomed, setIsZoomed] = useState(false);
+  const [rotationX, setRotationX] = useState(0);
+  const [rotationY, setRotationY] = useState(3.14); // Commence face à l'utilisateur
+  const [isDragging, setIsDragging] = useState(false);
+  const previousPositionRef = useRef({ x: 0, y: 0 });
+  const trackerRef = useRef<HTMLDivElement | null>(null);
+
+  // Sensibilité de la rotation
+  const rotationSensitivity = 0.01;
+
+  // Gestion du drag/tactile pour la rotation
+  const handlePointerDown = (e: React.PointerEvent) => {
+    if (!isZoomed) return;
+    setIsDragging(true);
+    previousPositionRef.current = { x: e.clientX, y: e.clientY };
+  };
+
+  const handlePointerMove = (e: React.PointerEvent) => {
+    if (!isDragging || !isZoomed) return;
+
+    const deltaX = e.clientX - previousPositionRef.current.x;
+    const deltaY = e.clientY - previousPositionRef.current.y;
+
+    // Rotation en fonction du mouvement
+    setRotationY(prevY => prevY + deltaX * rotationSensitivity);
+    setRotationX(prevX => prevX + deltaY * rotationSensitivity);
+
+    previousPositionRef.current = { x: e.clientX, y: e.clientY };
+  };
+
+  const handlePointerUp = () => {
+    setIsDragging(false);
+  };
+
+  // Clic en dehors de la carte pour dézoomer
+  const handlePointerMissed = () => {
+    if (isZoomed) {
+      setIsZoomed(false);
+      setRotationX(0);
+      setRotationY(3.14);
+    }
+  };
+
+  // Appui sur Échap pour dézoomer
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isZoomed) {
+        setIsZoomed(false);
+        setRotationX(0);
+        setRotationY(3.14);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isZoomed]);
 
   return (
-    <div
-      className={`absolute z-10 w-full max-w-screen h-96 bg-transparent ${className}`}
-      // ⚠️ CRUCIAL : C'est ICI qu'on empêche le menu du clic droit d'apparaître
-      onContextMenu={(e) => e.preventDefault()}
-    >
-      <Canvas camera={{ position: [0, 0, 10], fov: 40 }}>
-        <MovingRectangle
-          data={data}
-          isZoomed={isZoomed}
-          onZoomChange={setIsZoomed}
+    <>
+      {/* Tracker : Div invisible dans le flux normal de la page qui donne la position au Canvas */}
+      <div
+        ref={trackerRef}
+        className={`relative z-10 w-[359px] h-[230px] shrink-0 bg-transparent cursor-pointer ${className}`}
+        onClick={() => !isZoomed && setIsZoomed(true)}
+        aria-label="Zoomer sur la carte"
+      />
+
+      {/* Overlay global fixe contenant le Canvas */}
+      <div
+        className={`fixed inset-0 w-screen h-[100dvh] transition-all duration-300 ${isZoomed ? 'z-[100] pointer-events-auto' : 'z-10 pointer-events-none'
+          }`}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerLeave={handlePointerUp}
+        style={{ touchAction: isZoomed ? 'none' : 'auto' }}
+      >
+        {/* Fond sombre activé lors du zoom */}
+        <div
+          className={`absolute inset-0 bg-black transition-opacity duration-500 pointer-events-none ${isZoomed ? 'opacity-60' : 'opacity-0'
+            }`}
         />
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[5, 5, 5]} intensity={0.7} />
-      </Canvas>
-    </div>
+
+        <Canvas
+          camera={{ position: [0, 0, 10], fov: 40 }}
+          onPointerMissed={handlePointerMissed}
+          style={{ pointerEvents: isZoomed ? 'auto' : 'none' }}
+        >
+          <MovingRectangle
+            trackerRef={trackerRef}
+            data={data}
+            isZoomed={isZoomed}
+            onZoomChange={setIsZoomed}
+            rotationX={rotationX}
+            rotationY={rotationY}
+          />
+          <ambientLight intensity={0.5} />
+          <directionalLight position={[5, 5, 5]} intensity={0.7} />
+        </Canvas>
+      </div>
+    </>
   );
 }

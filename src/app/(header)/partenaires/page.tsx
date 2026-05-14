@@ -34,16 +34,20 @@ const majorPartnerData: PartnerData = {
 export default function PartenairesPage() {
     return (
         <PageTemplate title="NOS PARTENAIRES" variant="theme" className="organigramme !bg-(--color-secondary) dark:!bg-(--color-seconde-black)" titleClassName="!text-(--color-primary)">
-            <div className="relative flex h-40 sm:h-64 md:h-72 xl:h-80 mx-3">
+            <div className="relative flex justify-between items-center h-40 sm:h-64 md:h-72 xl:h-80 mx-3">
                 <h2 className="text-xl sm:text-2xl md:text-[150px] lg:text-[180px] font-bold mb-4 text-left text-middle text-(--color-tertiary-light) border-l-4 border-b-4 border-(--color-primary) pl-4 pb-4 w-fit">
                     Majeur
                 </h2>
-                <PartenaitCard data={majorPartnerData} className="h-[calc(100vh_-_80px)]" />
+                <div className="flex flex-1 justify-end items-center pr-1 md:pr-4">
+                    <PartenaitCard data={majorPartnerData} className="scale-50 sm:scale-75 md:scale-100 lg:scale-[1.2] origin-right" />
+                </div>
             </div>
             <div className="relative flex h-40 sm:h-64 md:h-72 xl:h-80 mx-3">
-                <div className="m-auto ml-26 scale-[1.2] flex gap-10">
-                    <Card />
-                    <Card />
+                <div className="flex flex-1 justify-start items-center">
+                    <PartenaitCard data={majorPartnerData} className="scale-50 sm:scale-75 md:scale-100 lg:scale-[1.2] origin-left" />
+                </div>
+                <div className="flex flex-1 justify-start items-center">
+                    <PartenaitCard data={majorPartnerData} className="scale-50 sm:scale-75 md:scale-100 lg:scale-[1.2] origin-left" />
                 </div>
                 <h2 className="text-xl sm:text-2xl md:text-[150px] lg:text-[180px] font-bold mb-4 text-right text-(--color-tertiary-light) border-r-4 border-b-4 border-(--color-primary) pr-4 pb-4 w-fit">
                     Leader
