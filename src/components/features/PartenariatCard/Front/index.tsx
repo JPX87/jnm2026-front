@@ -27,7 +27,9 @@ const info = (title: string, data: string) => (
 const middle = (logo: React.ReactNode, infos: PartnerInfo) => (
     <>
         <div className="w-9/20 h-full relative">
-            {logo}
+            <div className="relative flex items-center justify-center bg-white h-[80px] w-[120px] mx-auto mt-[15px] rounded-xl overflow-hidden">
+                {logo}
+            </div>
         </div>
         <div className="w-11/20 h-full relative">
             <div className="flex flex-end">

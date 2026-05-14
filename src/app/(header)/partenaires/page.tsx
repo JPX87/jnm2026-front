@@ -1,7 +1,7 @@
 import { PartenaitCard } from "@/components/features/PartenariatCard";
 import PageTemplate from "@/components/layout/PageTemplate/PageTemplate";
 import Section from "@/components/layout/Section/Section";
-import { majorPartnerData, ledaPartnerData } from "./data";
+import { majorPartnerData, ledaPartnerData } from "../../../data/partenaires";
 
 export default function PartenairesPage() {
     return (
