@@ -266,9 +266,10 @@ export default function PartenairesCarousel() {
           overflow: "hidden",
           paddingTop: 20,
           position: "relative",
-          cursor: isDragging.current ? "grabbing" : "grab",
+          cursor: "grab",
           userSelect: "none",
         }}
+        className="carousel-belt"
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
@@ -305,6 +306,7 @@ export default function PartenairesCarousel() {
       </div>
 
       <style>{`
+        .carousel-belt:active { cursor: grabbing; }
         @keyframes rouleau-spin {
           0%   { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
