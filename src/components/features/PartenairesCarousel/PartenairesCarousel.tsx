@@ -22,7 +22,7 @@ const tierConfig = [
 ];
 
 const GAP         = 40;
-const BG          = "#0e0e0e";
+const BG          = "#111111";
 const ROLLER_R    = 11;
 const LATTE_PITCH = 28;
 const LATTE_W     = 3;
@@ -50,10 +50,8 @@ function Valise({ partner }: { partner: (typeof partners)[number] }) {
         viewBox={`0 0 ${W} ${totalH}`}
         style={{ position: "absolute", inset: 0, filter: "drop-shadow(0 6px 16px rgba(0,0,0,0.6))" }}
       >
-        {/* Ombre portée */}
         <ellipse cx={W / 2} cy={totalH - 1} rx={W * 0.42} ry={5} fill="rgba(0,0,0,0.4)" />
 
-        {/* Poignée */}
         <path
           d={`M ${legL} ${bodyY} A ${(HW - SW) / 2} ${HH * 0.9} 0 0 1 ${legR} ${bodyY}`}
           stroke="white" strokeWidth={SW} fill="none" strokeLinecap="round"
@@ -61,13 +59,9 @@ function Valise({ partner }: { partner: (typeof partners)[number] }) {
         <rect x={legL - PW / 2} y={bodyY - PH / 2} width={PW} height={PH} rx={3} fill="#ddd" />
         <rect x={legR - PW / 2} y={bodyY - PH / 2} width={PW} height={PH} rx={3} fill="#ddd" />
 
-        {/* Corps */}
         <rect x={2} y={bodyY} width={W - 4} height={BH - 3} rx={rx} fill="#f6f6f6" stroke="#d8d8d8" strokeWidth={1.5} />
-
-        {/* Cadre intérieur */}
         <rect x={10} y={bodyY + 9} width={W - 20} height={BH - 21} rx={rx - 5} fill="none" stroke="#e4e4e4" strokeWidth={1} />
 
-        {/* Rivets */}
         {([
           [16, bodyY + 16], [W - 16, bodyY + 16],
           [16, bodyY + BH - 17], [W - 16, bodyY + BH - 17],
@@ -76,12 +70,11 @@ function Valise({ partner }: { partner: (typeof partners)[number] }) {
         ))}
       </svg>
 
-      {/* Logo */}
       <div
         style={{
           position: "absolute",
           left: 0, right: 0,
-          top: HH + 6,
+          top: bodyY,
           height: BH - 3,
           display: "flex",
           alignItems: "center",
@@ -104,24 +97,22 @@ const totalTrackWidth =
   partners.reduce((acc, p) => acc + tierConfig[p.tier].bodyW, 0) +
   GAP * (partners.length - 1);
 
-/* ── Bande tapis + rouleaux en un seul SVG ─────────────────────────────── */
 function BeltStrip() {
-  const BELT_H    = 18;
-  const TOTAL_H   = BELT_H + ROLLER_R * 2 + 6;
-  const rollerY   = BELT_H + ROLLER_R + 3;
-  const rollerCount = 32;
-  const spacing   = 52;
-  const totalW    = rollerCount * spacing;
+  const BELT_H  = 18;
+  const TOTAL_H = BELT_H + ROLLER_R * 2 + 6;
+  const rollerY = BELT_H + ROLLER_R + 3;
+  const count   = 32;
+  const spacing = 52;
+  const totalW  = count * spacing;
 
   return (
     <div style={{ position: "relative", height: TOTAL_H, overflow: "hidden" }}>
-      {/* Lattes animées */}
       <div
         style={{
           position: "absolute",
           top: 0, left: 0, right: 0,
           height: BELT_H,
-          background: `linear-gradient(180deg, #252525 0%, #1a1a1a 100%)`,
+          background: "linear-gradient(180deg, #252525 0%, #1a1a1a 100%)",
           borderTop: "1.5px solid #333",
           borderBottom: "1.5px solid #111",
           overflow: "hidden",
@@ -144,7 +135,6 @@ function BeltStrip() {
         />
       </div>
 
-      {/* Rouleaux SVG */}
       <svg
         width="100%"
         height={TOTAL_H}
@@ -152,7 +142,7 @@ function BeltStrip() {
         preserveAspectRatio="xMinYMid slice"
         style={{ position: "absolute", top: 0, left: 0 }}
       >
-        {Array.from({ length: rollerCount }).map((_, i) => {
+        {Array.from({ length: count }).map((_, i) => {
           const cx = i * spacing + ROLLER_R + 10;
           return (
             <g key={i} style={{ animation: `rouleau-spin 1.6s linear infinite`, transformOrigin: `${cx}px ${rollerY}px` }}>
@@ -174,7 +164,7 @@ export default function PartenairesCarousel() {
   return (
     <div style={{ width: "100%" }}>
 
-      {/* Label au-dessus du tapis */}
+      {/* Label au-dessus du bandeau */}
       <p
         style={{
           fontFamily: "Oswald, sans-serif",
@@ -191,35 +181,37 @@ export default function PartenairesCarousel() {
         Avec la participation de tous nos partenaires
       </p>
 
-    <div style={{ width: "100%", backgroundColor: BG, overflow: "hidden", paddingTop: 20, position: "relative" }}>
+      {/* Bandeau sombre */}
+      <div style={{ width: "100%", backgroundColor: BG, overflow: "hidden", paddingTop: 20, position: "relative" }}>
 
-      {/* Valises */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "flex-end",
-          gap: GAP,
-          width: totalTrackWidth * 2 + GAP * 2,
-          animation: `tapie-roulant ${partners.length * 4}s linear infinite`,
-        }}
-      >
-        {doubled.map((p, i) => (
-          <Valise key={i} partner={p} />
-        ))}
+        {/* Valises */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "flex-end",
+            gap: GAP,
+            width: totalTrackWidth * 2 + GAP * 2,
+            animation: `tapie-roulant ${partners.length * 4}s linear infinite`,
+          }}
+        >
+          {doubled.map((p, i) => (
+            <Valise key={i} partner={p} />
+          ))}
+        </div>
+
+        {/* Tapis + rouleaux */}
+        <BeltStrip />
+
+        {/* Dégradés latéraux */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            pointerEvents: "none",
+            background: `linear-gradient(90deg, ${BG} 0%, transparent 10%, transparent 90%, ${BG} 100%)`,
+          }}
+        />
       </div>
-
-      {/* Tapis + rouleaux */}
-      <BeltStrip />
-
-      {/* Dégradés latéraux */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          pointerEvents: "none",
-          background: `linear-gradient(90deg, ${BG} 0%, transparent 10%, transparent 90%, ${BG} 100%)`,
-        }}
-      />
 
       <style>{`
         @keyframes tapie-roulant {
@@ -235,7 +227,6 @@ export default function PartenairesCarousel() {
           100% { transform: rotate(360deg); }
         }
       `}</style>
-    </div>
     </div>
   );
 }
