@@ -86,8 +86,8 @@ export default function Home() {
         </div>
 
         {/* Section Countdown - Section critique pour l'engagement */}
-        <Slice absolute first className="!-top-8">
-          <h1 id="countdown" className="text-center text-4xl 2xs:text-[55px] xs:text-6xl xs:text-7xl lg:text-8xl xl:text-[150px] sm:mt-0 mb-[20%] sm:m-auto font-bold my-[20px] sm:my-[50px]">
+        <Slice absolute first className="!-top-52">
+          <h1 id="countdown" className="text-center text-2xl 2xs:text-[36px] xs:text-4xl xs:text-5xl lg:text-6xl xl:text-[100px] sm:mt-0 mb-[20%] sm:m-auto font-bold my-[20px] sm:my-[50px]">
             EMBARQUEMENT DANS
           </h1>
           <Countdown className="mx-auto mb-[30%] xs:mb-0" targetDate={targetDate} />

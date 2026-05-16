@@ -15,10 +15,10 @@ const partners = [
 ];
 
 const tierConfig = [
-  { bodyW: 260, bodyH: 200, handleW: 100, handleH: 28, logoW: 170, logoH: 58 },
-  { bodyW: 200, bodyH: 155, handleW:  78, handleH: 22, logoW: 130, logoH: 46 },
-  { bodyW: 158, bodyH: 124, handleW:  62, handleH: 18, logoW: 100, logoH: 36 },
-  { bodyW: 128, bodyH: 100, handleW:  50, handleH: 14, logoW:  80, logoH: 28 },
+  { bodyW: 260, bodyH: 200, handleW: 100, handleH: 28, logoW: 210, logoH: 80, maxW: "78%", maxH: "58%" },
+  { bodyW: 200, bodyH: 155, handleW:  78, handleH: 22, logoW: 160, logoH: 62, maxW: "74%", maxH: "54%" },
+  { bodyW: 158, bodyH: 124, handleW:  62, handleH: 18, logoW: 124, logoH: 48, maxW: "70%", maxH: "50%" },
+  { bodyW: 128, bodyH: 100, handleW:  50, handleH: 14, logoW: 100, logoH: 38, maxW: "66%", maxH: "46%" },
 ];
 
 const GAP         = 40;
@@ -93,7 +93,7 @@ function Valise({ partner }: { partner: (typeof partners)[number] }) {
           alt={partner.alt}
           width={c.logoW}
           height={c.logoH}
-          style={{ objectFit: "contain", maxWidth: "65%", maxHeight: "46%" }}
+          style={{ objectFit: "contain", maxWidth: c.maxW, maxHeight: c.maxH }}
         />
       </div>
     </div>
@@ -172,23 +172,26 @@ export default function PartenairesCarousel() {
   const doubled = [...partners, ...partners];
 
   return (
-    <div style={{ width: "100%", backgroundColor: BG, overflow: "hidden", paddingTop: 20, position: "relative" }}>
+    <div style={{ width: "100%" }}>
 
-      {/* Label */}
+      {/* Label au-dessus du tapis */}
       <p
         style={{
           fontFamily: "Oswald, sans-serif",
-          letterSpacing: "0.15em",
+          letterSpacing: "0.12em",
           textTransform: "uppercase",
-          fontSize: 11,
+          fontSize: 18,
           color: "var(--color-primary)",
-          textAlign: "center",
-          marginBottom: 18,
-          opacity: 0.85,
+          textAlign: "left",
+          paddingLeft: 24,
+          marginBottom: 10,
+          opacity: 0.9,
         }}
       >
-        Avec les participations de tous nos partenaires
+        Avec la participation de tous nos partenaires
       </p>
+
+    <div style={{ width: "100%", backgroundColor: BG, overflow: "hidden", paddingTop: 20, position: "relative" }}>
 
       {/* Valises */}
       <div
@@ -232,6 +235,7 @@ export default function PartenairesCarousel() {
           100% { transform: rotate(360deg); }
         }
       `}</style>
+    </div>
     </div>
   );
 }
