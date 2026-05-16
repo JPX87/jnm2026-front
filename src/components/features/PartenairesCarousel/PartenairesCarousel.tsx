@@ -66,13 +66,13 @@ function Valise({ partner }: { partner: (typeof partners)[number] }) {
         />
         <rect x={legL - PW / 2} y={bodyY - PH / 2} width={PW} height={PH} rx={3} fill="#ddd" />
         <rect x={legR - PW / 2} y={bodyY - PH / 2} width={PW} height={PH} rx={3} fill="#ddd" />
-        <rect x={2} y={bodyY} width={W - 4} height={BH - 3} rx={rx} fill="#f6f6f6" stroke="#d8d8d8" strokeWidth={1.5} />
-        <rect x={10} y={bodyY + 9} width={W - 20} height={BH - 21} rx={rx - 5} fill="none" stroke="#e4e4e4" strokeWidth={1} />
+        <rect x={2} y={bodyY} width={W - 4} height={BH - 3} rx={rx} fill="#ff89b8" stroke="#e0609a" strokeWidth={1.5} />
+        <rect x={10} y={bodyY + 9} width={W - 20} height={BH - 21} rx={rx - 5} fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth={1} />
         {([
           [16, bodyY + 16], [W - 16, bodyY + 16],
           [16, bodyY + BH - 17], [W - 16, bodyY + BH - 17],
         ] as [number, number][]).map(([cx, cy], i) => (
-          <circle key={i} cx={cx} cy={cy} r={3.5} fill="#d0d0d0" stroke="#bbb" strokeWidth={0.8} />
+          <circle key={i} cx={cx} cy={cy} r={3.5} fill="rgba(255,255,255,0.5)" stroke="rgba(255,255,255,0.3)" strokeWidth={0.8} />
         ))}
       </svg>
       <div
@@ -246,7 +246,8 @@ export default function PartenairesCarousel() {
           fontFamily: "Oswald, sans-serif",
           letterSpacing: "0.12em",
           textTransform: "uppercase",
-          fontSize: 18,
+          fontSize: 28,
+          fontWeight: 700,
           color: "var(--color-primary)",
           textAlign: "left",
           paddingLeft: 24,
