@@ -17,10 +17,10 @@ const top = (type: string) => (
     </div>
 )
 
-const info = (title: string, data: string) => (
-    <div className="text-[9px] text-[#ef6a9f] mb-1">
-        <h2 className="font-bold -mb-0.5">{title}</h2>
-        <p>{data.toUpperCase()}</p>
+const info = (title: string, data: string, upper: boolean = true, className?: string) => (
+    <div className={`text-[9px] text-[#ef6a9f] mb-1 ${className || ''}`}>
+        <h2 className="text-[8.5px] font-bold -mb-0.5">{title}</h2>
+        <p className="whitespace-normal break-words">{upper ? data.toUpperCase() : data}</p>
     </div>
 )
 
@@ -31,17 +31,17 @@ const middle = (logo: React.ReactNode, infos: PartnerInfo) => (
                 {logo}
             </div>
         </div>
-        <div className="w-11/20 h-full relative">
+        <div className="relative z-10 w-11/20 h-full relative">
             <div className="flex flex-end">
                 <div className="w-2/5">
                     {info("Type", infos.type)}
                     {info("Nom", infos.name)}
-                    {info("Nationalité", infos.nationality)}
+                    {info("Siège social", infos.nationality)}
                     {info("Date de délivrance", formatDateToFrench(infos.issueDate))}
                 </div>
                 <div className="w-3/5">
-                    {info("Domicile", infos.address)}
-                    {info("Date de naissance", formatDateToFrench(infos.birthDate))}
+                    {info("Adresse agence", infos.address, false, "mt-4")}
+                    {info("Date de naissance", typeof infos.birthDate === "string" ? infos.birthDate : formatDateToFrench(infos.birthDate))}
                     {info("Date d'expiration", formatDateToFrench(infos.expirationDate))}
                 </div>
             </div>
@@ -72,7 +72,7 @@ export function FrontCard(pros: { data: PartnerData }) {
             middle={middle(data.mainLogo, data.infos)}
             middleClassName="flex bg-repeat bg-[length:50px_27px] bg-top-left pb-1"
             middleStyle={{ backgroundImage: getSvgBackground("#fdc9d8") }}
-            end={renderCardEnd({ number: data.number, issueDate: data.infos.issueDate, expirationDate: data.infos.expirationDate })}
+            end={renderCardEnd({ name: data.infos.name, number: data.number, issueDate: data.infos.issueDate, expirationDate: data.infos.expirationDate })}
             endClassName="bg-[#ef6a9f]"
         />
     )

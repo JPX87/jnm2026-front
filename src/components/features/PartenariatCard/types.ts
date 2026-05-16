@@ -4,7 +4,7 @@ export interface PartnerInfo {
     nationality: string;
     issueDate: Date;
     address: string;
-    birthDate: Date;
+    birthDate: Date | string;
     expirationDate: Date;
 }
 
@@ -27,13 +27,14 @@ export interface PartnerData {
 }
 
 export interface CardEndData {
+    name: string;
     number: number;
     issueDate: Date;
     expirationDate: Date;
 }
 
 export interface CardBackData {
-    title: string;
+    title?: string;
     description: string;
     classNameDescription?: string;
 }

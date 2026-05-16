@@ -18,9 +18,13 @@ export const formatDateToFrench = (date: Date): string => {
 export function renderCardEnd(endData: CardEndData): React.ReactNode {
     const formattedIssueDate = formatDateToDDMMYYYY(endData.issueDate);
     const formattedExpirationDate = formatDateToDDMMYYYY(endData.expirationDate);
+
+    const cleanName = endData.name.replace(/\s/g, '').toUpperCase();
+    const fillCharacters = '<'.repeat(52 - cleanName.length);
+    const name = `PARTENAIRE<<${cleanName}${fillCharacters}`;
+
     return (
-        <h1 className="text-[9px] tracking-[0.15em] p-1 text-white">{`
-            PARTENAIRE<<JNM<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< `}<br />{`
+        <h1 className="text-[9px] tracking-[0.15em] py-1 mx-1 text-white overflow-hidden">{name}<br />{`
             ${formattedIssueDate}<${formattedExpirationDate}<JNM2026TOULOUSE<<<<<<<<<<<<<<<<<<<<<<<${endData.number < 10 ? `0${endData.number}` : endData.number}
         `}</h1>
     );

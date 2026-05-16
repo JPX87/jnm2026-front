@@ -19,7 +19,9 @@ const top = (type: string) => (
 
 const middle = (back: CardBackData) => (
     <div>
-        <h1 className="text-[16px] text-[#ff89b8] text-center [text-shadow:_-2px_0_0_rgb(255_255_255_/_0.8)]">{back.title}</h1>
+        {back.title && (
+            <h1 className="text-[16px] text-[#ff89b8] text-center [text-shadow:_-2px_0_0_rgb(255_255_255_/_0.8)]">{back.title}</h1>
+        )}
         <p className={`text-[8px] text-[#d75d91] text-justify mt-1 px-3 whitespace-normal break-words w-full ${back.classNameDescription || ''}`}>
             {back.description}
         </p>
@@ -45,7 +47,7 @@ export function BackCard(pros: { data: PartnerData }) {
             middle={middle(data.back)}
             middleClassName="flex bg-repeat bg-[length:50px_27px] bg-top-left pb-1"
             middleStyle={{ backgroundImage: getSvgBackground("#fdc9d8") }}
-            end={renderCardEnd({ number: data.number, issueDate: data.infos.issueDate, expirationDate: data.infos.expirationDate })}
+            end={renderCardEnd({ name: data.infos.name, number: data.number, issueDate: data.infos.issueDate, expirationDate: data.infos.expirationDate })}
             endClassName="bg-[#ff89b8]"
         />
     )
