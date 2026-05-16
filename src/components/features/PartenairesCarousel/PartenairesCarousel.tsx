@@ -29,8 +29,8 @@ const tiers = [
       { src: "/img/partenaires/pap.png", alt: "ProApro" },
       { src: "/img/partenaires/pwc.png", alt: "PwC" },
     ],
-    imgHeight: 40,
-    imgWidth: 150,
+    imgHeight: 52,
+    imgWidth: 180,
     featured: false,
   },
   {

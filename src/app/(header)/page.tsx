@@ -81,7 +81,7 @@ export default function Home() {
 
       <main className="home relative" id="top">
         {/* Section Partenaires - hors du Slice pour éviter le chevauchement avec le header fixe */}
-        <div className="pt-20 md:pt-24 pb-2 px-6 w-full max-w-3xl mx-auto">
+        <div className="pt-20 md:pt-24 pb-2 px-6 w-full">
           <PartenairesCarousel />
         </div>
 
