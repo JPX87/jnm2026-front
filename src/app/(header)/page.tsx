@@ -81,12 +81,12 @@ export default function Home() {
 
       <main className="home relative" id="top">
         {/* Section Partenaires - hors du Slice pour éviter le chevauchement avec le header fixe */}
-        <div className="pt-20 md:pt-24 pb-2 px-6 w-full">
+        <div className="pt-20 md:pt-24 w-full">
           <PartenairesCarousel />
         </div>
 
         {/* Section Countdown - Section critique pour l'engagement */}
-        <Slice absolute first>
+        <Slice absolute first className="!-top-8">
           <h1 id="countdown" className="text-center text-4xl 2xs:text-[55px] xs:text-6xl xs:text-7xl lg:text-8xl xl:text-[150px] sm:mt-0 mb-[20%] sm:m-auto font-bold my-[20px] sm:my-[50px]">
             EMBARQUEMENT DANS
           </h1>
