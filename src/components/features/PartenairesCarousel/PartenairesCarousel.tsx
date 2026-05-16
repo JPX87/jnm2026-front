@@ -1,17 +1,19 @@
 "use client";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef } from "react";
 
 const partners = [
-  { src: "/img/partenaires/soprasteria.png", alt: "Sopra Steria", tier: 0 },
-  { src: "/img/partenaires/atos.png", alt: "Atos", tier: 1 },
-  { src: "/img/partenaires/CGI.png", alt: "CGI", tier: 1 },
-  { src: "/img/partenaires/extia.png", alt: "Extia", tier: 1 },
-  { src: "/img/partenaires/orange.jpg", alt: "Orange", tier: 1 },
-  { src: "/img/partenaires/pap.png", alt: "ProApro", tier: 2 },
-  { src: "/img/partenaires/pwc.png", alt: "PwC", tier: 2 },
-  { src: "/img/partenaires/AbsysCyborg.png", alt: "AbsysCyborg", tier: 3 },
-  { src: "/img/partenaires/agirc-arrco.png", alt: "Agirc-Arrco", tier: 3 },
+  { src: "/img/partenaires/soprasteria.png", alt: "Sopra Steria", tier: 0, maxW: "90%", maxH: "72%" },
+  { src: "/img/partenaires/atos.png",        alt: "Atos",         tier: 1, maxW: "48%", maxH: "36%" },
+  { src: "/img/partenaires/CGI.png",         alt: "CGI",          tier: 1, maxW: "48%", maxH: "36%" },
+  { src: "/img/partenaires/extia.png",       alt: "Extia",        tier: 1, maxW: "48%", maxH: "36%" },
+  { src: "/img/partenaires/orange.jpg",      alt: "Orange",       tier: 1 },
+  { src: "/img/partenaires/pap.png",         alt: "ProApro",      tier: 2 },
+  { src: "/img/partenaires/pwc.png",         alt: "PwC",          tier: 2 },
+  { src: "/img/partenaires/AbsysCyborg.png", alt: "AbsysCyborg",  tier: 3 },
+  { src: "/img/partenaires/agirc-arrco.png", alt: "Agirc-Arrco",  tier: 3 },
 ];
 
 const tierConfig = [
@@ -26,6 +28,13 @@ const BG          = "#111111";
 const ROLLER_R    = 11;
 const LATTE_PITCH = 28;
 const LATTE_W     = 3;
+const AUTO_SPEED  = 0.5; // px par frame à 60fps
+
+const totalTrackWidth =
+  partners.reduce((acc, p) => acc + tierConfig[p.tier].bodyW, 0) +
+  GAP * (partners.length - 1);
+
+const LOOP_WIDTH = totalTrackWidth + GAP;
 
 function Valise({ partner }: { partner: (typeof partners)[number] }) {
   const c = tierConfig[partner.tier];
@@ -51,17 +60,14 @@ function Valise({ partner }: { partner: (typeof partners)[number] }) {
         style={{ position: "absolute", inset: 0, filter: "drop-shadow(0 6px 16px rgba(0,0,0,0.6))" }}
       >
         <ellipse cx={W / 2} cy={totalH - 1} rx={W * 0.42} ry={5} fill="rgba(0,0,0,0.4)" />
-
         <path
           d={`M ${legL} ${bodyY} A ${(HW - SW) / 2} ${HH * 0.9} 0 0 1 ${legR} ${bodyY}`}
           stroke="white" strokeWidth={SW} fill="none" strokeLinecap="round"
         />
         <rect x={legL - PW / 2} y={bodyY - PH / 2} width={PW} height={PH} rx={3} fill="#ddd" />
         <rect x={legR - PW / 2} y={bodyY - PH / 2} width={PW} height={PH} rx={3} fill="#ddd" />
-
         <rect x={2} y={bodyY} width={W - 4} height={BH - 3} rx={rx} fill="#f6f6f6" stroke="#d8d8d8" strokeWidth={1.5} />
         <rect x={10} y={bodyY + 9} width={W - 20} height={BH - 21} rx={rx - 5} fill="none" stroke="#e4e4e4" strokeWidth={1} />
-
         {([
           [16, bodyY + 16], [W - 16, bodyY + 16],
           [16, bodyY + BH - 17], [W - 16, bodyY + BH - 17],
@@ -69,7 +75,6 @@ function Valise({ partner }: { partner: (typeof partners)[number] }) {
           <circle key={i} cx={cx} cy={cy} r={3.5} fill="#d0d0d0" stroke="#bbb" strokeWidth={0.8} />
         ))}
       </svg>
-
       <div
         style={{
           position: "absolute",
@@ -86,24 +91,36 @@ function Valise({ partner }: { partner: (typeof partners)[number] }) {
           alt={partner.alt}
           width={c.logoW}
           height={c.logoH}
-          style={{ objectFit: "contain", maxWidth: c.maxW, maxHeight: c.maxH }}
+          draggable={false}
+          style={{ objectFit: "contain", maxWidth: partner.maxW ?? c.maxW, maxHeight: partner.maxH ?? c.maxH, pointerEvents: "none" }}
         />
       </div>
     </div>
   );
 }
 
-const totalTrackWidth =
-  partners.reduce((acc, p) => acc + tierConfig[p.tier].bodyW, 0) +
-  GAP * (partners.length - 1);
-
-function BeltStrip() {
+function BeltStrip({ offsetRef }: { offsetRef: React.RefObject<number> }) {
+  const latteRef = useRef<HTMLDivElement>(null);
   const BELT_H  = 18;
   const TOTAL_H = BELT_H + ROLLER_R * 2 + 6;
   const rollerY = BELT_H + ROLLER_R + 3;
   const count   = 32;
   const spacing = 52;
   const totalW  = count * spacing;
+
+  // sync latte position with main offset
+  useEffect(() => {
+    let raf: number;
+    const tick = () => {
+      if (latteRef.current) {
+        const pos = (offsetRef.current % LATTE_PITCH + LATTE_PITCH) % LATTE_PITCH;
+        latteRef.current.style.backgroundPosition = `${pos}px 0`;
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [offsetRef]);
 
   return (
     <div style={{ position: "relative", height: TOTAL_H, overflow: "hidden" }}>
@@ -119,6 +136,7 @@ function BeltStrip() {
         }}
       >
         <div
+          ref={latteRef}
           style={{
             position: "absolute",
             inset: 0,
@@ -130,11 +148,9 @@ function BeltStrip() {
               rgba(255,255,255,0.04) ${LATTE_PITCH}px
             )`,
             backgroundSize: `${LATTE_PITCH}px 100%`,
-            animation: `lattes ${(LATTE_PITCH / totalTrackWidth) * partners.length * 4}s linear infinite`,
           }}
         />
       </div>
-
       <svg
         width="100%"
         height={TOTAL_H}
@@ -161,10 +177,70 @@ function BeltStrip() {
 export default function PartenairesCarousel() {
   const doubled = [...partners, ...partners];
 
+  const router      = useRouter();
+  const trackRef    = useRef<HTMLDivElement>(null);
+  const offsetRef   = useRef(0);
+  const isDragging  = useRef(false);
+  const lastX       = useRef(0);
+  const startX      = useRef(0);
+  const dragVel     = useRef(0);
+  const coastVel    = useRef(0);
+
+  useEffect(() => {
+    let raf: number;
+
+    const tick = () => {
+      if (isDragging.current) {
+        // pendant le drag : juste appliquer le mouvement (géré dans les handlers)
+      } else {
+        // inertie : on ralentit progressivement vers AUTO_SPEED
+        coastVel.current += (AUTO_SPEED - coastVel.current) * 0.06;
+        offsetRef.current -= coastVel.current;
+      }
+
+      // boucle infinie
+      if (offsetRef.current <= -LOOP_WIDTH) offsetRef.current += LOOP_WIDTH;
+      if (offsetRef.current > 0)            offsetRef.current -= LOOP_WIDTH;
+
+      if (trackRef.current) {
+        trackRef.current.style.transform = `translateX(${offsetRef.current}px)`;
+      }
+
+      raf = requestAnimationFrame(tick);
+    };
+
+    coastVel.current = AUTO_SPEED;
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
+  const onPointerDown = (e: React.PointerEvent) => {
+    isDragging.current = true;
+    lastX.current = e.clientX;
+    startX.current = e.clientX;
+    dragVel.current = 0;
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+  };
+
+  const onPointerMove = (e: React.PointerEvent) => {
+    if (!isDragging.current) return;
+    const dx = e.clientX - lastX.current;
+    lastX.current = e.clientX;
+    dragVel.current = dx;
+    offsetRef.current += dx;
+  };
+
+  const onPointerUp = (e: React.PointerEvent) => {
+    const moved = Math.abs(e.clientX - startX.current);
+    isDragging.current = false;
+    coastVel.current = -dragVel.current;
+    // clic simple (pas un drag) → redirection
+    if (moved < 6) router.push("/partenaires");
+  };
+
   return (
     <div style={{ width: "100%" }}>
-
-      {/* Label au-dessus du bandeau */}
+      {/* Label */}
       <p
         style={{
           fontFamily: "Oswald, sans-serif",
@@ -182,16 +258,30 @@ export default function PartenairesCarousel() {
       </p>
 
       {/* Bandeau sombre */}
-      <div style={{ width: "100%", backgroundColor: BG, overflow: "hidden", paddingTop: 20, position: "relative" }}>
-
+      <div
+        style={{
+          width: "100%",
+          backgroundColor: BG,
+          overflow: "hidden",
+          paddingTop: 20,
+          position: "relative",
+          cursor: isDragging.current ? "grabbing" : "grab",
+          userSelect: "none",
+        }}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerLeave={onPointerUp}
+      >
         {/* Valises */}
         <div
+          ref={trackRef}
           style={{
             display: "flex",
             alignItems: "flex-end",
             gap: GAP,
             width: totalTrackWidth * 2 + GAP * 2,
-            animation: `tapie-roulant ${partners.length * 4}s linear infinite`,
+            willChange: "transform",
           }}
         >
           {doubled.map((p, i) => (
@@ -200,7 +290,7 @@ export default function PartenairesCarousel() {
         </div>
 
         {/* Tapis + rouleaux */}
-        <BeltStrip />
+        <BeltStrip offsetRef={offsetRef} />
 
         {/* Dégradés latéraux */}
         <div
@@ -214,14 +304,6 @@ export default function PartenairesCarousel() {
       </div>
 
       <style>{`
-        @keyframes tapie-roulant {
-          0%   { transform: translateX(0); }
-          100% { transform: translateX(-${totalTrackWidth + GAP}px); }
-        }
-        @keyframes lattes {
-          0%   { background-position: 0 0; }
-          100% { background-position: -${LATTE_PITCH}px 0; }
-        }
         @keyframes rouleau-spin {
           0%   { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
