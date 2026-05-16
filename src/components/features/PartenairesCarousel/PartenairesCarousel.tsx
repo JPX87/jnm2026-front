@@ -10,8 +10,8 @@ const partners = [
   { src: "/img/partenaires/CGI.png",         alt: "CGI",          tier: 1, maxW: "48%", maxH: "36%" },
   { src: "/img/partenaires/extia.png",       alt: "Extia",        tier: 1, maxW: "48%", maxH: "36%" },
   { src: "/img/partenaires/orange.jpg",      alt: "Orange",       tier: 1 },
-  { src: "/img/partenaires/pap.png",         alt: "ProApro",      tier: 2 },
-  { src: "/img/partenaires/pwc.png",         alt: "PwC",          tier: 2 },
+  { src: "/img/partenaires/pap.png",         alt: "ProApro",      tier: 2, maxW: "48%", maxH: "36%" },
+  { src: "/img/partenaires/pwc.png",         alt: "PwC",          tier: 2, maxW: "48%", maxH: "36%" },
   { src: "/img/partenaires/AbsysCyborg.png", alt: "AbsysCyborg",  tier: 3 },
   { src: "/img/partenaires/agirc-arrco.png", alt: "Agirc-Arrco",  tier: 3 },
 ];
