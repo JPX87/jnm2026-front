@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 
 const partners = [
-  { src: "/img/partenaires/soprasteria.png", alt: "Sopra Steria", tier: 0, maxW: "90%", maxH: "72%" },
+  { src: "/img/partenaires/soprasteria.png", alt: "Sopra Steria", tier: 0, maxW: "92%", maxH: "90%" },
   { src: "/img/partenaires/atos.png",        alt: "Atos",         tier: 1, maxW: "48%", maxH: "36%" },
   { src: "/img/partenaires/CGI.png",         alt: "CGI",          tier: 1, maxW: "48%", maxH: "36%" },
   { src: "/img/partenaires/extia.png",       alt: "Extia",        tier: 1, maxW: "48%", maxH: "36%" },
@@ -17,10 +17,10 @@ const partners = [
 ];
 
 const tierConfig = [
-  { bodyW: 260, bodyH: 200, handleW: 100, handleH: 28, logoW: 210, logoH: 80, maxW: "78%", maxH: "58%" },
-  { bodyW: 200, bodyH: 155, handleW:  78, handleH: 22, logoW: 160, logoH: 62, maxW: "74%", maxH: "54%" },
-  { bodyW: 158, bodyH: 124, handleW:  62, handleH: 18, logoW: 124, logoH: 48, maxW: "70%", maxH: "50%" },
-  { bodyW: 128, bodyH: 100, handleW:  50, handleH: 14, logoW: 100, logoH: 38, maxW: "66%", maxH: "46%" },
+  { bodyW: 260, bodyH: 200, handleW: 100, handleH: 28, logoW: 210, logoH: 80, maxW: "78%", maxH: "58%", label: "MAJEUR",  labelSize: 13 },
+  { bodyW: 200, bodyH: 155, handleW:  78, handleH: 22, logoW: 160, logoH: 62, maxW: "74%", maxH: "54%", label: "LEADER",  labelSize: 11 },
+  { bodyW: 158, bodyH: 124, handleW:  62, handleH: 18, logoW: 124, logoH: 48, maxW: "70%", maxH: "50%", label: "ASSOCIÉ", labelSize: 10 },
+  { bodyW: 128, bodyH: 100, handleW:  50, handleH: 14, logoW: 100, logoH: 38, maxW: "66%", maxH: "46%", label: "ASSOCIÉ", labelSize: 9  },
 ];
 
 const GAP         = 40;
@@ -74,6 +74,20 @@ function Valise({ partner }: { partner: (typeof partners)[number] }) {
         ] as [number, number][]).map(([cx, cy], i) => (
           <circle key={i} cx={cx} cy={cy} r={3.5} fill="rgba(255,255,255,0.5)" stroke="rgba(255,255,255,0.3)" strokeWidth={0.8} />
         ))}
+
+        {/* Label de tier */}
+        <text
+          x={W / 2}
+          y={bodyY + 22}
+          textAnchor="middle"
+          fontFamily="Oswald, sans-serif"
+          fontSize={c.labelSize}
+          fontWeight="700"
+          letterSpacing="2"
+          fill="rgba(255,255,255,0.85)"
+        >
+          {c.label}
+        </text>
       </svg>
       <div
         style={{
