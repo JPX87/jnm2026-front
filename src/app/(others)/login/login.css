@@ -1,0 +1,390 @@
+/* ===================== */
+/* LOGIN PAGE - Luggage Tag Design */
+/* ===================== */
+
+.login-page {
+  min-height: 100vh;
+  background-color: #e8729c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Sky color overlay - animated by GSAP (opacity only) */
+.sky-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: #87CEEB;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 720px;
+  animation: fadeIn 0.6s ease-out forwards;
+  backface-visibility: hidden;
+  position: relative;
+  z-index: 2;
+}
+
+/* === Luggage Tag Shape === */
+.luggage-tag {
+  background: #faf5f0;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  clip-path: polygon(
+    8% 0%,
+    100% 0%,
+    100% 100%,
+    8% 100%,
+    0% 50%
+  );
+}
+
+/* Left section */
+.tag-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 2.5rem 1.5rem 2.5rem 3.5rem;
+  flex-shrink: 0;
+}
+
+.tag-hole {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 3px solid #2d2d2d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tag-hole-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #e8729c;
+}
+
+.tag-destination {
+  display: flex;
+  flex-direction: column;
+}
+
+.tag-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: #2d2d2d;
+  margin-bottom: 0.15rem;
+}
+
+.tag-code {
+  font-size: 3.2rem;
+  font-weight: 900;
+  line-height: 1;
+  color: #2d2d2d;
+  letter-spacing: -0.02em;
+}
+
+.tag-city {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #2d2d2d;
+  margin-top: 0.25rem;
+}
+
+/* Right section */
+.tag-right {
+  flex: 1;
+  padding: 1.5rem 2rem 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.tag-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.tag-fields {
+  display: flex;
+  gap: 1rem;
+}
+
+.tag-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.tag-input {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #2d2d2d;
+  padding: 0.5rem 0;
+  font-size: 0.8rem;
+  color: #2d2d2d;
+  outline: none;
+  font-family: inherit;
+  width: 100%;
+}
+
+.tag-input::placeholder {
+  color: #2d2d2d;
+  opacity: 0.5;
+}
+
+.tag-input:focus {
+  border-bottom-color: #e8729c;
+}
+
+.tag-field-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #2d2d2d;
+  margin-top: 0.4rem;
+}
+
+.tag-error {
+  color: #dc2626;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin: -0.5rem 0;
+}
+
+/* JNM logo area */
+.tag-jnm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+}
+
+.tag-jnm-logo {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+}
+
+.tag-jnm-dates {
+  font-size: 0.85rem;
+  font-weight: 900;
+  color: #2d2d2d;
+  letter-spacing: 0.05em;
+}
+
+/* === CONNEXION Button === */
+.login-button {
+  display: block;
+  width: calc(100% + 3rem);
+  margin-left: -2rem;
+  margin-right: -1rem;
+  margin-top: 0;
+  padding: 1.1rem;
+  background: #e8729c;
+  color: white;
+  border: none;
+  font-size: 1.6rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  font-family: inherit;
+  text-align: center;
+}
+
+.login-button:hover {
+  background: #d4607e;
+}
+
+.login-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+
+/* ===================== */
+/* TAKEOFF ANIMATION     */
+/* ===================== */
+
+.takeoff-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* --- Airplane --- */
+.airplane {
+  position: absolute;
+  width: 260px;
+  left: 50%;
+  top: 50%;
+  margin-left: -130px;
+  margin-top: -43px;
+  backface-visibility: hidden;
+  opacity: 0;
+}
+
+.airplane svg {
+  width: 100%;
+  height: auto;
+}
+
+/* --- Contrail --- */
+.contrail {
+  position: absolute;
+  left: 0;
+  top: 55%;
+  width: 100vw;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.06) 40%, rgba(255,255,255,0.35) 100%);
+  border-radius: 1px;
+  transform-origin: right center;
+  backface-visibility: hidden;
+  opacity: 0;
+}
+
+/* --- Clouds --- */
+.cloud {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  right: 0;
+  backface-visibility: hidden;
+  opacity: 0;
+}
+
+.cloud::before,
+.cloud::after {
+  content: '';
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+}
+
+.cloud-1 {
+  width: 120px;
+  height: 40px;
+  top: 18%;
+}
+.cloud-1::before { width: 60px; height: 60px; top: -30px; left: 20px; }
+.cloud-1::after  { width: 45px; height: 45px; top: -20px; left: 55px; }
+
+.cloud-2 {
+  width: 80px;
+  height: 28px;
+  top: 42%;
+}
+.cloud-2::before { width: 40px; height: 40px; top: -20px; left: 12px; }
+.cloud-2::after  { width: 32px; height: 32px; top: -14px; left: 38px; }
+
+.cloud-3 {
+  width: 95px;
+  height: 32px;
+  top: 65%;
+}
+.cloud-3::before { width: 48px; height: 48px; top: -24px; left: 16px; }
+.cloud-3::after  { width: 38px; height: 38px; top: -16px; left: 46px; }
+
+/* --- "BON VOYAGE !" text --- */
+.takeoff-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: white;
+  letter-spacing: 0.15em;
+  white-space: nowrap;
+  backface-visibility: hidden;
+  opacity: 0;
+}
+
+/* --- White flash --- */
+.takeoff-flash {
+  position: absolute;
+  inset: 0;
+  background: white;
+  backface-visibility: hidden;
+  opacity: 0;
+}
+
+
+/* === Mobile Responsive === */
+@media (max-width: 640px) {
+  .login-page {
+    padding: 1rem;
+    align-items: flex-start;
+    padding-top: 2rem;
+  }
+
+  .luggage-tag {
+    flex-direction: column;
+    clip-path: polygon(
+      0% 8%,
+      50% 0%,
+      100% 8%,
+      100% 100%,
+      0% 100%
+    );
+    border-radius: 8px;
+  }
+
+  .tag-left {
+    padding: 3rem 2rem 1.5rem 2rem;
+    justify-content: center;
+  }
+
+  .tag-code {
+    font-size: 2.5rem;
+  }
+
+  .tag-right {
+    padding: 1rem 1.5rem 0 1.5rem;
+  }
+
+  .tag-fields {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .login-button {
+    width: calc(100% + 3rem);
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+    font-size: 1.3rem;
+    padding: 1rem;
+    border-radius: 0 0 8px 8px;
+  }
+
+  .airplane {
+    width: 160px;
+    margin-left: -80px;
+    margin-top: -27px;
+  }
+
+  .takeoff-text {
+    font-size: 1.6rem;
+  }
+}

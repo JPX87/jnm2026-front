@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model User {
+  id           Int           @id @default(autoincrement())
+  email        String        @unique
+  firstname    String?
+  lastname     String?
+  password     String
+  miage        String?
+  ville        String?
+  hotelRoom    String
+  hotelFloor   String?
+  isAdmin      Boolean       @default(false)
+  createdAt    DateTime      @default(now())
+  messageReads MessageRead[]
+}
+
+model Message {
+  id        Int           @id @default(autoincrement())
+  title     String
+  content   String
+  createdAt DateTime      @default(now())
+  reads     MessageRead[]
+}
+
+model MessageRead {
+  userId    Int
+  messageId Int
+  readAt    DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  message   Message  @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  @@id([userId, messageId])
+}
