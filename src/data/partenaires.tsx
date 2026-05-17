@@ -6,7 +6,7 @@ import Image from "next/image";
 export const majorPartnerData: PartnerData = {
     number: 1,
     partnerType: "Majeur",
-    mainLogo: <Image src="/img/partenaires/soprasteria.png" alt="Sopra Steria Logo" className="w-max p-1 !h-auto m-auto" width={300} height={180} />,
+    mainLogo: <Image src="/img/partenaires/soprasteria.png" loading="eager" alt="Sopra Steria Logo" className="w-max p-1 !h-auto m-auto" width={300} height={180} />,
     infos: {
         type: "GE",
         name: "Sopra Steria",
@@ -27,7 +27,7 @@ export const majorPartnerData: PartnerData = {
 export const ledaPartnerData: PartnerData[] = [{
     number: 2,
     partnerType: "Leader",
-    mainLogo: <Image src="/img/partenaires/atos.jpg" alt="Atos Logo" className="w-max p-1 !h-auto m-auto" width={300} height={180} />,
+    mainLogo: <Image src="/img/partenaires/atos.jpg" loading="eager" alt="Atos Logo" className="w-max p-1 !h-auto m-auto" width={300} height={180} />,
     infos: {
         type: "GE",
         name: "Atos",
@@ -45,7 +45,7 @@ export const ledaPartnerData: PartnerData[] = [{
 {
     number: 3,
     partnerType: "Leader",
-    mainLogo: <Image src="/img/partenaires/capgemini.png" alt="Capgemini Logo" className="w-max p-1 !h-auto m-auto" width={300} height={180} />,
+    mainLogo: <Image src="/img/partenaires/capgemini.png" loading="eager" alt="Capgemini Logo" className="w-max p-1 !h-auto m-auto" width={300} height={180} />,
     infos: {
         type: "GE",
         name: "Capgemini",
@@ -63,7 +63,7 @@ export const ledaPartnerData: PartnerData[] = [{
 }, {
     number: 4,
     partnerType: "Leader",
-    mainLogo: <Image src="/img/partenaires/cgi.jpg" alt="CGI Logo" className="w-max p-2 !h-auto m-auto" width={300} height={180} />,
+    mainLogo: <Image src="/img/partenaires/cgi.jpg" loading="eager" alt="CGI Logo" className="w-max p-2 !h-auto m-auto" width={300} height={180} />,
     infos: {
         type: "ETR",
         name: "CGI",
@@ -82,7 +82,7 @@ L’engagement d’être toujours impliqués auprès de nos clients dans la réu
 }, {
     number: 5,
     partnerType: "Leader",
-    mainLogo: <Image src="/img/partenaires/extia.png" alt="Extia Logo" className="w-max p-1 !h-auto m-auto" width={300} height={180} />,
+    mainLogo: <Image src="/img/partenaires/extia.png" loading="eager" alt="Extia Logo" className="w-max p-1 !h-auto m-auto" width={300} height={180} />,
     infos: {
         type: "ETI",
         name: "Extia",
@@ -100,7 +100,7 @@ L’engagement d’être toujours impliqués auprès de nos clients dans la réu
 }, {
     number: 6,
     partnerType: "Leader",
-    mainLogo: <Image src="/img/partenaires/orange.jpg" alt="Orange Logo" className="w-20 p-1 !h-auto m-auto" width={300} height={180} />,
+    mainLogo: <Image src="/img/partenaires/orange.jpg" loading="eager" alt="Orange Logo" className="w-20 p-1 !h-auto m-auto" width={300} height={180} />,
     infos: {
         type: "GE",
         name: "Orange",
@@ -122,7 +122,7 @@ L’engagement d’être toujours impliqués auprès de nos clients dans la réu
 export const actorPartnerData: PartnerData[] = [{
     number: 7,
     partnerType: "Acteur",
-    mainLogo: <Image src="/img/partenaires/pap.png" alt="Pro à Pro Logo" className="w-max p-1 !h-auto m-auto" width={300} height={180} />,
+    mainLogo: <Image src="/img/partenaires/pap.png" loading="eager" alt="Pro à Pro Logo" className="w-max p-1 !h-auto m-auto" width={300} height={180} />,
     infos: {
         type: "GE",
         name: "Pro à Pro",
@@ -141,7 +141,7 @@ export const actorPartnerData: PartnerData[] = [{
 {
     number: 8,
     partnerType: "Acteur",
-    mainLogo: <Image src="/img/partenaires/pwc.png" alt="PwC Logo" className="w-max p-1 !h-auto m-auto" width={300} height={180} />,
+    mainLogo: <Image src="/img/partenaires/pwc.png" loading="eager" alt="PwC Logo" className="w-max p-1 !h-auto m-auto" width={300} height={180} />,
     infos: {
         type: "GE",
         name: "PwC",
