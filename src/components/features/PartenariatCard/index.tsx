@@ -5,6 +5,7 @@ import { Canvas, ThreeEvent, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { Html, RoundedBox } from '@react-three/drei';
 import { useSpring, a } from '@react-spring/three';
+import { useTheme } from "next-themes";
 import { FrontCard } from './Front';
 import { BackCard } from './Back';
 import { PartnerData } from './types';
@@ -124,6 +125,8 @@ export function PartenaitCard({ data, className = "" }: { data: PartnerData; cla
   const [isDragging, setIsDragging] = useState(false);
   const previousPositionRef = useRef({ x: 0, y: 0 });
   const trackerRef = useRef<HTMLDivElement | null>(null);
+
+  const { resolvedTheme: currentTheme } = useTheme();
 
   // Sensibilité de la rotation
   const rotationSensitivity = 0.01;
@@ -278,7 +281,7 @@ export function PartenaitCard({ data, className = "" }: { data: PartnerData; cla
                 setIsClosing(false);
               }} // Démonte le WebGL
             />
-            <ambientLight intensity={0.5} />
+            <ambientLight intensity={currentTheme === 'dark' ? 0 : 10} />
             <directionalLight position={[5, 5, 5]} intensity={0.7} />
           </Canvas>
         </div>
