@@ -157,3 +157,22 @@ export const actorPartnerData: PartnerData[] = [{
         description: `PwC aide les organisations de toutes tailles et de tous secteurs d’activité à créer de la confiance, se réinventer et se démarquer dans un monde complexe. Ses services de conseil, d’audit et d’expertise juridique et fiscale conjuguent avancées technologiques et savoir-faire pluridisciplinaires pour accompagner et accélérer la transformation durable des entreprises. PwC compte 7 000 collaborateurs en France et au Maghreb, au sein d’un réseau de plus de 364 000 personnes dans 136 pays.`
     }
 }];
+
+
+export interface PartnerLogo {
+    name: string;
+    url: string;
+}
+
+export const partnersList: PartnerLogo[] = [
+    { name: "Absys Cyborg", url: "/img/partenaires/AbsysCyborg.png" },
+    { name: "Agirc-Arrco", url: "/img/partenaires/agirc-arrco.jpg" },
+    { name: "Atos", url: "/img/partenaires/atos.jpg" },
+    { name: "Capgemini", url: "/img/partenaires/capgemini.png" },
+    { name: "CGI", url: "/img/partenaires/cgi.jpg" },
+    { name: "Extia", url: "/img/partenaires/extia.png" },
+    { name: "Orange", url: "/img/partenaires/orange.jpg" },
+    { name: "Pro à Pro", url: "/img/partenaires/pap.png" },
+    { name: "PwC", url: "/img/partenaires/pwc.png" },
+    { name: "Sopra Steria", url: "/img/partenaires/soprasteria.png" },
+];

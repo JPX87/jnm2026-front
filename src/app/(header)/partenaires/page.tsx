@@ -1,9 +1,10 @@
 import { PartenaitCard } from "@/components/features/PartenariatCard";
 import PageTemplate from "@/components/layout/PageTemplate/PageTemplate";
 import Section from "@/components/layout/Section/Section";
-import { majorPartnerData, ledaPartnerData, actorPartnerData } from "../../../data/partenaires";
+import { majorPartnerData, ledaPartnerData, actorPartnerData, partnersList } from "../../../data/partenaires";
 import { MiageLogo } from "@/components/ui/branding/MiageLogo/MiageLogo";
 import { LogoSvg } from "@/components/ui/branding/logo/LogoSvg";
+import { PartnerCarousel } from "@/components/features/PartnerCarousel/PartnerCarousel";
 
 export default function PartenairesPage() {
     return (
@@ -39,6 +40,11 @@ export default function PartenairesPage() {
                         <PartenaitCard key={index} data={data} className="scale-90 lg:scale-100 xl:scale-120" />
                     ))}
                 </div>
+            </Section>
+
+            <Section variant="neutral" maxWidth="full" contentClassName="!px-0 !pb-2 !md:pb-0 !w-full">
+                <h2 className="text-2xl md:text-5xl font-bold text-(--color-primary) text-center">MERCI À TOUS NOS PARTENAIRES</h2>
+                <PartnerCarousel partnersList={partnersList} />
             </Section>
         </PageTemplate>
     );
