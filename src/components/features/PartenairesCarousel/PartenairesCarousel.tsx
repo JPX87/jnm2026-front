@@ -8,7 +8,7 @@ const partners = [
   { src: "/img/partenaires/soprasteria.png", alt: "Sopra Steria", tier: 0, maxW: "92%", maxH: "90%" },
   { src: "/img/partenaires/atos.jpg", alt: "Atos", tier: 1, maxW: "48%", maxH: "36%", backColor: "#fff" },
   { src: "/img/partenaires/capgemini.png", alt: "Capgemini", tier: 1, maxW: "48%", maxH: "36%" },
-  { src: "/img/partenaires/CGI.jpg", alt: "CGI", tier: 1, maxW: "48%", maxH: "36%", backColor: "#fff" },
+  { src: "/img/partenaires/cgi.jpg", alt: "CGI", tier: 1, maxW: "48%", maxH: "36%", backColor: "#fff" },
   { src: "/img/partenaires/extia.png", alt: "Extia", tier: 1, maxW: "48%", maxH: "36%" },
   { src: "/img/partenaires/orange.jpg", alt: "Orange", tier: 1 },
   { src: "/img/partenaires/pap.png", alt: "ProApro", tier: 2, maxW: "48%", maxH: "36%" },
