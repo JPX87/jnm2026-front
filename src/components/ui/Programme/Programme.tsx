@@ -359,12 +359,12 @@ function EventCard({ event, isPositioned = false, minTime = 0, maxTime = 1440, c
                             {event.startTime} - {getEndTime(event.startTime, event.duration)}
                         </div>
                         {event.title && (
-                            <div className={`text-(--color-primary) font-extrabold ${titleClass} ${event.position === "medium" ? "lg:-mt-0.5 lg:ml-2 lg:text-[1rem]" : ""} ${event.position === "minimum" && event.size !== 0.9 ? "lg:text-[0.85rem] lg:mt-[-7px]" : ""} ${event.position === "minimum" && event.size === 0.9 ? "lg:text-[1rem]" : ""} ${event.position === "minimum" ? " lg:mx-4.5" : ""}`}>{event.title}</div>
+                            <div className={`text-(--color-primary) font-extrabold ${titleClass} ${event.position === "medium" ? "lg:-mt-0.5 lg:ml-2 md:text-[0.75rem] lg:text-[1rem]" : ""} ${event.position === "minimum" && event.size !== 0.9 ? "md:text-[0.7rem] lg:text-[0.85rem] lg:mt-[-7px]" : ""} ${event.position === "minimum" && event.size === 0.9 ? "lg:text-[1rem]" : ""} ${event.position === "minimum" ? "xl:mx-3.5" : ""}`}>{event.title}</div>
                         )}
                     </div>
 
                     {event.location && (
-                        <div className={`font-bold ${locationClass} ${event.position === "minimum" ? "lg:text-[0.85rem]" : ""} ${event.position === "minimum" ? "lg:mt-[-1px]" : ""} text-(--color-seconde-black) flex items-center gap-1`}>
+                        <div className={`font-bold ${locationClass} ${event.position === "minimum" ? "md:text-[0.85rem]" : ""} ${event.position === "minimum" ? "lg:mt-[-1px]" : ""} text-(--color-seconde-black) flex items-center gap-1`}>
                             <svg width={iconProps.width} height={iconProps.height} viewBox="0 0 10 14" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-none flex-shrink-0">
                                 <path d="M5 0C2.24 0 0 2.24 0 5C0 8.75 5 14 5 14C5 14 10 8.75 10 5C10 2.24 7.76 0 5 0ZM5 6.8C4.01 6.8 3.2 5.99 3.2 5C3.2 4.01 4.01 3.2 5 3.2C5.99 3.2 6.8 4.01 6.8 5C6.8 5.99 5.99 6.8 5 6.8Z" fill="#E86A92" />
                             </svg>
