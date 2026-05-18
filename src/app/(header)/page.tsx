@@ -86,7 +86,7 @@ export default function Home() {
         </div>
 
         {/* Section Countdown - Section critique pour l'engagement */}
-        <Slice absolute first className="!top-20" parentClassName="h-[45vh]">
+        <Slice absolute first className="top-10 md:!top-20" parentClassName="h-[45vh]">
           <h1 id="countdown" className="text-center text-2xl 2xs:text-[36px] xs:text-4xl xs:text-5xl lg:text-6xl xl:text-[100px] sm:mt-0 mb-[20%] sm:m-auto font-bold my-[20px] sm:my-[50px]">
             EMBARQUEMENT DANS
           </h1>
@@ -95,7 +95,7 @@ export default function Home() {
         </Slice>
 
         {/* Section CTA - Engagement et conversion */}
-        <Slice absolute className="!top-52" parentClassName="h-screen mb-16 sm:mb-0 sm:h-screen">
+        <Slice absolute className="!top-52 md:!top-80" parentClassName="h-[70vh] mb-16 sm:mb-0 sm:h-screen">
           <div className="relative w-10/12 flex flex-col gap-3 py-14 px-6 justify-center rounded-3xl bg-(--color-tertiary) text-(--color-secondary) dark:text-(--color-seconde-black) m-auto">
             <h2 id="contact" className="text-center text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold my-[50px] transition-all">
               DES QUESTIONS SUR LES JNM ?

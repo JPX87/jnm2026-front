@@ -110,24 +110,24 @@
 
 @media (max-width: 580px) {
   .flip-digit-container {
-    width: clamp(21px, 5vw, 70px);
-    height: clamp(35px, 10vw, 140px);
+    width: clamp(30px, 7vw, 100px);
+    height: clamp(50px, 14vw, 200px);
   }
 
   .flip-digit-text,
   .flip-digit-face {
-    font-size: clamp(21px, 3.5vw, 56px);
+    font-size: clamp(30px, 5vw, 80px);
   }
 }
 
 @media (max-width: 380px) {
   .flip-digit-container {
-    width: clamp(17px, 5vw, 70px);
-    height: clamp(28px, 8vw, 70px);
+    width: clamp(25px, 7vw, 100px);
+    height: clamp(40px, 12vw, 200px);
   }
 
   .flip-digit-text,
   .flip-digit-face {
-    font-size: clamp(17px, 3.5vw, 56px);
+    font-size: clamp(25px, 5vw, 80px);
   }
 }
