@@ -27,3 +27,8 @@ export type User = Prisma.UserModel
  * 
  */
 export type Message = Prisma.MessageModel
+/**
+ * Model MessageRead
+ * 
+ */
+export type MessageRead = Prisma.MessageReadModel

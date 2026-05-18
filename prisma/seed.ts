@@ -23,6 +23,13 @@ async function main() {
         process.exit(1);
     }
 
+    await prisma.setting.upsert({
+        where: { key: 'loginEnabled' },
+        update: {},
+        create: { key: 'loginEnabled', value: 'true' },
+    });
+    console.log('Paramètre loginEnabled initialisé.');
+
     const existing = await prisma.user.findUnique({ where: { email: adminEmail } });
 
     if (existing) {

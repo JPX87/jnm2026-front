@@ -385,7 +385,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   User: 'User',
-  Message: 'Message'
+  Message: 'Message',
+  MessageRead: 'MessageRead'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -401,7 +402,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "message"
+    modelProps: "user" | "message" | "messageRead"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -537,6 +538,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    MessageRead: {
+      payload: Prisma.$MessageReadPayload<ExtArgs>
+      fields: Prisma.MessageReadFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MessageReadFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessageReadPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MessageReadFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessageReadPayload>
+        }
+        findFirst: {
+          args: Prisma.MessageReadFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessageReadPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MessageReadFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessageReadPayload>
+        }
+        findMany: {
+          args: Prisma.MessageReadFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessageReadPayload>[]
+        }
+        create: {
+          args: Prisma.MessageReadCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessageReadPayload>
+        }
+        createMany: {
+          args: Prisma.MessageReadCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.MessageReadDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessageReadPayload>
+        }
+        update: {
+          args: Prisma.MessageReadUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessageReadPayload>
+        }
+        deleteMany: {
+          args: Prisma.MessageReadDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MessageReadUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.MessageReadUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessageReadPayload>
+        }
+        aggregate: {
+          args: Prisma.MessageReadAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMessageRead>
+        }
+        groupBy: {
+          args: Prisma.MessageReadGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MessageReadGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MessageReadCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MessageReadCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -586,6 +653,7 @@ export const UserScalarFieldEnum = {
   ville: 'ville',
   hotelRoom: 'hotelRoom',
   hotelFloor: 'hotelFloor',
+  doorCode: 'doorCode',
   isAdmin: 'isAdmin',
   createdAt: 'createdAt'
 } as const
@@ -601,6 +669,15 @@ export const MessageScalarFieldEnum = {
 } as const
 
 export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
+
+
+export const MessageReadScalarFieldEnum = {
+  userId: 'userId',
+  messageId: 'messageId',
+  readAt: 'readAt'
+} as const
+
+export type MessageReadScalarFieldEnum = (typeof MessageReadScalarFieldEnum)[keyof typeof MessageReadScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -627,7 +704,8 @@ export const UserOrderByRelevanceFieldEnum = {
   miage: 'miage',
   ville: 'ville',
   hotelRoom: 'hotelRoom',
-  hotelFloor: 'hotelFloor'
+  hotelFloor: 'hotelFloor',
+  doorCode: 'doorCode'
 } as const
 
 export type UserOrderByRelevanceFieldEnum = (typeof UserOrderByRelevanceFieldEnum)[keyof typeof UserOrderByRelevanceFieldEnum]
@@ -793,6 +871,7 @@ export type PrismaClientOptions = ({
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   message?: Prisma.MessageOmit
+  messageRead?: Prisma.MessageReadOmit
 }
 
 /* Types for Logging */

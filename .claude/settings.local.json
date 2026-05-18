@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\bland\\\\Documents\\\\JNM\\\\jnm2026-front\" -Directory)",
+      "Bash(Select-Object Name)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\bland\\\\Documents\\\\JNM\\\\jnm2026-front\" -Recurse -Directory)",
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "Bash(npx prisma *)",
+      "Bash(Remove-Item -Recurse -Force \"src\\\\app\\\\\\(dashboard\\)\")",
+      "Bash(npx tsc *)",
+      "Bash(gh pr *)",
+      "Bash(git diff *)"
+    ]
+  }
+}

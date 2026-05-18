@@ -1,9 +1,11 @@
+import Link from 'next/link';
+
 export default async function ProfilePage() {
     return (
         <div className="max-w-6xl mx-auto px-4 sm:px-0">
             <div className="mb-6 sm:mb-8">
-                <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">Programme de l&apos;événement</h2>
-                <p className="text-white/70 text-sm sm:text-base">Découvrez toutes les informations importantes</p>
+                <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">Bienvenue aux JNM 2026 !</h2>
+                <p className="text-white/70 text-sm sm:text-base">Toulouse · 26–29 mai 2026</p>
             </div>
 
             <div className="flex flex-col lg:flex-row gap-6 sm:gap-8">
@@ -19,11 +21,14 @@ export default async function ProfilePage() {
                 {/* Cartes d'action */}
                 <div className="flex flex-col gap-4 sm:gap-6 flex-1">
                     {/* Carte Programme */}
-                    <button className="dashboard-card-shadow dashboard-glass p-4 sm:p-6 rounded-2xl sm:rounded-3xl text-left group hover:bg-white transition-all duration-300">
+                    <Link
+                        href="/app/programme"
+                        className="dashboard-card-shadow dashboard-glass p-4 sm:p-6 rounded-2xl sm:rounded-3xl text-left group hover:bg-white transition-all duration-300 block"
+                    >
                         <div className="flex items-center gap-3 sm:gap-5">
                             <div className="flex-shrink-0 w-14 h-14 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#ff89b8] to-[#ef6a9f] flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                                 <svg className="w-8 h-8 sm:w-10 sm:h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                                 </svg>
                             </div>
                             <div className="flex-1 min-w-0">
@@ -31,7 +36,7 @@ export default async function ProfilePage() {
                                     Voir le programme
                                 </h3>
                                 <p className="text-[#ef6a9f]/60 text-xs sm:text-sm">
-                                    Consultez le planning complet
+                                    4 jours · Mardi 26 → Vendredi 29 mai
                                 </p>
                             </div>
                             <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#ff89b8]/10 flex items-center justify-center group-hover:bg-[#ff89b8] group-hover:text-white transition-all duration-300">
@@ -40,10 +45,13 @@ export default async function ProfilePage() {
                                 </svg>
                             </div>
                         </div>
-                    </button>
+                    </Link>
 
                     {/* Carte Hôtel */}
-                    <button className="dashboard-card-shadow dashboard-glass p-4 sm:p-6 rounded-2xl sm:rounded-3xl text-left group hover:bg-white transition-all duration-300">
+                    <Link
+                        href="/app/lodging"
+                        className="dashboard-card-shadow dashboard-glass p-4 sm:p-6 rounded-2xl sm:rounded-3xl text-left group hover:bg-white transition-all duration-300 block"
+                    >
                         <div className="flex items-center gap-3 sm:gap-5">
                             <div className="flex-shrink-0 w-14 h-14 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl overflow-hidden shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                                 <img
@@ -73,7 +81,7 @@ export default async function ProfilePage() {
                                 </svg>
                             </div>
                         </div>
-                    </button>
+                    </Link>
 
                     {/* Info supplémentaire */}
                     <div className="dashboard-glass rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-[#ff89b8]/30">

@@ -52,7 +52,8 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
-  Message: 'Message'
+  Message: 'Message',
+  MessageRead: 'MessageRead'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -81,6 +82,7 @@ export const UserScalarFieldEnum = {
   ville: 'ville',
   hotelRoom: 'hotelRoom',
   hotelFloor: 'hotelFloor',
+  doorCode: 'doorCode',
   isAdmin: 'isAdmin',
   createdAt: 'createdAt'
 } as const
@@ -96,6 +98,15 @@ export const MessageScalarFieldEnum = {
 } as const
 
 export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
+
+
+export const MessageReadScalarFieldEnum = {
+  userId: 'userId',
+  messageId: 'messageId',
+  readAt: 'readAt'
+} as const
+
+export type MessageReadScalarFieldEnum = (typeof MessageReadScalarFieldEnum)[keyof typeof MessageReadScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -122,7 +133,8 @@ export const UserOrderByRelevanceFieldEnum = {
   miage: 'miage',
   ville: 'ville',
   hotelRoom: 'hotelRoom',
-  hotelFloor: 'hotelFloor'
+  hotelFloor: 'hotelFloor',
+  doorCode: 'doorCode'
 } as const
 
 export type UserOrderByRelevanceFieldEnum = (typeof UserOrderByRelevanceFieldEnum)[keyof typeof UserOrderByRelevanceFieldEnum]

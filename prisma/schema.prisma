@@ -17,6 +17,7 @@ model User {
   ville        String?
   hotelRoom    String
   hotelFloor   String?
+  doorCode     String?
   isAdmin      Boolean       @default(false)
   createdAt    DateTime      @default(now())
   messageReads MessageRead[]
@@ -38,4 +39,9 @@ model MessageRead {
   message   Message  @relation(fields: [messageId], references: [id], onDelete: Cascade)
 
   @@id([userId, messageId])
+}
+
+model Setting {
+  key   String @id
+  value String
 }

@@ -62,6 +62,7 @@ export async function POST(request: Request) {
                         ville: String(row['ville'] ?? '').trim() || null,
                         hotelRoom: String(row['hotelRoom'] ?? '').trim(),
                         hotelFloor: String(row['hotelFloor'] ?? '').trim() || null,
+                        doorCode: String(row['doorCode'] ?? '').trim() || null,
                         isAdmin,
                     },
                 });

@@ -8,7 +8,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
     const tabs = [
         {
-            href: '/admin',
+            href: '/app/admin',
             label: 'Utilisateurs',
             icon: (
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -17,7 +17,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             ),
         },
         {
-            href: '/admin/messages',
+            href: '/app/admin/messages',
             label: 'Messages',
             icon: (
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -1,12 +1,28 @@
 'use client';
 
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
 const HOTEL_LAT = 43.5600;
 const HOTEL_LNG = 1.4750;
 const HOTEL_QUERY = 'Hotel+Formule+1+Ramonville-Saint-Agne';
 
-export default function LogementPage() {
+type Roommate = {
+    firstname: string | null;
+    lastname: string | null;
+    miage: string | null;
+    ville: string | null;
+};
+
+type Props = {
+    hotelFloor: string | null;
+    hotelRoom: string;
+    doorCode: string | null;
+    roommates: Roommate[];
+};
+
+export default function LodgingClient({ hotelFloor, hotelRoom, doorCode, roommates }: Props) {
+    const [showRoommates, setShowRoommates] = useState(false);
+
     const openMap = useCallback(() => {
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
         if (isIOS) {
@@ -46,7 +62,7 @@ export default function LogementPage() {
                         </div>
                     </div>
 
-                    {/* Étage & Chambre */}
+                    {/* Étage, Chambre & Code */}
                     <div className="flex gap-3 sm:gap-4 mb-5 sm:mb-6">
                         <div className="flex-1 bg-gradient-to-br from-[#ff89b8]/10 to-[#ef6a9f]/10 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center border border-[#ff89b8]/20">
                             <div className="flex items-center justify-center gap-1.5 mb-1.5 sm:mb-2">
@@ -55,29 +71,81 @@ export default function LogementPage() {
                                 </svg>
                                 <p className="text-[#ef6a9f]/70 font-semibold text-xs sm:text-sm uppercase tracking-wide">Etage</p>
                             </div>
-                            <p className="text-[#ef6a9f] text-4xl sm:text-5xl font-extrabold">1</p>
+                            <p className="text-[#ef6a9f] text-4xl sm:text-5xl font-extrabold">
+                                {hotelFloor ?? '—'}
+                            </p>
                         </div>
                         <div className="flex-1 bg-gradient-to-br from-[#ff89b8]/10 to-[#ef6a9f]/10 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center border border-[#ff89b8]/20">
                             <div className="flex items-center justify-center gap-1.5 mb-1.5 sm:mb-2">
                                 <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#ef6a9f]/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                                 </svg>
                                 <p className="text-[#ef6a9f]/70 font-semibold text-xs sm:text-sm uppercase tracking-wide">Chambre</p>
                             </div>
-                            <p className="text-[#ef6a9f] text-4xl sm:text-5xl font-extrabold">12</p>
+                            <p className="text-[#ef6a9f] text-4xl sm:text-5xl font-extrabold">
+                                {hotelRoom || '—'}
+                            </p>
                         </div>
+                        {doorCode && (
+                            <div className="flex-1 bg-gradient-to-br from-[#ff89b8]/10 to-[#ef6a9f]/10 rounded-xl sm:rounded-2xl p-3 sm:p-5 text-center border border-[#ff89b8]/20">
+                                <div className="flex items-center justify-center gap-1.5 mb-1.5 sm:mb-2">
+                                    <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#ef6a9f]/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                                    </svg>
+                                    <p className="text-[#ef6a9f]/70 font-semibold text-xs sm:text-sm uppercase tracking-wide">Code</p>
+                                </div>
+                                <p className="text-[#ef6a9f] text-3xl sm:text-4xl font-extrabold tracking-widest">
+                                    {doorCode}
+                                </p>
+                            </div>
+                        )}
                     </div>
 
                     {/* Bouton colocataires */}
-                    <button className="group w-full flex items-center justify-center gap-2.5 bg-gradient-to-r from-[#ff89b8]/10 to-[#ef6a9f]/10 hover:from-[#ff89b8] hover:to-[#ef6a9f] border border-[#ff89b8]/30 rounded-xl sm:rounded-2xl py-3 sm:py-3.5 text-[#ef6a9f] hover:text-white font-semibold text-sm sm:text-base transition-all duration-300">
+                    <button
+                        onClick={() => setShowRoommates(v => !v)}
+                        className="group w-full flex items-center justify-center gap-2.5 bg-gradient-to-r from-[#ff89b8]/10 to-[#ef6a9f]/10 hover:from-[#ff89b8] hover:to-[#ef6a9f] border border-[#ff89b8]/30 rounded-xl sm:rounded-2xl py-3 sm:py-3.5 text-[#ef6a9f] hover:text-white font-semibold text-sm sm:text-base transition-all duration-300"
+                    >
                         <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
-                        Voir avec qui je partage ma chambre
-                        <svg className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        {showRoommates ? 'Masquer les colocataires' : 'Voir avec qui je partage ma chambre'}
+                        <svg
+                            className={`w-4 h-4 transition-transform duration-300 ${showRoommates ? 'rotate-180' : ''}`}
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
+
+                    {/* Liste colocataires */}
+                    {showRoommates && (
+                        <div className="mt-4 rounded-xl sm:rounded-2xl border border-[#ff89b8]/20 overflow-hidden animate-fade-in">
+                            {roommates.length === 0 ? (
+                                <div className="px-5 py-4 text-[#ef6a9f]/60 text-sm text-center">
+                                    Vous êtes seul(e) dans cette chambre.
+                                </div>
+                            ) : (
+                                <ul className="divide-y divide-[#ff89b8]/10">
+                                    {roommates.map((r, i) => {
+                                        const name = [r.firstname, r.lastname].filter(Boolean).join(' ') || '—';
+                                        const sub = [r.miage, r.ville].filter(Boolean).join(' · ');
+                                        return (
+                                            <li key={i} className="flex items-center gap-3 px-4 py-3">
+                                                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#ff89b8] to-[#ef6a9f] flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
+                                                    {(r.firstname?.[0] ?? r.lastname?.[0] ?? '?').toUpperCase()}
+                                                </div>
+                                                <div>
+                                                    <p className="text-[#ef6a9f] font-semibold text-sm">{name}</p>
+                                                    {sub && <p className="text-[#ef6a9f]/50 text-xs">{sub}</p>}
+                                                </div>
+                                            </li>
+                                        );
+                                    })}
+                                </ul>
+                            )}
+                        </div>
+                    )}
                 </div>
 
                 {/* Colonne droite */}

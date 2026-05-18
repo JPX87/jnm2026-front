@@ -5,8 +5,12 @@ export async function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
     const token = request.cookies.get('token')?.value;
 
-    const isAdminRoute = pathname.startsWith('/admin') || pathname.startsWith('/api/admin');
-    const isProtectedRoute = isAdminRoute || pathname.startsWith('/lodging') || pathname.startsWith('/profile') || pathname.startsWith('/notifications');
+    const isAdminRoute = pathname.startsWith('/app/admin') || pathname.startsWith('/api/admin');
+    const isProtectedRoute = isAdminRoute
+        || pathname.startsWith('/app/lodging')
+        || pathname.startsWith('/app/profile')
+        || pathname.startsWith('/app/notifications')
+        || pathname.startsWith('/app/programme');
 
     if (!isProtectedRoute) return NextResponse.next();
 
@@ -23,12 +27,12 @@ export async function middleware(request: NextRequest) {
     }
 
     if (isAdminRoute && !payload.isAdmin) {
-        return NextResponse.redirect(new URL('/profile', request.url));
+        return NextResponse.redirect(new URL('/app/lodging', request.url));
     }
 
     return NextResponse.next();
 }
 
 export const config = {
-    matcher: ['/admin/:path*', '/api/admin/:path*', '/lodging/:path*', '/profile/:path*', '/lodging', '/profile', '/notifications'],
+    matcher: ['/app/:path*', '/api/admin/:path*'],
 };

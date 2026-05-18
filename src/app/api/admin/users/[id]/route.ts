@@ -7,7 +7,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
         const { id } = await params;
         const userId = parseInt(id);
         const body = await request.json();
-        const { email, password, firstname, lastname, miage, ville, hotelRoom, hotelFloor, isAdmin } = body;
+        const { email, password, firstname, lastname, miage, ville, hotelRoom, hotelFloor, doorCode, isAdmin } = body;
 
         const updateData: Record<string, unknown> = {
             email,
@@ -17,6 +17,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
             ville: ville || null,
             hotelRoom: hotelRoom || '',
             hotelFloor: hotelFloor || null,
+            doorCode: doorCode || null,
             isAdmin: isAdmin ?? false,
         };
 
@@ -36,6 +37,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
                 ville: true,
                 hotelRoom: true,
                 hotelFloor: true,
+                doorCode: true,
                 isAdmin: true,
                 createdAt: true,
             },

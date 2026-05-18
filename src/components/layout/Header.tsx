@@ -3,9 +3,16 @@
 import { MobileNav } from './MobileNav';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export function Header({ title }: { title: string }) {
     const [unreadCount, setUnreadCount] = useState(0);
+    const router = useRouter();
+
+    const handleLogout = async () => {
+        await fetch('/api/auth/logout', { method: 'POST' });
+        router.push('/login');
+    };
 
     useEffect(() => {
         const fetchCount = async () => {
@@ -35,7 +42,7 @@ export function Header({ title }: { title: string }) {
 
             <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
                 <Link
-                    href="/notifications"
+                    href="/app/notifications"
                     className="relative flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white/10 hover:bg-white/20 text-[#ef6a9f] transition-all duration-300 hover:scale-105"
                     title="Notifications"
                 >
@@ -49,7 +56,7 @@ export function Header({ title }: { title: string }) {
                     )}
                 </Link>
 
-                <button className="group flex items-center gap-2 bg-gradient-to-r from-[#ff89b8] to-[#ef6a9f] text-white px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 rounded-full font-medium shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                <button onClick={handleLogout} className="group flex items-center gap-2 bg-gradient-to-r from-[#ff89b8] to-[#ef6a9f] text-white px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 rounded-full font-medium shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
                     <svg
                         className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:-translate-x-1"
                         fill="none"

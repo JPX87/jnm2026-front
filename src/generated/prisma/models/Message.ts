@@ -208,6 +208,7 @@ export type MessageWhereInput = {
   title?: Prisma.StringFilter<"Message"> | string
   content?: Prisma.StringFilter<"Message"> | string
   createdAt?: Prisma.DateTimeFilter<"Message"> | Date | string
+  reads?: Prisma.MessageReadListRelationFilter
 }
 
 export type MessageOrderByWithRelationInput = {
@@ -215,6 +216,7 @@ export type MessageOrderByWithRelationInput = {
   title?: Prisma.SortOrder
   content?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  reads?: Prisma.MessageReadOrderByRelationAggregateInput
   _relevance?: Prisma.MessageOrderByRelevanceInput
 }
 
@@ -226,6 +228,7 @@ export type MessageWhereUniqueInput = Prisma.AtLeast<{
   title?: Prisma.StringFilter<"Message"> | string
   content?: Prisma.StringFilter<"Message"> | string
   createdAt?: Prisma.DateTimeFilter<"Message"> | Date | string
+  reads?: Prisma.MessageReadListRelationFilter
 }, "id">
 
 export type MessageOrderByWithAggregationInput = {
@@ -254,6 +257,7 @@ export type MessageCreateInput = {
   title: string
   content: string
   createdAt?: Date | string
+  reads?: Prisma.MessageReadCreateNestedManyWithoutMessageInput
 }
 
 export type MessageUncheckedCreateInput = {
@@ -261,12 +265,14 @@ export type MessageUncheckedCreateInput = {
   title: string
   content: string
   createdAt?: Date | string
+  reads?: Prisma.MessageReadUncheckedCreateNestedManyWithoutMessageInput
 }
 
 export type MessageUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  reads?: Prisma.MessageReadUpdateManyWithoutMessageNestedInput
 }
 
 export type MessageUncheckedUpdateInput = {
@@ -274,6 +280,7 @@ export type MessageUncheckedUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  reads?: Prisma.MessageReadUncheckedUpdateManyWithoutMessageNestedInput
 }
 
 export type MessageCreateManyInput = {
@@ -331,6 +338,96 @@ export type MessageSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
 }
 
+export type MessageScalarRelationFilter = {
+  is?: Prisma.MessageWhereInput
+  isNot?: Prisma.MessageWhereInput
+}
+
+export type MessageCreateNestedOneWithoutReadsInput = {
+  create?: Prisma.XOR<Prisma.MessageCreateWithoutReadsInput, Prisma.MessageUncheckedCreateWithoutReadsInput>
+  connectOrCreate?: Prisma.MessageCreateOrConnectWithoutReadsInput
+  connect?: Prisma.MessageWhereUniqueInput
+}
+
+export type MessageUpdateOneRequiredWithoutReadsNestedInput = {
+  create?: Prisma.XOR<Prisma.MessageCreateWithoutReadsInput, Prisma.MessageUncheckedCreateWithoutReadsInput>
+  connectOrCreate?: Prisma.MessageCreateOrConnectWithoutReadsInput
+  upsert?: Prisma.MessageUpsertWithoutReadsInput
+  connect?: Prisma.MessageWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MessageUpdateToOneWithWhereWithoutReadsInput, Prisma.MessageUpdateWithoutReadsInput>, Prisma.MessageUncheckedUpdateWithoutReadsInput>
+}
+
+export type MessageCreateWithoutReadsInput = {
+  title: string
+  content: string
+  createdAt?: Date | string
+}
+
+export type MessageUncheckedCreateWithoutReadsInput = {
+  id?: number
+  title: string
+  content: string
+  createdAt?: Date | string
+}
+
+export type MessageCreateOrConnectWithoutReadsInput = {
+  where: Prisma.MessageWhereUniqueInput
+  create: Prisma.XOR<Prisma.MessageCreateWithoutReadsInput, Prisma.MessageUncheckedCreateWithoutReadsInput>
+}
+
+export type MessageUpsertWithoutReadsInput = {
+  update: Prisma.XOR<Prisma.MessageUpdateWithoutReadsInput, Prisma.MessageUncheckedUpdateWithoutReadsInput>
+  create: Prisma.XOR<Prisma.MessageCreateWithoutReadsInput, Prisma.MessageUncheckedCreateWithoutReadsInput>
+  where?: Prisma.MessageWhereInput
+}
+
+export type MessageUpdateToOneWithWhereWithoutReadsInput = {
+  where?: Prisma.MessageWhereInput
+  data: Prisma.XOR<Prisma.MessageUpdateWithoutReadsInput, Prisma.MessageUncheckedUpdateWithoutReadsInput>
+}
+
+export type MessageUpdateWithoutReadsInput = {
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  content?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type MessageUncheckedUpdateWithoutReadsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  content?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+
+/**
+ * Count Type MessageCountOutputType
+ */
+
+export type MessageCountOutputType = {
+  reads: number
+}
+
+export type MessageCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  reads?: boolean | MessageCountOutputTypeCountReadsArgs
+}
+
+/**
+ * MessageCountOutputType without action
+ */
+export type MessageCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MessageCountOutputType
+   */
+  select?: Prisma.MessageCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * MessageCountOutputType without action
+ */
+export type MessageCountOutputTypeCountReadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MessageReadWhereInput
+}
 
 
 export type MessageSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -338,6 +435,8 @@ export type MessageSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   title?: boolean
   content?: boolean
   createdAt?: boolean
+  reads?: boolean | Prisma.Message$readsArgs<ExtArgs>
+  _count?: boolean | Prisma.MessageCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["message"]>
 
 
@@ -350,10 +449,16 @@ export type MessageSelectScalar = {
 }
 
 export type MessageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "content" | "createdAt", ExtArgs["result"]["message"]>
+export type MessageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  reads?: boolean | Prisma.Message$readsArgs<ExtArgs>
+  _count?: boolean | Prisma.MessageCountOutputTypeDefaultArgs<ExtArgs>
+}
 
 export type $MessagePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Message"
-  objects: {}
+  objects: {
+    reads: Prisma.$MessageReadPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     title: string
@@ -699,6 +804,7 @@ readonly fields: MessageFieldRefs;
  */
 export interface Prisma__MessageClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  reads<T extends Prisma.Message$readsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Message$readsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MessageReadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -749,6 +855,10 @@ export type MessageFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Inter
    */
   omit?: Prisma.MessageOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MessageInclude<ExtArgs> | null
+  /**
    * Filter, which Message to fetch.
    */
   where: Prisma.MessageWhereUniqueInput
@@ -767,6 +877,10 @@ export type MessageFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extension
    */
   omit?: Prisma.MessageOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MessageInclude<ExtArgs> | null
+  /**
    * Filter, which Message to fetch.
    */
   where: Prisma.MessageWhereUniqueInput
@@ -784,6 +898,10 @@ export type MessageFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Omit specific fields from the Message
    */
   omit?: Prisma.MessageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MessageInclude<ExtArgs> | null
   /**
    * Filter, which Message to fetch.
    */
@@ -833,6 +951,10 @@ export type MessageFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions
    */
   omit?: Prisma.MessageOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MessageInclude<ExtArgs> | null
+  /**
    * Filter, which Message to fetch.
    */
   where?: Prisma.MessageWhereInput
@@ -880,6 +1002,10 @@ export type MessageFindManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Omit specific fields from the Message
    */
   omit?: Prisma.MessageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MessageInclude<ExtArgs> | null
   /**
    * Filter, which Messages to fetch.
    */
@@ -929,6 +1055,10 @@ export type MessageCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   omit?: Prisma.MessageOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MessageInclude<ExtArgs> | null
+  /**
    * The data needed to create a Message.
    */
   data: Prisma.XOR<Prisma.MessageCreateInput, Prisma.MessageUncheckedCreateInput>
@@ -957,6 +1087,10 @@ export type MessageUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the Message
    */
   omit?: Prisma.MessageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MessageInclude<ExtArgs> | null
   /**
    * The data needed to update a Message.
    */
@@ -998,6 +1132,10 @@ export type MessageUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   omit?: Prisma.MessageOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MessageInclude<ExtArgs> | null
+  /**
    * The filter to search for the Message to update in case it exists.
    */
   where: Prisma.MessageWhereUniqueInput
@@ -1024,6 +1162,10 @@ export type MessageDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   omit?: Prisma.MessageOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MessageInclude<ExtArgs> | null
+  /**
    * Filter which Message to delete.
    */
   where: Prisma.MessageWhereUniqueInput
@@ -1044,6 +1186,30 @@ export type MessageDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
+ * Message.reads
+ */
+export type Message$readsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MessageRead
+   */
+  select?: Prisma.MessageReadSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MessageRead
+   */
+  omit?: Prisma.MessageReadOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MessageReadInclude<ExtArgs> | null
+  where?: Prisma.MessageReadWhereInput
+  orderBy?: Prisma.MessageReadOrderByWithRelationInput | Prisma.MessageReadOrderByWithRelationInput[]
+  cursor?: Prisma.MessageReadWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MessageReadScalarFieldEnum | Prisma.MessageReadScalarFieldEnum[]
+}
+
+/**
  * Message without action
  */
 export type MessageDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1055,4 +1221,8 @@ export type MessageDefaultArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Omit specific fields from the Message
    */
   omit?: Prisma.MessageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MessageInclude<ExtArgs> | null
 }
