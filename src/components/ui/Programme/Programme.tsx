@@ -34,28 +34,28 @@ const programme: DaySchedule[] = [
             {
                 title: "Arrivée des participants → Université de Toulouse",
                 content: "",
-                startTime: "5h",
-                duration: 9,
+                startTime: "9h",
+                duration: 5,
             },
             {
-                title: "PAUSE",
-                startTime: "18h",
-                duration: 2,
+                title: "Ouverture des JNM 2026",
+                location: "Bât. U4",
+                // content: "14h: Étiquetage bagages & jeux d'attente\n15h: Ouverture JNM26 & Discours\n16h - 18h: Activité « Ice Breaker »",
+                startTime: "14h30",
+                duration: 1.1,
                 borderDisable: true,
             },
             {
-                title: "Accueil et Ouverture des JNM 2026",
-                location: "Bât. U4 ou U5",
-               // content: "14h: Étiquetage bagages & jeux d'attente\n15h: Ouverture JNM26 & Discours\n16h - 18h: Activité « Ice Breaker »",
-                startTime: "14h",
-                duration: 4,
+                title: "Jeu de cohésion",
+                startTime: "16h",
+                duration: 2,
             },
             {
-                title: "Soirée d'Accueil",
-                location: "Esplanade ou l'Upsidom",
-               // content: "Détails à définir",
-                startTime: "20h",
-                duration: 3,
+                title: "Cocktail de bienvenue",
+                location: "Upsidom",
+                // content: "Détails à définir",
+                startTime: "18h",
+                duration: 2,
             },
         ],
     },
@@ -63,23 +63,30 @@ const programme: DaySchedule[] = [
         day: "Mercredi 27/05",
         events: [
             {
+                title: "Petit déjeuner",
+                location: "Bât. 2A",
+                startTime: "9h",
+                duration: 1.5,
+            },
+            {
                 title: "Rencontres ALUMNI & Forum",
                 location: "Amphi GRIGNARD & Salles 2A",
-               // content: "09h - 10h30: Tables rondes Alumni (Perspectives métiers, carrières, VIE, consulting, influence)\n11h - 12h30: Forum des entreprises (Rencontres MIAGE/Alumni)",
+                // content: "09h - 10h30: Tables rondes Alumni (Perspectives métiers, carrières, VIE, consulting, influence)\n11h - 12h30: Forum des entreprises (Rencontres MIAGE/Alumni)",
                 startTime: "9h",
                 duration: 3.5,
             },
             {
                 title: "PAUSE",
                 location: "Bât. 2A",
-              //  content: "Buffet avec les partenaires",
+                //  content: "Buffet avec les partenaires",
                 startTime: "12h30",
                 duration: 1.5,
                 borderDisable: true,
             },
             {
                 title: "Ateliers & Challenges",
-             //   content: "14h - 15h30: Green IT (IA & empreinte carbone / IA conscientisée)\n16h - 18h: E-Sport (Étudiants vs Entreprises avec CGI & EXTIA)",
+                //   content: "14h - 15h30: Green IT (IA & empreinte carbone / IA conscientisée)\n16h - 18h: E-Sport (Étudiants vs Entreprises avec CGI & EXTIA)",
+                location: "Amphi GRIGNARD & Salles 2A",
                 startTime: "14h",
                 duration: 4,
             },
@@ -90,9 +97,9 @@ const programme: DaySchedule[] = [
                 borderDisable: true,
             },
             {
-                title: "Soirée",
+                title: "Soirée conviviale",
                 startTime: "20h",
-                duration: 3,
+                duration: 4,
             },
         ],
     },
@@ -103,19 +110,19 @@ const programme: DaySchedule[] = [
                 title: "Petit déjeuner",
                 location: "Bât. 2A",
                 startTime: "9h",
-                duration: 3,
+                duration: 1.5,
             },
             {
                 title: "Team building",
                 location: "Centre-ville",
-              //  content: "Découverte de Toulouse / Jeux de piste\n\nAG CDM en parallèle.",
+                //  content: "Découverte de Toulouse / Jeux de piste\n\nAG CDM en parallèle.",
                 startTime: "9h",
                 duration: 3,
             },
             {
                 title: "PAUSE",
                 content: "Pique-nique",
-                location: "Prairie des filtres ou Jardin des plantes",
+                location: "Prairie des filtres",
                 startTime: "12h",
                 duration: 3,
                 borderDisable: true,
@@ -123,9 +130,17 @@ const programme: DaySchedule[] = [
             {
                 title: "Conférences & Ateliers",
                 location: "Amphi CONCORDE / GRIGNARD",
-              //  content: "15h - 16h30: Conférence Table Ronde (Aéronautique / Cyberdéfense)\n16h45 - 18h: Atelier Pitch en ascenseur (Pecha Kucha)",
+                //  content: "15h - 16h30: Conférence Table Ronde (Aéronautique / Cyberdéfense)\n16h45 - 18h: Atelier Pitch en ascenseur (Pecha Kucha)",
                 startTime: "15h",
                 duration: 3,
+            },
+            {
+                title: "16h45 - Atelier pitch ascenseur",
+                location: "U6",
+                //  content: "15h - 16h30: Conférence Table Ronde (Aéronautique / Cyberdéfense)\n16h45 - 18h: Atelier Pitch en ascenseur (Pecha Kucha)",
+                startTime: "16h45",
+                duration: 1,
+                borderDisable: true,
             },
             {
                 title: "PAUSE",
@@ -136,7 +151,7 @@ const programme: DaySchedule[] = [
             {
                 title: "Soirée conviviale",
                 location: "« Central » de la fac",
-             //   content: "Quizz MIAGE & JNM (Kahoot)",
+                //   content: "Quizz MIAGE & JNM (Kahoot)",
                 startTime: "20h",
                 duration: 3,
             },
@@ -146,28 +161,43 @@ const programme: DaySchedule[] = [
         day: "Vendredi 29/05",
         events: [
             {
-                title: "Concours MIAGE",
-                location: "Amphi Médecine (Allées Jules Guesde)",
-             //   content: "Présentation des vidéos / ballon de rugby Concours MIAGE",
+                title: "Petit déjeuner",
+                location: "Bât. 2A",
                 startTime: "9h",
-                duration: 3,
-            },
-            {
-                title: "PAUSE",
-                startTime: "12h",
-                duration: 2,
+                duration: 1.5,
                 borderDisable: true,
             },
             {
-                title: "Clôture",
-               // content: "Résultats « Concours MIAGE »\nClôture de l'événement",
+                title: "Concours MIAGE",
+                location: "Amphi Médecine (Allées Jules Guesde)",
+                //   content: "Présentation des vidéos / ballon de rugby Concours MIAGE",
+                startTime: "9h",
+                duration: 2,
+            },
+            {
+                title: "11h - Activité Vélo Smoothie",
+                location: "Amphi Médecine (Allées Jules Guesde)",
+                startTime: "11h",
+                duration: 1.5,
+                borderDisable: true,
+            },
+            {
+                title: "Pique nique",
+                startTime: "12h30",
+                location: "Prairie des filtres",
+                duration: 1.5,
+                borderDisable: true,
+            },
+            {
+                title: "Résultat des concours",
+                location: "Amphi Médecine",
                 startTime: "14h",
-                duration: 1,
+                duration: 2,
             },
             {
                 title: "PAUSE",
-                startTime: "15h",
-                duration: 5,
+                startTime: "16h",
+                duration: 4,
                 borderDisable: true,
             },
             {
@@ -317,14 +347,14 @@ export default function Programme() {
             groups[event.startTime].push(event);
         });
 
-        return Object.values(groups).flatMap((group) => 
+        return Object.values(groups).flatMap((group) =>
             group.map((event, index) => (
-                <EventCard 
-                    key={`${event.startTime}-${event.title || index}`} 
-                    event={event} 
-                    isPositioned={true} 
-                    minTime={minTime} 
-                    maxTime={maxTime} 
+                <EventCard
+                    key={`${event.startTime}-${event.title || index}`}
+                    event={event}
+                    isPositioned={true}
+                    minTime={minTime}
+                    maxTime={maxTime}
                     column={index}
                     totalColumns={group.length}
                 />
