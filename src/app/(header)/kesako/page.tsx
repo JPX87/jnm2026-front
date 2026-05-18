@@ -25,7 +25,7 @@ export default function KesakoPage() {
                 <Section variant="primary" maxWidth="md" contentClassName="gap-4">
                     <p className="text-lg md:text-xl lg:text-2xl leading-relaxed">
                         Prochaine escale : <strong>TOULOUSE</strong>.
-                        Plus qu&apos;un événement, c&apos;est <strong>LE</strong> moment où tout le réseau ne fait qu&apos;un.
+                        Plus qu&apos;un événement, c&apos;est <strong>LE</strong>{' '}moment où tout le réseau ne fait qu&apos;un.
                     </p>
 
                     <p className="text-lg md:text-xl lg:text-2xl leading-relaxed">
