@@ -9,8 +9,9 @@ const timeToMinutes = (time: string): number => {
 // Format heure à partir de minutes depuis minuit
 const minutesToTime = (minutes: number): string => {
     const h = Math.floor(minutes / 60);
+    const hAdjusted = h >= 24 ? h - 24 : h; // Ajuster si dépasse 24h
     const m = minutes % 60;
-    return m === 0 ? `${h}h` : `${h}h${m}`;
+    return m === 0 ? `${hAdjusted}h` : `${hAdjusted}h${m}`;
 };
 
 interface EventBlock {
@@ -19,6 +20,8 @@ interface EventBlock {
     content?: string;
     startTime: string; // Format: "9h", "14h30", etc
     duration: number; // En heures (peut être 2.5, 3, 4, etc)
+    size?: number;
+    position?: "minimum" | "midium" | "medium";
     borderDisable?: boolean;
 }
 
@@ -33,9 +36,10 @@ const programme: DaySchedule[] = [
         events: [
             {
                 title: "Arrivée des participants → Université de Toulouse",
-                content: "",
-                startTime: "9h",
-                duration: 5,
+                // Midi picnique ou crous
+                content: "Pensez à apporter votre repas du midi ou à prévoir une solution de restauration sur place (Crous, restaurants à proximité, etc).",
+                startTime: "8h",
+                duration: 6,
             },
             {
                 title: "Ouverture des JNM 2026",
@@ -49,13 +53,28 @@ const programme: DaySchedule[] = [
                 title: "Jeu de cohésion",
                 startTime: "16h",
                 duration: 2,
+                size: 1.9,
             },
             {
                 title: "Cocktail de bienvenue",
                 location: "Upsidom",
                 // content: "Détails à définir",
                 startTime: "18h",
+                duration: 3,
+                size: 2.9,
+            },
+            {
+                title: "Soirée au délirium",
+                location: "Délirium Café",
+                // content: "Détails à définir",
+                startTime: "21h",
+                duration: 3,
+            },
+            {
+                title: "",
+                startTime: "24h",
                 duration: 2,
+                borderDisable: true,
             },
         ],
     },
@@ -63,17 +82,35 @@ const programme: DaySchedule[] = [
         day: "Mercredi 27/05",
         events: [
             {
+                title: "",
+                startTime: "8h",
+                duration: 1,
+                borderDisable: true,
+            },
+            {
                 title: "Petit déjeuner",
                 location: "Bât. 2A",
                 startTime: "9h",
-                duration: 1.5,
+                duration: 0.5,
+                size: 0.4,
+                position: "minimum"
             },
             {
-                title: "Rencontres ALUMNI & Forum",
+                title: "Rencontres ALUMNI",
                 location: "Amphi GRIGNARD & Salles 2A",
                 // content: "09h - 10h30: Tables rondes Alumni (Perspectives métiers, carrières, VIE, consulting, influence)\n11h - 12h30: Forum des entreprises (Rencontres MIAGE/Alumni)",
-                startTime: "9h",
-                duration: 3.5,
+                startTime: "9h30",
+                duration: 1,
+                size: 1.4,
+                position: "medium"
+            },
+            {
+                title: "Forum Entreprises",
+                location: "Amphi GRIGNARD & Salles 2A",
+                // content: "09h - 10h30: Tables rondes Alumni (Perspectives métiers, carrières, VIE, consulting, influence)\n11h - 12h30: Forum des entreprises (Rencontres MIAGE/Alumni)",
+                startTime: "11h",
+                duration: 1.5,
+                position: "medium"
             },
             {
                 title: "PAUSE",
@@ -88,7 +125,15 @@ const programme: DaySchedule[] = [
                 //   content: "14h - 15h30: Green IT (IA & empreinte carbone / IA conscientisée)\n16h - 18h: E-Sport (Étudiants vs Entreprises avec CGI & EXTIA)",
                 location: "Amphi GRIGNARD & Salles 2A",
                 startTime: "14h",
-                duration: 4,
+                duration: 1.5,
+                size: 1.9
+            },
+            {
+                title: "Atelier E-sport",
+                //   content: "14h - 15h30: Green IT (IA & empreinte carbone / IA conscientisée)\n16h - 18h: E-Sport (Étudiants vs Entreprises avec CGI & EXTIA)",
+                location: "Amphi GRIGNARD & Salles 2A",
+                startTime: "16h",
+                duration: 2,
             },
             {
                 title: "PAUSE",
@@ -101,30 +146,46 @@ const programme: DaySchedule[] = [
                 startTime: "20h",
                 duration: 4,
             },
+            {
+                title: "",
+                startTime: "24h",
+                duration: 2,
+                borderDisable: true,
+            },
         ],
     },
     {
         day: "Jeudi 28/05",
         events: [
             {
+                title: "",
+                startTime: "8h",
+                duration: 1,
+                borderDisable: true,
+            },
+            {
                 title: "Petit déjeuner",
                 location: "Bât. 2A",
                 startTime: "9h",
-                duration: 1.5,
+                duration: 0.5,
+                size: 0.4,
+                position: "minimum"
             },
             {
+
                 title: "Team building",
                 location: "Centre-ville",
                 //  content: "Découverte de Toulouse / Jeux de piste\n\nAG CDM en parallèle.",
-                startTime: "9h",
-                duration: 3,
+                startTime: "9h30",
+                duration: 2.5,
             },
             {
                 title: "PAUSE",
                 content: "Pique-nique",
                 location: "Prairie des filtres",
                 startTime: "12h",
-                duration: 3,
+                duration: 2,
+                size: 2.5,
                 borderDisable: true,
             },
             {
@@ -132,15 +193,16 @@ const programme: DaySchedule[] = [
                 location: "Amphi CONCORDE / GRIGNARD",
                 //  content: "15h - 16h30: Conférence Table Ronde (Aéronautique / Cyberdéfense)\n16h45 - 18h: Atelier Pitch en ascenseur (Pecha Kucha)",
                 startTime: "15h",
-                duration: 3,
+                duration: 1.5,
+                size: 1.65,
             },
             {
-                title: "16h45 - Atelier pitch ascenseur",
-                location: "U6",
+                title: "Atelier pitch ascenseur",
+                location: "Bât. U6",
                 //  content: "15h - 16h30: Conférence Table Ronde (Aéronautique / Cyberdéfense)\n16h45 - 18h: Atelier Pitch en ascenseur (Pecha Kucha)",
                 startTime: "16h45",
-                duration: 1,
-                borderDisable: true,
+                duration: 1.25,
+                position: "medium"
             },
             {
                 title: "PAUSE",
@@ -153,7 +215,13 @@ const programme: DaySchedule[] = [
                 location: "« Central » de la fac",
                 //   content: "Quizz MIAGE & JNM (Kahoot)",
                 startTime: "20h",
-                duration: 3,
+                duration: 4,
+            },
+            {
+                title: "",
+                startTime: "24h",
+                duration: 2,
+                borderDisable: true,
             },
         ],
     },
@@ -163,28 +231,32 @@ const programme: DaySchedule[] = [
             {
                 title: "Petit déjeuner",
                 location: "Bât. 2A",
-                startTime: "9h",
-                duration: 1.5,
-                borderDisable: true,
+                startTime: "8h",
+                duration: 1,
+                size: 0.9,
+                position: "minimum"
             },
             {
                 title: "Concours MIAGE",
-                location: "Amphi Médecine (Allées Jules Guesde)",
+                location: "Amphi Médecine",
                 //   content: "Présentation des vidéos / ballon de rugby Concours MIAGE",
                 startTime: "9h",
                 duration: 2,
+                size: 1.9,
+                position: "medium"
             },
             {
-                title: "11h - Activité Vélo Smoothie",
-                location: "Amphi Médecine (Allées Jules Guesde)",
+                title: "Activité Vélo Smoothie",
+                location: "Amphi Médecine",
                 startTime: "11h",
                 duration: 1.5,
-                borderDisable: true,
+                size: 1.7,
+                position: "medium"
             },
             {
                 title: "Pique nique",
                 startTime: "12h30",
-                location: "Prairie des filtres",
+                location: "Jardin des Plantes",
                 duration: 1.5,
                 borderDisable: true,
             },
@@ -203,7 +275,7 @@ const programme: DaySchedule[] = [
             {
                 title: "GALA",
                 startTime: "20h",
-                duration: 4,
+                duration: 6,
             },
         ],
     },
@@ -250,7 +322,7 @@ function EventCard({ event, isPositioned = false, minTime = 0, maxTime = 1440, c
 
     if (isPositioned && maxTime > minTime) {
         const eventStart = timeToMinutes(event.startTime);
-        const eventDuration = event.duration * 60;
+        const eventDuration = (event.size ?? event.duration) * 60;
         const dayDurationMinutes = maxTime - minTime;
         topPercent = ((eventStart - minTime) / dayDurationMinutes) * 100;
         heightPercent = (eventDuration / dayDurationMinutes) * 100;
@@ -276,20 +348,23 @@ function EventCard({ event, isPositioned = false, minTime = 0, maxTime = 1440, c
 
     return (
         <div
-            className={`${isPositioned ? "absolute" : ""} ${isEmptyBlock ? "border-0" : `bg-(--color-secondary) border-2 border-(--color-seconde-black) rounded-lg ${paddingClass} shadow-md`
+            className={`${isPositioned ? "absolute" : ""} ${isEmptyBlock ? "border-0" : `bg-(--color-secondary) border-2 border-(--color-seconde-black) rounded-lg ${paddingClass} shadow-md ${event.position === "minimum" ? "lg:flex lg:flex-row" : ""}`
                 } ${!isPositioned && !isEmptyBlock ? `border-2 border-(--color-seconde-black) rounded-lg ${paddingClass} text-(--color-seconde-black) flex flex-col ${gapClass} shadow-md` : ""} text-(--color-seconde-black) flex flex-col ${gapClass} overflow-hidden`}
             style={positionedStyle}
         >
             {!isEmptyBlock ? (
                 <>
-                    <div className={`font-bold ${timeClass} text-(--color-seconde-black) opacity-60 flex items-center gap-1`}>
-                        {event.startTime} - {getEndTime(event.startTime, event.duration)}
+                    <div className={event.position === "medium" || event.position === "minimum" ? "lg:flex" : ""}>
+                        <div className={`font-bold ${timeClass} text-(--color-seconde-black) opacity-60 flex items-center gap-1`}>
+                            {event.startTime} - {getEndTime(event.startTime, event.duration)}
+                        </div>
+                        {event.title && (
+                            <div className={`text-(--color-primary) font-extrabold ${titleClass} ${event.position === "medium" ? "lg:-mt-0.5 lg:ml-2 lg:text-[1rem]" : ""} ${event.position === "minimum" && event.size !== 0.9 ? "lg:text-[0.85rem] lg:mt-[-7px]" : ""} ${event.position === "minimum" && event.size === 0.9 ? "lg:text-[1rem]" : ""} ${event.position === "minimum" ? " lg:mx-4.5" : ""}`}>{event.title}</div>
+                        )}
                     </div>
-                    {event.title && (
-                        <div className={`text-(--color-primary) font-extrabold ${titleClass}`}>{event.title}</div>
-                    )}
+
                     {event.location && (
-                        <div className={`font-bold ${locationClass} text-(--color-seconde-black) flex items-center gap-1`}>
+                        <div className={`font-bold ${locationClass} ${event.position === "minimum" ? "lg:text-[0.85rem]" : ""} ${event.position === "minimum" ? "lg:mt-[-1px]" : ""} text-(--color-seconde-black) flex items-center gap-1`}>
                             <svg width={iconProps.width} height={iconProps.height} viewBox="0 0 10 14" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-none flex-shrink-0">
                                 <path d="M5 0C2.24 0 0 2.24 0 5C0 8.75 5 14 5 14C5 14 10 8.75 10 5C10 2.24 7.76 0 5 0ZM5 6.8C4.01 6.8 3.2 5.99 3.2 5C3.2 4.01 4.01 3.2 5 3.2C5.99 3.2 6.8 4.01 6.8 5C6.8 5.99 5.99 6.8 5 6.8Z" fill="#E86A92" />
                             </svg>
@@ -371,13 +446,16 @@ export default function Programme() {
                     <div className="absolute top-14 bottom-0 left-1/2 -translate-x-1/2 w-[2px] border-l-[2px] border-dotted border-(--color-primary) dark:border-(--color-secondary)" />
                     {Array.from({ length: Math.floor(totalHours) + 1 }).map((_, i) => {
                         const hour = Math.floor(globalMinTime / 60) + i;
+
+                        // If hour is outside 24h range then - 24
+                        const adjustedHour = hour >= 24 ? hour - 24 : hour;
                         return (
                             <div
                                 key={i}
                                 className="flex flex-col items-center justify-center text-(--color-primary) dark:text-(--color-secondary) font-extrabold text-[0.85rem] relative z-10"
                                 style={{ height: `${(60 / (globalMaxTime - globalMinTime)) * 100}%` }}
                             >
-                                <span className="bg-(--color-secondary) dark:bg-(--color-seconde-black) transition-all duration-300 px-1 py-[0.1rem]">{hour}h</span>
+                                <span className="bg-(--color-secondary) dark:bg-(--color-seconde-black) transition-all duration-300 px-1 py-[0.1rem]">{adjustedHour}h</span>
                             </div>
                         );
                     })}
