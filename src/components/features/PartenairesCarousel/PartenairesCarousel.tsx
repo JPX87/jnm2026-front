@@ -6,29 +6,30 @@ import { useEffect, useRef } from "react";
 
 const partners = [
   { src: "/img/partenaires/soprasteria.png", alt: "Sopra Steria", tier: 0, maxW: "92%", maxH: "90%" },
-  { src: "/img/partenaires/atos.png",        alt: "Atos",         tier: 1, maxW: "48%", maxH: "36%" },
-  { src: "/img/partenaires/CGI.png",         alt: "CGI",          tier: 1, maxW: "48%", maxH: "36%" },
-  { src: "/img/partenaires/extia.png",       alt: "Extia",        tier: 1, maxW: "48%", maxH: "36%" },
-  { src: "/img/partenaires/orange.jpg",      alt: "Orange",       tier: 1 },
-  { src: "/img/partenaires/pap.png",         alt: "ProApro",      tier: 2, maxW: "48%", maxH: "36%" },
-  { src: "/img/partenaires/pwc.png",         alt: "PwC",          tier: 2, maxW: "48%", maxH: "36%" },
-  { src: "/img/partenaires/AbsysCyborg.png", alt: "AbsysCyborg",  tier: 3 },
-  { src: "/img/partenaires/agirc-arrco.png", alt: "Agirc-Arrco",  tier: 3 },
+  { src: "/img/partenaires/atos.jpg", alt: "Atos", tier: 1, maxW: "48%", maxH: "36%", backColor: "#fff" },
+  { src: "/img/partenaires/capgemini.png", alt: "Capgemini", tier: 1, maxW: "48%", maxH: "36%" },
+  { src: "/img/partenaires/CGI.jpg", alt: "CGI", tier: 1, maxW: "48%", maxH: "36%", backColor: "#fff" },
+  { src: "/img/partenaires/extia.png", alt: "Extia", tier: 1, maxW: "48%", maxH: "36%" },
+  { src: "/img/partenaires/orange.jpg", alt: "Orange", tier: 1 },
+  { src: "/img/partenaires/pap.png", alt: "ProApro", tier: 2, maxW: "48%", maxH: "36%" },
+  { src: "/img/partenaires/pwc.png", alt: "PwC", tier: 2, maxW: "48%", maxH: "36%" },
+  { src: "/img/partenaires/AbsysCyborg.png", alt: "AbsysCyborg", tier: 3 },
+  { src: "/img/partenaires/agirc-arrco.jpg", alt: "Agirc-Arrco", tier: 3, backColor: "#fff" },
 ];
 
 const tierConfig = [
-  { bodyW: 260, bodyH: 200, handleW: 100, handleH: 28, logoW: 210, logoH: 80, maxW: "78%", maxH: "58%", label: "MAJEUR",  labelSize: 13 },
-  { bodyW: 200, bodyH: 155, handleW:  78, handleH: 22, logoW: 160, logoH: 62, maxW: "74%", maxH: "54%", label: "LEADER",  labelSize: 11 },
-  { bodyW: 158, bodyH: 124, handleW:  62, handleH: 18, logoW: 124, logoH: 48, maxW: "70%", maxH: "50%", label: "ASSOCIÉ", labelSize: 10 },
-  { bodyW: 128, bodyH: 100, handleW:  50, handleH: 14, logoW: 100, logoH: 38, maxW: "66%", maxH: "46%", label: "ASSOCIÉ", labelSize: 9  },
+  { bodyW: 260, bodyH: 200, handleW: 100, handleH: 28, logoW: 210, logoH: 80, maxW: "78%", maxH: "58%", label: "MAJEUR", labelSize: 13 },
+  { bodyW: 200, bodyH: 155, handleW: 78, handleH: 22, logoW: 160, logoH: 62, maxW: "74%", maxH: "54%", label: "LEADER", labelSize: 11 },
+  { bodyW: 158, bodyH: 124, handleW: 62, handleH: 18, logoW: 124, logoH: 48, maxW: "70%", maxH: "50%", label: "ASSOCIÉ", labelSize: 10 },
+  { bodyW: 128, bodyH: 100, handleW: 50, handleH: 14, logoW: 100, logoH: 38, maxW: "66%", maxH: "46%", label: "ASSOCIÉ", labelSize: 9 },
 ];
 
-const GAP         = 40;
-const BG          = "#111111";
-const ROLLER_R    = 11;
+const GAP = 40;
+const BG = "#111111";
+const ROLLER_R = 11;
 const LATTE_PITCH = 28;
-const LATTE_W     = 3;
-const AUTO_SPEED  = 0.5; // px par frame à 60fps
+const LATTE_W = 3;
+const AUTO_SPEED = 0.5; // px par frame à 60fps
 
 const totalTrackWidth =
   partners.reduce((acc, p) => acc + tierConfig[p.tier].bodyW, 0) +
@@ -97,7 +98,7 @@ function Valise({ partner }: { partner: (typeof partners)[number] }) {
           height: BH - 3,
           display: "flex",
           alignItems: "center",
-          justifyContent: "center",
+          justifyContent: "center"
         }}
       >
         <Image
@@ -106,7 +107,13 @@ function Valise({ partner }: { partner: (typeof partners)[number] }) {
           width={c.logoW}
           height={c.logoH}
           draggable={false}
-          style={{ objectFit: "contain", maxWidth: partner.maxW ?? c.maxW, maxHeight: partner.maxH ?? c.maxH, pointerEvents: "none" }}
+          style={{
+            objectFit: "contain", maxWidth: partner.maxW ?? c.maxW, maxHeight: partner.maxH ?? c.maxH, pointerEvents: "none",
+            // background
+            padding: partner.backColor ? 6 : 0,
+            borderRadius: partner.backColor ? 6 : 0,
+            backgroundColor: partner.backColor ?? "transparent",
+          }}
         />
       </div>
     </div>
@@ -115,12 +122,12 @@ function Valise({ partner }: { partner: (typeof partners)[number] }) {
 
 function BeltStrip({ offsetRef }: { offsetRef: React.RefObject<number> }) {
   const latteRef = useRef<HTMLDivElement>(null);
-  const BELT_H  = 18;
+  const BELT_H = 18;
   const TOTAL_H = BELT_H + ROLLER_R * 2 + 6;
   const rollerY = BELT_H + ROLLER_R + 3;
-  const count   = 32;
+  const count = 32;
   const spacing = 52;
-  const totalW  = count * spacing;
+  const totalW = count * spacing;
 
   // sync latte position with main offset
   useEffect(() => {
@@ -191,14 +198,14 @@ function BeltStrip({ offsetRef }: { offsetRef: React.RefObject<number> }) {
 export default function PartenairesCarousel() {
   const doubled = [...partners, ...partners];
 
-  const router      = useRouter();
-  const trackRef    = useRef<HTMLDivElement>(null);
-  const offsetRef   = useRef(0);
-  const isDragging  = useRef(false);
-  const lastX       = useRef(0);
-  const startX      = useRef(0);
-  const dragVel     = useRef(0);
-  const coastVel    = useRef(0);
+  const router = useRouter();
+  const trackRef = useRef<HTMLDivElement>(null);
+  const offsetRef = useRef(0);
+  const isDragging = useRef(false);
+  const lastX = useRef(0);
+  const startX = useRef(0);
+  const dragVel = useRef(0);
+  const coastVel = useRef(0);
 
   useEffect(() => {
     let raf: number;
@@ -214,7 +221,7 @@ export default function PartenairesCarousel() {
 
       // boucle infinie
       if (offsetRef.current <= -LOOP_WIDTH) offsetRef.current += LOOP_WIDTH;
-      if (offsetRef.current > 0)            offsetRef.current -= LOOP_WIDTH;
+      if (offsetRef.current > 0) offsetRef.current -= LOOP_WIDTH;
 
       if (trackRef.current) {
         trackRef.current.style.transform = `translateX(${offsetRef.current}px)`;
@@ -249,7 +256,7 @@ export default function PartenairesCarousel() {
     isDragging.current = false;
     coastVel.current = -dragVel.current;
     // clic simple (pas un drag) → redirection
-    if (moved < 6) router.push("/partenaires");
+    // if (moved < 6) router.push("/partenaires"); --> Désactiver le temps de mettre la page online ^^
   };
 
   return (
