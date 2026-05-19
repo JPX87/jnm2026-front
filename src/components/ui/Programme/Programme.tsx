@@ -106,7 +106,7 @@ const programme: DaySchedule[] = [
             },
             {
                 title: "Forum Entreprises",
-                location: "Amphi GRIGNARD & Salles 2A",
+                location: "Bât. U6",
                 // content: "09h - 10h30: Tables rondes Alumni (Perspectives métiers, carrières, VIE, consulting, influence)\n11h - 12h30: Forum des entreprises (Rencontres MIAGE/Alumni)",
                 startTime: "11h",
                 duration: 1.5,
