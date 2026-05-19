@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import Countdown from "@/components/features/Countdown/Countdown";
-import PartenairesCarousel from "@/components/features/PartenairesCarousel/PartenairesCarousel";
+import PartenairesCarouselSuitCase from "@/components/ui/PartenairesCarouselSuitCase/PartenairesCarouselSuitCase";
 import { Slice } from "@/components/layout/Slice/Slice";
 import { Avionn } from "@/components/ui/shapes/Avionn/Avionn";
 import MessageBubble from "@/components/ui/shapes/MessageBubble/MessageBubble";
@@ -82,7 +82,7 @@ export default function Home() {
       <main className="home relative" id="top">
         {/* Section Partenaires - hors du Slice pour éviter le chevauchement avec le header fixe */}
         <div className="pt-20 md:pt-24 w-full">
-          <PartenairesCarousel />
+          <PartenairesCarouselSuitCase />
         </div>
 
         {/* Section Countdown - Section critique pour l'engagement */}

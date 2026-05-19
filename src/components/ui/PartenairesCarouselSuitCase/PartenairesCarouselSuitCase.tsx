@@ -198,7 +198,7 @@ function BeltStrip({ offsetRef }: { offsetRef: React.RefObject<number> }) {
   );
 }
 
-export default function PartenairesCarousel() {
+export default function PartenairesCarouselSuitCase() {
   const doubled = [...partners, ...partners];
 
   const router = useRouter();
