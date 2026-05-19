@@ -95,7 +95,7 @@ export default function Home() {
         </Slice>
 
         {/* Section CTA - Engagement et conversion */}
-        <Slice absolute className="!top-52 md:!top-80" parentClassName="h-[70vh] mb-16 sm:mb-0 sm:h-screen">
+        <Slice absolute className="!top-52 md:!top-80" parentClassName="h-[80vh] min-h-[700px] mb-12 sm:h-screen sm:mb-18 md:mb-22 xl:mt-10">
           <div className="relative w-10/12 flex flex-col gap-3 py-14 px-6 justify-center rounded-3xl bg-(--color-tertiary) text-(--color-secondary) dark:text-(--color-seconde-black) m-auto">
             <h2 id="contact" className="text-center text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold my-[50px] transition-all">
               DES QUESTIONS SUR LES JNM ?
