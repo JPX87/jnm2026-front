@@ -45,19 +45,20 @@ const programme: DaySchedule[] = [
                 title: "Ouverture des JNM 2026",
                 location: "Bât. U4",
                 // content: "14h: Étiquetage bagages & jeux d'attente\n15h: Ouverture JNM26 & Discours\n16h - 18h: Activité « Ice Breaker »",
-                startTime: "14h30",
-                duration: 1.1,
-                borderDisable: true,
+                startTime: "15h30",
+                duration: 1,
+                size: 0.9,
+                position: "minimum"
             },
             {
                 title: "Jeu de cohésion",
-                startTime: "16h",
-                duration: 2,
-                size: 1.9,
+                startTime: "16h30",
+                duration: 1.5,
+                size: 1.4,
             },
             {
                 title: "Cocktail de bienvenue",
-                location: "Upsidom",
+                location: "Upsidum",
                 // content: "Détails à définir",
                 startTime: "18h",
                 duration: 3,
@@ -82,25 +83,19 @@ const programme: DaySchedule[] = [
         day: "Mercredi 27/05",
         events: [
             {
-                title: "",
-                startTime: "8h",
-                duration: 1,
-                borderDisable: true,
-            },
-            {
                 title: "Petit déjeuner",
                 location: "Bât. 2A",
-                startTime: "9h",
-                duration: 0.5,
-                size: 0.4,
+                startTime: "8h",
+                duration: 1,
+                size: 0.901,
                 position: "minimum"
             },
             {
                 title: "Rencontres ALUMNI",
                 location: "Amphi GRIGNARD & Salles 2A",
                 // content: "09h - 10h30: Tables rondes Alumni (Perspectives métiers, carrières, VIE, consulting, influence)\n11h - 12h30: Forum des entreprises (Rencontres MIAGE/Alumni)",
-                startTime: "9h30",
-                duration: 1,
+                startTime: "9h",
+                duration: 1.5,
                 size: 1.4,
                 position: "medium"
             },
@@ -143,6 +138,7 @@ const programme: DaySchedule[] = [
             },
             {
                 title: "Soirée conviviale",
+                location: "« Central » de la fac",
                 startTime: "20h",
                 duration: 4,
             },
@@ -158,17 +154,11 @@ const programme: DaySchedule[] = [
         day: "Jeudi 28/05",
         events: [
             {
-                title: "",
-                startTime: "8h",
-                duration: 1,
-                borderDisable: true,
-            },
-            {
                 title: "Petit déjeuner",
                 location: "Bât. 2A",
-                startTime: "9h",
-                duration: 0.5,
-                size: 0.4,
+                startTime: "8h",
+                duration: 1,
+                size: 0.901,
                 position: "minimum"
             },
             {
@@ -176,8 +166,8 @@ const programme: DaySchedule[] = [
                 title: "Team building",
                 location: "Centre-ville",
                 //  content: "Découverte de Toulouse / Jeux de piste\n\nAG CDM en parallèle.",
-                startTime: "9h30",
-                duration: 2.5,
+                startTime: "9h",
+                duration: 3,
             },
             {
                 title: "PAUSE",
@@ -211,9 +201,8 @@ const programme: DaySchedule[] = [
                 borderDisable: true,
             },
             {
-                title: "Soirée conviviale",
-                location: "« Central » de la fac",
-                //   content: "Quizz MIAGE & JNM (Kahoot)",
+                title: "Soirée en ville",
+                // content: "Quizz MIAGE & JNM (Kahoot)",
                 startTime: "20h",
                 duration: 4,
             },
@@ -230,7 +219,7 @@ const programme: DaySchedule[] = [
         events: [
             {
                 title: "Petit déjeuner",
-                location: "Bât. 2A",
+                location: "Amphi Médecine",
                 startTime: "8h",
                 duration: 1,
                 size: 0.9,
@@ -261,7 +250,7 @@ const programme: DaySchedule[] = [
                 borderDisable: true,
             },
             {
-                title: "Résultat des concours",
+                title: "Clôture des JNM 2026",
                 location: "Amphi Médecine",
                 startTime: "14h",
                 duration: 2,
@@ -359,7 +348,7 @@ function EventCard({ event, isPositioned = false, minTime = 0, maxTime = 1440, c
                             {event.startTime} - {getEndTime(event.startTime, event.duration)}
                         </div>
                         {event.title && (
-                            <div className={`text-(--color-primary) font-extrabold ${titleClass} ${event.position === "medium" ? "lg:-mt-0.5 lg:ml-2 md:text-[0.75rem] lg:text-[1rem]" : ""} ${event.position === "minimum" && event.size !== 0.9 ? "md:text-[0.7rem] lg:text-[0.85rem] lg:mt-[-7px]" : ""} ${event.position === "minimum" && event.size === 0.9 ? "lg:text-[1rem]" : ""} ${event.position === "minimum" ? "xl:mx-3.5" : ""}`}>{event.title}</div>
+                            <div className={`text-(--color-primary) font-extrabold ${titleClass} ${event.position === "medium" ? "lg:-mt-0.5 lg:ml-2 md:text-[0.75rem] lg:text-[1rem]" : ""} ${event.position === "minimum" && event.size !== 0.9 ? "md:text-[0.7rem] lg:text-[0.85rem] lg:mt-[-7px]" : ""} ${event.position === "minimum" && event.size === 0.9 ? "lg:text-[0.8rem] lg:mt-[-5px]" : ""} ${event.position === "minimum" && event.size === 0.901 ? "lg:text-[1rem] lg:!mt-0" : ""} ${event.position === "minimum" ? "xl:mx-3.5" : ""}`}>{event.title}</div>
                         )}
                     </div>
 
