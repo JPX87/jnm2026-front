@@ -190,7 +190,7 @@ const programme: DaySchedule[] = [
             },
             {
                 title: "Conférences & Ateliers",
-                location: "Amphi CONCORDE / GRIGNARD",
+                location: "Amphi CONCORDE",
                 //  content: "15h - 16h30: Conférence Table Ronde (Aéronautique / Cyberdéfense)\n16h45 - 18h: Atelier Pitch en ascenseur (Pecha Kucha)",
                 startTime: "15h",
                 duration: 1.5,
@@ -238,7 +238,7 @@ const programme: DaySchedule[] = [
             },
             {
                 title: "Concours MIAGE",
-                location: "Amphi Médecine",
+                location: "Amphi Médecine (Allées Jules Guesde)",
                 //   content: "Présentation des vidéos / ballon de rugby Concours MIAGE",
                 startTime: "9h",
                 duration: 2,
@@ -247,7 +247,7 @@ const programme: DaySchedule[] = [
             },
             {
                 title: "Activité Vélo Smoothie",
-                location: "Amphi Médecine",
+                location: "Amphi Médecine (Allées Jules Guesde)",
                 startTime: "11h",
                 duration: 1.5,
                 size: 1.7,
