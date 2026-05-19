@@ -1,4 +1,5 @@
-'use client';
+﻿'use client';
+import { apiFetch } from '@/lib/clientFetch';
 
 import { MobileNav } from './MobileNav';
 import Link from 'next/link';
@@ -10,14 +11,14 @@ export function Header({ title }: { title: string }) {
     const router = useRouter();
 
     const handleLogout = async () => {
-        await fetch('/api/auth/logout', { method: 'POST' });
+        await apiFetch('/api/auth/logout', { method: 'POST' });
         router.push('/login');
     };
 
     useEffect(() => {
         const fetchCount = async () => {
             try {
-                const res = await fetch('/api/messages/unread-count');
+                const res = await apiFetch('/api/messages/unread-count');
                 const data = await res.json();
                 setUnreadCount(data.count ?? 0);
             } catch {

@@ -1,7 +1,9 @@
-'use client';
+﻿'use client';
+import { apiFetch } from '@/lib/clientFetch';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import Link from 'next/link';
 
 type User = {
     id: number;
@@ -61,7 +63,7 @@ export default function AdminPage() {
     useEffect(() => { setMounted(true); }, []);
 
     useEffect(() => {
-        fetch('/api/admin/settings')
+        apiFetch('/api/admin/settings')
             .then(r => r.json())
             .then(data => {
                 if (data.error) throw new Error(data.error);
@@ -78,7 +80,7 @@ export default function AdminPage() {
         setSettingsError('');
         setSettingsSaved(false);
         try {
-            const res = await fetch('/api/admin/settings', {
+            const res = await apiFetch('/api/admin/settings', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ key: 'loginEnabled', value: String(next) }),
@@ -95,7 +97,7 @@ export default function AdminPage() {
     const fetchUsers = useCallback(async () => {
         setLoading(true);
         try {
-            const res = await fetch('/api/admin/users');
+            const res = await apiFetch('/api/admin/users');
             const data = await res.json();
             setUsers(data);
         } catch {
@@ -173,7 +175,7 @@ export default function AdminPage() {
         try {
             const formData = new FormData();
             formData.append('file', file);
-            const res = await fetch('/api/admin/users/import', { method: 'POST', body: formData });
+            const res = await apiFetch('/api/admin/users/import', { method: 'POST', body: formData });
             const result = await res.json();
             setImportResult(result);
             await fetchUsers();
@@ -223,6 +225,27 @@ export default function AdminPage() {
                         </button>
                     </div>
                 </div>
+            </div>
+
+            {/* Accès rapide */}
+            <div className="mb-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <Link
+                    href="/app/admin/roundtables"
+                    className="card-shadow glass-effect rounded-2xl border border-[#ff89b8]/20 p-5 flex items-center gap-4 hover:border-[#ff89b8]/50 hover:scale-[1.02] transition-all duration-200 group"
+                >
+                    <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#ff89b8] to-[#ef6a9f] flex items-center justify-center flex-shrink-0 shadow-md group-hover:shadow-lg transition-shadow">
+                        <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                        <p className="text-gray-800 font-bold text-sm">Tables rondes</p>
+                        <p className="text-gray-500 text-xs mt-0.5">Gérer les inscriptions et le statut</p>
+                    </div>
+                    <svg className="w-4 h-4 text-gray-400 group-hover:text-[#ef6a9f] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                </Link>
             </div>
 
             {/* En-tête gestion utilisateurs */}

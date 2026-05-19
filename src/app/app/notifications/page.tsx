@@ -1,4 +1,5 @@
-'use client';
+﻿'use client';
+import { apiFetch } from '@/lib/clientFetch';
 
 import { useState, useEffect, useCallback } from 'react';
 
@@ -19,7 +20,7 @@ export default function NotificationsPage() {
     const fetchMessages = useCallback(async () => {
         setLoading(true);
         try {
-            const res = await fetch('/api/messages');
+            const res = await apiFetch('/api/messages');
             const data = await res.json();
             setMessages(Array.isArray(data) ? data : []);
         } finally {

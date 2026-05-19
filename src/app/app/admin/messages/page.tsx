@@ -1,4 +1,5 @@
-'use client';
+﻿'use client';
+import { apiFetch } from '@/lib/clientFetch';
 
 import { useState, useEffect, useCallback } from 'react';
 
@@ -23,7 +24,7 @@ export default function AdminMessagesPage() {
     const fetchMessages = useCallback(async () => {
         setLoading(true);
         try {
-            const res = await fetch('/api/admin/messages');
+            const res = await apiFetch('/api/admin/messages');
             const data = await res.json();
             setMessages(Array.isArray(data) ? data : []);
         } finally {
@@ -40,7 +41,7 @@ export default function AdminMessagesPage() {
         setSuccess('');
 
         try {
-            const res = await fetch('/api/admin/messages', {
+            const res = await apiFetch('/api/admin/messages', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ title, content }),

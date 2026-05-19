@@ -21,6 +21,7 @@ model User {
   isAdmin      Boolean       @default(false)
   createdAt    DateTime      @default(now())
   messageReads MessageRead[]
+  roundTableRegistrations RoundTableRegistration[]
 }
 
 model Message {
@@ -44,4 +45,34 @@ model MessageRead {
 model Setting {
   key   String @id
   value String
+}
+
+model RoundTable {
+  id            Int                      @id @default(autoincrement())
+  title         String
+  description   String?
+  maxSeats      Int?
+  order         Int                      @default(0)
+  speakers      RoundTableSpeaker[]
+  registrations RoundTableRegistration[]
+}
+
+model RoundTableSpeaker {
+  id           Int        @id @default(autoincrement())
+  name         String
+  role         String?
+  company      String?
+  linkedinUrl  String?
+  roundTableId Int
+  roundTable   RoundTable @relation(fields: [roundTableId], references: [id], onDelete: Cascade)
+}
+
+model RoundTableRegistration {
+  userId       Int
+  roundTableId Int
+  createdAt    DateTime   @default(now())
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  roundTable   RoundTable @relation(fields: [roundTableId], references: [id], onDelete: Cascade)
+
+  @@id([userId, roundTableId])
 }

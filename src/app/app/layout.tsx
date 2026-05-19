@@ -64,6 +64,18 @@ export default async function DashboardLayout({
                     </Link>
 
                     <Link
+                        href="/app/roundtables"
+                        className="group flex items-center gap-3 lg:gap-4 px-4 lg:px-5 py-3 lg:py-4 rounded-xl lg:rounded-2xl text-[#ef6a9f] font-semibold hover:bg-gradient-to-r hover:from-[#ff89b8]/10 hover:to-[#ef6a9f]/10 transition-all duration-300"
+                    >
+                        <span className="flex items-center justify-center w-10 h-10 lg:w-12 lg:h-12 rounded-lg lg:rounded-xl bg-gradient-to-br from-[#ff89b8] to-[#ef6a9f] text-white shadow-lg group-hover:shadow-xl group-hover:scale-110 transition-all duration-300">
+                            <svg className="w-5 h-5 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </span>
+                        <span className="text-base lg:text-lg">Tables rondes</span>
+                    </Link>
+
+                    <Link
                         href="/app/notifications"
                         className="group flex items-center gap-3 lg:gap-4 px-4 lg:px-5 py-3 lg:py-4 rounded-xl lg:rounded-2xl text-[#ef6a9f] font-semibold hover:bg-gradient-to-r hover:from-[#ff89b8]/10 hover:to-[#ef6a9f]/10 transition-all duration-300"
                     >
