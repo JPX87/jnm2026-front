@@ -11,12 +11,13 @@ const partners = [
   { src: "/img/partenaires/cgi.jpg", alt: "CGI", tier: 1, maxW: "48%", maxH: "36%", backColor: "#fff" },
   { src: "/img/partenaires/extia.png", alt: "Extia", tier: 1, maxW: "48%", maxH: "36%" },
   { src: "/img/partenaires/orange.jpg", alt: "Orange", tier: 1 },
-  { src: "/img/partenaires/UT.png", alt: "Université de Toulouse", tier: 4, backColor: "#fff" },
-  { src: "/img/partenaires/FSI.jpg", alt: "FSI", tier: 4, backColor: "#fff" },
   { src: "/img/partenaires/pap.png", alt: "ProApro", tier: 2, maxW: "48%", maxH: "36%" },
   { src: "/img/partenaires/pwc.png", alt: "PwC", tier: 2, maxW: "48%", maxH: "36%" },
   { src: "/img/partenaires/AbsysCyborg.png", alt: "AbsysCyborg", tier: 3 },
   { src: "/img/partenaires/agirc-arrco.jpg", alt: "Agirc-Arrco", tier: 3, backColor: "#fff" },
+  { src: "/img/partenaires/UT.png", alt: "Université de Toulouse", tier: 4, backColor: "#fff" },
+  { src: "/img/partenaires/FSI.jpg", alt: "FSI", tier: 4, backColor: "#fff" },
+  { src: "/img/partenaires/miage_tls.jpg", alt: "MIAGE Toulouse", tier: 4, backColor: "#fff" },
 ];
 
 const tierConfig = [
@@ -24,7 +25,7 @@ const tierConfig = [
   { bodyW: 200, bodyH: 155, handleW: 78, handleH: 22, logoW: 160, logoH: 62, maxW: "74%", maxH: "54%", label: "LEADER", labelSize: 11 },
   { bodyW: 158, bodyH: 124, handleW: 62, handleH: 18, logoW: 124, logoH: 48, maxW: "70%", maxH: "50%", label: "ACTEUR", labelSize: 10 },
   { bodyW: 128, bodyH: 100, handleW: 50, handleH: 14, logoW: 100, logoH: 38, maxW: "66%", maxH: "46%", label: "ASSOCIÉ", labelSize: 9 },
-  { bodyW: 200, bodyH: 155, handleW: 78, handleH: 22, logoW: 160, logoH: 62, maxW: "66%", maxH: "46%", label: "", labelSize: 9 },
+  { bodyW: 158, bodyH: 124, handleW: 62, handleH: 18, logoW: 124, logoH: 48, maxW: "76%", maxH: "46%", label: "", labelSize: 9 },
 ];
 
 const GAP = 40;

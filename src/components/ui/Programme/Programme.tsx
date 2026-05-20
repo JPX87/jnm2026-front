@@ -47,15 +47,8 @@ const programme: DaySchedule[] = [
                 location: "Ampi Concorde, Bât. U4",
                 // content: "14h: Étiquetage bagages & jeux d'attente\n15h: Ouverture JNM26 & Discours\n16h - 18h: Activité « Ice Breaker »",
                 startTime: "15h30",
-                duration: 1,
-                size: 0.9,
-                position: "minimum"
-            },
-            {
-                title: "Jeu de cohésion",
-                startTime: "16h30",
-                duration: 2,
-                size: 1.9,
+                duration: 3,
+                size: 2.9
             },
             {
                 title: "Cocktail de bienvenue",
@@ -101,7 +94,7 @@ const programme: DaySchedule[] = [
                 position: "medium"
             },
             {
-                title: "Forum Entreprises",
+                title: "Forum des partenaires*",
                 location: "Bât. U6",
                 // content: "09h - 10h30: Tables rondes Alumni (Perspectives métiers, carrières, VIE, consulting, influence)\n11h - 12h30: Forum des entreprises (Rencontres MIAGE/Alumni)",
                 startTime: "11h",
@@ -117,7 +110,7 @@ const programme: DaySchedule[] = [
                 borderDisable: true,
             },
             {
-                title: "Ateliers & Challenges",
+                title: "Ateliers & Intervenants",
                 //   content: "14h - 15h30: Green IT (IA & empreinte carbone / IA conscientisée)\n16h - 18h: E-Sport (Étudiants vs Entreprises avec CGI & EXTIA)",
                 location: "Salles 2A",
                 startTime: "14h",
@@ -127,7 +120,7 @@ const programme: DaySchedule[] = [
             {
                 title: "Atelier E-sport",
                 //   content: "14h - 15h30: Green IT (IA & empreinte carbone / IA conscientisée)\n16h - 18h: E-Sport (Étudiants vs Entreprises avec CGI & EXTIA)",
-                location: "Salles 2A",
+                location: "Bât. 2A",
                 startTime: "16h",
                 duration: 2,
             },
@@ -164,7 +157,7 @@ const programme: DaySchedule[] = [
             },
             {
 
-                title: "Team building",
+                title: "Jeux de pistes de Toulouse",
                 location: "Centre-ville",
                 //  content: "Découverte de Toulouse / Jeux de piste\n\nAG CDM en parallèle.",
                 startTime: "9h",
