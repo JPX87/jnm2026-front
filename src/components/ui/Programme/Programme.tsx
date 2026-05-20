@@ -192,6 +192,7 @@ const programme: DaySchedule[] = [
                 //  content: "15h - 16h30: Conférence Table Ronde (Aéronautique / Cyberdéfense)\n16h45 - 18h: Atelier Pitch en ascenseur (Pecha Kucha)",
                 startTime: "16h45",
                 duration: 1.25,
+                size: 1.5,
                 position: "medium"
             },
             {
@@ -350,7 +351,7 @@ function EventCard({ event, isPositioned = false, minTime = 0, maxTime = 1440, c
                             {event.startTime} - {getEndTime(event.startTime, event.duration)}
                         </div>
                         {event.title && (
-                            <div className={`text-(--color-primary) font-extrabold ${titleClass} ${event.position === "medium" ? "lg:-mt-0.5 lg:ml-2 md:text-[0.75rem] lg:text-[1rem]" : ""} ${event.position === "minimum" && event.size !== 0.9 ? "md:text-[0.7rem] lg:text-[0.85rem] lg:mt-[-7px]" : ""} ${event.position === "minimum" && event.size === 0.9 ? "lg:text-[0.8rem] lg:mt-[-5px]" : ""} ${event.position === "minimum" && event.size === 0.901 ? "lg:text-[1rem] lg:!mt-0" : ""} ${event.position === "minimum" ? "xl:mx-3.5" : ""}`}>{event.title}</div>
+                            <div className={`text-(--color-primary) font-extrabold ${titleClass} ${event.position === "medium" ? "lg:-mt-0.5 lg:ml-2 md:text-[0.75rem] lg:text-[1rem]" : ""} ${event.position === "minimum" && event.size !== 0.9 ? "md:text-[0.7rem] lg:text-[0.85rem] lg:mt-[-7px]" : ""} ${event.position === "minimum" && event.size === 0.9 ? "lg:text-[0.8rem] lg:mt-[-5px]" : ""} ${event.position === "minimum" && event.size === 0.901 ? "md:text-[1rem] md:mt-[-2px] lg:!mt-0" : ""} ${event.position === "minimum" ? "xl:mx-3.5" : ""}`}>{event.title}</div>
                         )}
                     </div>
 
@@ -484,7 +485,7 @@ export default function Programme() {
             {/* ── Tablet/Mobile: Card view ── */}
             <div className="flex flex-row overflow-x-scroll lg:hidden flex-col gap-6 w-full max-w-2xl mx-auto mt-0 px-4">
                 {programme.map((day) => (
-                    <div key={day.day} className="min-w-[calc(100vw-35px)] bg-(--color-primary) dark:bg-(--color-secondary) transition-all duration-300 rounded-2xl flex flex-col p-[0.8rem] pb-8 w-full">
+                    <div key={day.day} className="min-w-[calc(100vw-35px)] md:min-w-[calc(90vw-200px)] bg-(--color-primary) dark:bg-(--color-secondary) transition-all duration-300 rounded-2xl flex flex-col p-[0.8rem] pb-8 w-full">
                         <div className="text-white dark:text-(--color-seconde-black) font-black text-xl text-center uppercase pb-[0.4rem] mb-3 relative after:content-[''] after:absolute after:bottom-0 after:-left-2 after:-right-2 after:h-[3px] after:bg-white dark:after:bg-(--color-seconde-black) transition-all duration-300">
                             {day.day}
                         </div>
