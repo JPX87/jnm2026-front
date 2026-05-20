@@ -39,29 +39,31 @@ const programme: DaySchedule[] = [
                 // Midi picnique ou crous
                 content: "Pensez à apporter votre repas du midi ou à prévoir une solution de restauration sur place (Crous, restaurants à proximité, etc).",
                 startTime: "8h",
-                duration: 6,
+                duration: 7.5,
+                size: 7.4,
             },
             {
-                title: "Ouverture des JNM 2026",
-                location: "Bât. U4",
+                title: "Ouverture JNM 2026",
+                location: "Ampi Concorde, Bât. U4",
                 // content: "14h: Étiquetage bagages & jeux d'attente\n15h: Ouverture JNM26 & Discours\n16h - 18h: Activité « Ice Breaker »",
-                startTime: "14h30",
-                duration: 1.1,
-                borderDisable: true,
+                startTime: "15h30",
+                duration: 1,
+                size: 0.9,
+                position: "minimum"
             },
             {
                 title: "Jeu de cohésion",
-                startTime: "16h",
+                startTime: "16h30",
                 duration: 2,
                 size: 1.9,
             },
             {
                 title: "Cocktail de bienvenue",
-                location: "Upsidom",
+                location: "Upsidum",
                 // content: "Détails à définir",
-                startTime: "18h",
-                duration: 3,
-                size: 2.9,
+                startTime: "18h30",
+                duration: 2.5,
+                size: 2.4,
             },
             {
                 title: "Soirée au délirium",
@@ -82,38 +84,32 @@ const programme: DaySchedule[] = [
         day: "Mercredi 27/05",
         events: [
             {
-                title: "",
-                startTime: "8h",
-                duration: 1,
-                borderDisable: true,
-            },
-            {
                 title: "Petit déjeuner",
                 location: "Bât. 2A",
-                startTime: "9h",
-                duration: 0.5,
-                size: 0.4,
+                startTime: "8h",
+                duration: 1,
+                size: 0.901,
                 position: "minimum"
             },
             {
                 title: "Rencontres ALUMNI",
                 location: "Amphi GRIGNARD & Salles 2A",
                 // content: "09h - 10h30: Tables rondes Alumni (Perspectives métiers, carrières, VIE, consulting, influence)\n11h - 12h30: Forum des entreprises (Rencontres MIAGE/Alumni)",
-                startTime: "9h30",
-                duration: 1,
+                startTime: "9h",
+                duration: 1.5,
                 size: 1.4,
                 position: "medium"
             },
             {
                 title: "Forum Entreprises",
-                location: "Amphi GRIGNARD & Salles 2A",
+                location: "Bât. U6",
                 // content: "09h - 10h30: Tables rondes Alumni (Perspectives métiers, carrières, VIE, consulting, influence)\n11h - 12h30: Forum des entreprises (Rencontres MIAGE/Alumni)",
                 startTime: "11h",
                 duration: 1.5,
                 position: "medium"
             },
             {
-                title: "PAUSE",
+                title: "Repas & Networking",
                 location: "Bât. 2A",
                 //  content: "Buffet avec les partenaires",
                 startTime: "12h30",
@@ -123,7 +119,7 @@ const programme: DaySchedule[] = [
             {
                 title: "Ateliers & Challenges",
                 //   content: "14h - 15h30: Green IT (IA & empreinte carbone / IA conscientisée)\n16h - 18h: E-Sport (Étudiants vs Entreprises avec CGI & EXTIA)",
-                location: "Amphi GRIGNARD & Salles 2A",
+                location: "Salles 2A",
                 startTime: "14h",
                 duration: 1.5,
                 size: 1.9
@@ -131,7 +127,7 @@ const programme: DaySchedule[] = [
             {
                 title: "Atelier E-sport",
                 //   content: "14h - 15h30: Green IT (IA & empreinte carbone / IA conscientisée)\n16h - 18h: E-Sport (Étudiants vs Entreprises avec CGI & EXTIA)",
-                location: "Amphi GRIGNARD & Salles 2A",
+                location: "Salles 2A",
                 startTime: "16h",
                 duration: 2,
             },
@@ -142,7 +138,8 @@ const programme: DaySchedule[] = [
                 borderDisable: true,
             },
             {
-                title: "Soirée conviviale",
+                title: "Soirée étudiante",
+                location: "",
                 startTime: "20h",
                 duration: 4,
             },
@@ -158,17 +155,11 @@ const programme: DaySchedule[] = [
         day: "Jeudi 28/05",
         events: [
             {
-                title: "",
-                startTime: "8h",
-                duration: 1,
-                borderDisable: true,
-            },
-            {
                 title: "Petit déjeuner",
                 location: "Bât. 2A",
-                startTime: "9h",
-                duration: 0.5,
-                size: 0.4,
+                startTime: "8h",
+                duration: 1,
+                size: 0.901,
                 position: "minimum"
             },
             {
@@ -176,11 +167,11 @@ const programme: DaySchedule[] = [
                 title: "Team building",
                 location: "Centre-ville",
                 //  content: "Découverte de Toulouse / Jeux de piste\n\nAG CDM en parallèle.",
-                startTime: "9h30",
-                duration: 2.5,
+                startTime: "9h",
+                duration: 3,
             },
             {
-                title: "PAUSE",
+                title: "Dejeuner sur l'herbe",
                 content: "Pique-nique",
                 location: "Prairie des filtres",
                 startTime: "12h",
@@ -190,7 +181,7 @@ const programme: DaySchedule[] = [
             },
             {
                 title: "Conférences & Ateliers",
-                location: "Amphi CONCORDE / GRIGNARD",
+                location: "Amphi CONCORDE",
                 //  content: "15h - 16h30: Conférence Table Ronde (Aéronautique / Cyberdéfense)\n16h45 - 18h: Atelier Pitch en ascenseur (Pecha Kucha)",
                 startTime: "15h",
                 duration: 1.5,
@@ -202,6 +193,7 @@ const programme: DaySchedule[] = [
                 //  content: "15h - 16h30: Conférence Table Ronde (Aéronautique / Cyberdéfense)\n16h45 - 18h: Atelier Pitch en ascenseur (Pecha Kucha)",
                 startTime: "16h45",
                 duration: 1.25,
+                size: 1.5,
                 position: "medium"
             },
             {
@@ -213,7 +205,7 @@ const programme: DaySchedule[] = [
             {
                 title: "Soirée conviviale",
                 location: "« Central » de la fac",
-                //   content: "Quizz MIAGE & JNM (Kahoot)",
+                // content: "Quizz MIAGE & JNM (Kahoot)",
                 startTime: "20h",
                 duration: 4,
             },
@@ -230,7 +222,7 @@ const programme: DaySchedule[] = [
         events: [
             {
                 title: "Petit déjeuner",
-                location: "Bât. 2A",
+                location: "Amphi Médecine",
                 startTime: "8h",
                 duration: 1,
                 size: 0.9,
@@ -238,7 +230,7 @@ const programme: DaySchedule[] = [
             },
             {
                 title: "Concours MIAGE",
-                location: "Amphi Médecine",
+                location: "Amphi Médecine (Allées Jules Guesde)",
                 //   content: "Présentation des vidéos / ballon de rugby Concours MIAGE",
                 startTime: "9h",
                 duration: 2,
@@ -247,7 +239,7 @@ const programme: DaySchedule[] = [
             },
             {
                 title: "Activité Vélo Smoothie",
-                location: "Amphi Médecine",
+                location: "Amphi Médecine (Allées Jules Guesde)",
                 startTime: "11h",
                 duration: 1.5,
                 size: 1.7,
@@ -261,7 +253,7 @@ const programme: DaySchedule[] = [
                 borderDisable: true,
             },
             {
-                title: "Résultat des concours",
+                title: "Clôture des JNM 2026",
                 location: "Amphi Médecine",
                 startTime: "14h",
                 duration: 2,
@@ -274,6 +266,7 @@ const programme: DaySchedule[] = [
             },
             {
                 title: "GALA",
+                location: "Matabiau",
                 startTime: "20h",
                 duration: 6,
             },
@@ -359,7 +352,7 @@ function EventCard({ event, isPositioned = false, minTime = 0, maxTime = 1440, c
                             {event.startTime} - {getEndTime(event.startTime, event.duration)}
                         </div>
                         {event.title && (
-                            <div className={`text-(--color-primary) font-extrabold ${titleClass} ${event.position === "medium" ? "lg:-mt-0.5 lg:ml-2 md:text-[0.75rem] lg:text-[1rem]" : ""} ${event.position === "minimum" && event.size !== 0.9 ? "md:text-[0.7rem] lg:text-[0.85rem] lg:mt-[-7px]" : ""} ${event.position === "minimum" && event.size === 0.9 ? "lg:text-[1rem]" : ""} ${event.position === "minimum" ? "xl:mx-3.5" : ""}`}>{event.title}</div>
+                            <div className={`text-(--color-primary) font-extrabold ${titleClass} ${event.position === "medium" ? "lg:-mt-0.5 lg:ml-2 md:text-[0.75rem] lg:text-[1rem]" : ""} ${event.position === "minimum" && event.size !== 0.9 ? "md:text-[0.7rem] lg:text-[0.85rem] lg:mt-[-7px]" : ""} ${event.position === "minimum" && event.size === 0.9 ? "lg:text-[0.8rem] lg:mt-[-5px]" : ""} ${event.position === "minimum" && event.size === 0.901 ? "md:text-[1rem] md:mt-[-2px] lg:!mt-0" : ""} ${event.position === "minimum" ? "xl:mx-3.5" : ""}`}>{event.title}</div>
                         )}
                     </div>
 
@@ -493,7 +486,7 @@ export default function Programme() {
             {/* ── Tablet/Mobile: Card view ── */}
             <div className="flex flex-row overflow-x-scroll lg:hidden flex-col gap-6 w-full max-w-2xl mx-auto mt-0 px-4">
                 {programme.map((day) => (
-                    <div key={day.day} className="min-w-[calc(100vw-35px)] bg-(--color-primary) dark:bg-(--color-secondary) transition-all duration-300 rounded-2xl flex flex-col p-[0.8rem] pb-8 w-full">
+                    <div key={day.day} className="min-w-[calc(100vw-35px)] md:min-w-[calc(90vw-200px)] bg-(--color-primary) dark:bg-(--color-secondary) transition-all duration-300 rounded-2xl flex flex-col p-[0.8rem] pb-8 w-full">
                         <div className="text-white dark:text-(--color-seconde-black) font-black text-xl text-center uppercase pb-[0.4rem] mb-3 relative after:content-[''] after:absolute after:bottom-0 after:-left-2 after:-right-2 after:h-[3px] after:bg-white dark:after:bg-(--color-seconde-black) transition-all duration-300">
                             {day.day}
                         </div>

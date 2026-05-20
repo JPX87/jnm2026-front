@@ -198,10 +198,10 @@ function BeltStrip({ offsetRef }: { offsetRef: React.RefObject<number> }) {
   );
 }
 
-export default function PartenairesCarousel() {
+export default function PartenairesCarouselSuitCase() {
   const doubled = [...partners, ...partners];
 
-  const router = useRouter();
+  //const router = useRouter();
   const trackRef = useRef<HTMLDivElement>(null);
   const offsetRef = useRef(0);
   const isDragging = useRef(false);
@@ -255,7 +255,7 @@ export default function PartenairesCarousel() {
   };
 
   const onPointerUp = (e: React.PointerEvent) => {
-    const moved = Math.abs(e.clientX - startX.current);
+    //const moved = Math.abs(e.clientX - startX.current);
     isDragging.current = false;
     coastVel.current = -dragVel.current;
     // clic simple (pas un drag) → redirection

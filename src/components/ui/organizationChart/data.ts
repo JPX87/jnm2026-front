@@ -17,7 +17,7 @@ export const LINES: Record<LineId, MetroLine> = {
         id: "C",
         name: "Logistique",
         color: "#ff3131",
-        nodes: ["IB", "SZ", "JA", "VD", "ET", "GC"],
+        nodes: ["IB", "SZ", "JA", "GC", "ET", "VD"],
     },
     D: {
         id: "D",
@@ -47,7 +47,7 @@ export const LINES: Record<LineId, MetroLine> = {
         id: "H",
         name: "Gala",
         color: "#ff751f",
-        nodes: ["VD", "ET", "GC", "TS", "AS"],
+        nodes: ["VD", "ET", "TS", "AS"],
     },
 };
 
@@ -67,7 +67,7 @@ export const NODES: MetroNode[] = [
     { id: "JA", label: "Julie A.", shortLabel: "Julie", x: 25, y: 90, line: "C", imageUrl: "JA.png" },
     { id: "TS", label: "Thomas S.", shortLabel: "Thomas", x: 50, y: 60, line: "H", isHub: true, imageUrl: "TS.png" },
     { id: "ET", label: "Eliott T.", shortLabel: "Eliott", x: 50, y: 90, line: ["C", "G", "H"], isHub: true, imageUrl: "ET.png" },
-    { id: "GC", label: "Géraldine C.", shortLabel: "Mme Christol", x: 50, y: 75, line: ["C", "H"], isHub: true },
+    { id: "GC", label: "Géraldine C.", shortLabel: "Mme Christol", x: 37.5, y: 90, line: "C", isHub: true },
     { id: "LM", label: "Lina M.", shortLabel: "Lina", x: 65, y: 10, line: ["D", "E"], isHub: true, imageUrl: "LM.png" },
     { id: "CT", label: "Cédric T.", shortLabel: "M. Teyssié", x: 80, y: 10, line: "D" },
     { id: "KB", label: "Katia B.", shortLabel: "Katia", sublabel: "Référente Programme", x: 65, y: 30, line: "E", imageUrl: "KB.png" },
@@ -80,5 +80,5 @@ export const NODES: MetroNode[] = [
     //{ id: "YL", label: "Yann L.", shortLabel: "Yann", x: 95, y: 50, line: "E" },
     { id: "GF", label: "Guillaume F.", shortLabel: "M. Feuillade", x: 65, y: 90, line: ["F", "G"], isHub: true },
     { id: "KP", label: "Karen P.", shortLabel: "Mme  Pinel-Sauvagnat", x: 65, y: 70, line: "F" },
-    { id: "VD", label: "Valentin D.", shortLabel: "Valentin", x: 37.5, y: 90, line: ["C", "H"], imageUrl: "VD.png" },
+    { id: "VD", label: "Valentin D.", shortLabel: "Valentin", x: 50, y: 75, line: ["C", "H"], imageUrl: "VD.png" },
 ];
