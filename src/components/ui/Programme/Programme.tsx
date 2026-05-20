@@ -45,16 +45,16 @@ const programme: DaySchedule[] = [
                 title: "Ouverture des JNM 2026",
                 location: "Bât. U4",
                 // content: "14h: Étiquetage bagages & jeux d'attente\n15h: Ouverture JNM26 & Discours\n16h - 18h: Activité « Ice Breaker »",
-                startTime: "15h30",
+                startTime: "15",
                 duration: 1,
                 size: 0.9,
                 position: "minimum"
             },
             {
                 title: "Jeu de cohésion",
-                startTime: "16h30",
-                duration: 1.5,
-                size: 1.4,
+                startTime: "16",
+                duration: 2,
+                size: 1.9,
             },
             {
                 title: "Cocktail de bienvenue",
@@ -108,7 +108,7 @@ const programme: DaySchedule[] = [
                 position: "medium"
             },
             {
-                title: "PAUSE",
+                title: "Repas & Networking",
                 location: "Bât. 2A",
                 //  content: "Buffet avec les partenaires",
                 startTime: "12h30",
@@ -118,7 +118,7 @@ const programme: DaySchedule[] = [
             {
                 title: "Ateliers & Challenges",
                 //   content: "14h - 15h30: Green IT (IA & empreinte carbone / IA conscientisée)\n16h - 18h: E-Sport (Étudiants vs Entreprises avec CGI & EXTIA)",
-                location: "Amphi GRIGNARD & Salles 2A",
+                location: "Salles 2A",
                 startTime: "14h",
                 duration: 1.5,
                 size: 1.9
@@ -126,7 +126,7 @@ const programme: DaySchedule[] = [
             {
                 title: "Atelier E-sport",
                 //   content: "14h - 15h30: Green IT (IA & empreinte carbone / IA conscientisée)\n16h - 18h: E-Sport (Étudiants vs Entreprises avec CGI & EXTIA)",
-                location: "Amphi GRIGNARD & Salles 2A",
+                location: "Salles 2A",
                 startTime: "16h",
                 duration: 2,
             },
@@ -137,8 +137,8 @@ const programme: DaySchedule[] = [
                 borderDisable: true,
             },
             {
-                title: "Soirée conviviale",
-                location: "« Central » de la fac",
+                title: "Soirée étudiante",
+                location: "",
                 startTime: "20h",
                 duration: 4,
             },
@@ -170,7 +170,7 @@ const programme: DaySchedule[] = [
                 duration: 3,
             },
             {
-                title: "PAUSE",
+                title: "Dejeuner sur l'herbe",
                 content: "Pique-nique",
                 location: "Prairie des filtres",
                 startTime: "12h",
@@ -201,7 +201,8 @@ const programme: DaySchedule[] = [
                 borderDisable: true,
             },
             {
-                title: "Soirée en ville",
+                title: "Soirée conviviale",
+                location: "« Central » de la fac",
                 // content: "Quizz MIAGE & JNM (Kahoot)",
                 startTime: "20h",
                 duration: 4,
@@ -263,6 +264,7 @@ const programme: DaySchedule[] = [
             },
             {
                 title: "GALA",
+                location: "Matabiau",
                 startTime: "20h",
                 duration: 6,
             },
