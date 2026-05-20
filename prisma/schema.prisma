@@ -5,23 +5,24 @@ generator client {
 
 datasource db {
   provider = "mysql"
+  url      = env("DATABASE_URL") //fake env only for CI
 }
 
 model User {
-  id           Int           @id @default(autoincrement())
-  email        String        @unique
-  firstname    String?
-  lastname     String?
-  password     String
-  miage        String?
-  ville        String?
-  hotelRoom    String
-  hotelFloor   String?
-  doorCode     String?
-  isAdmin      Boolean       @default(false)
-  createdAt    DateTime      @default(now())
-  messageReads MessageRead[]
-  roundTableRegistrations RoundTableRegistration[]
+  id                    Int                    @id @default(autoincrement())
+  email                 String                 @unique
+  firstname             String?
+  lastname              String?
+  password              String
+  miage                 String?
+  ville                 String?
+  hotelRoom             String
+  hotelFloor            String?
+  doorCode              String?
+  isAdmin               Boolean                @default(false)
+  createdAt             DateTime               @default(now())
+  messageReads          MessageRead[]
+  activityRegistrations ActivityRegistration[]
 }
 
 model Message {
@@ -47,32 +48,45 @@ model Setting {
   value String
 }
 
-model RoundTable {
-  id            Int                      @id @default(autoincrement())
+model ActivityGroup {
+  id          Int        @id @default(autoincrement())
+  title       String
+  description String?
+  isOpen      Boolean    @default(false)
+  maxPerUser  Int        @default(1)
+  order       Int        @default(0)
+  createdAt   DateTime   @default(now())
+  activities  Activity[]
+}
+
+model Activity {
+  id            Int                    @id @default(autoincrement())
   title         String
   description   String?
   maxSeats      Int?
-  order         Int                      @default(0)
-  speakers      RoundTableSpeaker[]
-  registrations RoundTableRegistration[]
+  order         Int                    @default(0)
+  groupId       Int
+  group         ActivityGroup          @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  speakers      ActivitySpeaker[]
+  registrations ActivityRegistration[]
 }
 
-model RoundTableSpeaker {
-  id           Int        @id @default(autoincrement())
-  name         String
-  role         String?
-  company      String?
-  linkedinUrl  String?
-  roundTableId Int
-  roundTable   RoundTable @relation(fields: [roundTableId], references: [id], onDelete: Cascade)
+model ActivitySpeaker {
+  id          Int      @id @default(autoincrement())
+  name        String
+  role        String?
+  company     String?
+  linkedinUrl String?
+  activityId  Int
+  activity    Activity @relation(fields: [activityId], references: [id], onDelete: Cascade)
 }
 
-model RoundTableRegistration {
-  userId       Int
-  roundTableId Int
-  createdAt    DateTime   @default(now())
-  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  roundTable   RoundTable @relation(fields: [roundTableId], references: [id], onDelete: Cascade)
+model ActivityRegistration {
+  userId     Int
+  activityId Int
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  activity   Activity @relation(fields: [activityId], references: [id], onDelete: Cascade)
 
-  @@id([userId, roundTableId])
+  @@id([userId, activityId])
 }

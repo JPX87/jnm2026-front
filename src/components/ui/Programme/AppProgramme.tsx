@@ -2,206 +2,7 @@
 
 import { useState } from 'react';
 import React from 'react';
-
-interface EventBlock {
-    title?: string;
-    location?: string;
-    content?: string;
-    startTime: string;
-    duration: number;
-    size?: number;
-    position?: 'minimum' | 'midium' | 'medium';
-    borderDisable?: boolean;
-}
-
-interface DaySchedule {
-    day: string;
-    shortDay: string;
-    date: string;
-    events: EventBlock[];
-}
-
-const programme: DaySchedule[] = [
-    {
-        day: 'Mardi 26/05',
-        shortDay: 'Mardi',
-        date: '26 mai',
-        events: [
-            {
-                title: 'Arrivée des participants',
-                location: 'Université de Toulouse',
-                content: "Pensez à apporter votre repas du midi ou à prévoir une solution de restauration sur place (Crous, restaurants à proximité, etc).",
-                startTime: '8h',
-                duration: 6,
-            },
-            {
-                title: 'Ouverture des JNM 2026',
-                location: 'Bât. U4',
-                startTime: '14h30',
-                duration: 1.1,
-                borderDisable: true,
-            },
-            {
-                title: 'Jeu de cohésion',
-                startTime: '16h',
-                duration: 2,
-                size: 1.9,
-            },
-            {
-                title: 'Cocktail de bienvenue',
-                location: 'Upsidom',
-                startTime: '18h',
-                duration: 3,
-                size: 2.9,
-            },
-            {
-                title: 'Soirée au délirium',
-                location: 'Délirium Café',
-                startTime: '21h',
-                duration: 3,
-            },
-        ],
-    },
-    {
-        day: 'Mercredi 27/05',
-        shortDay: 'Mercredi',
-        date: '27 mai',
-        events: [
-            {
-                title: 'Petit déjeuner',
-                location: 'Bât. 2A',
-                startTime: '9h',
-                duration: 0.5,
-                borderDisable: true,
-            },
-            {
-                title: 'Rencontres ALUMNI',
-                location: 'Amphi GRIGNARD & Salles 2A',
-                startTime: '9h30',
-                duration: 1,
-            },
-            {
-                title: 'Forum Entreprises',
-                location: 'Amphi GRIGNARD & Salles 2A',
-                startTime: '11h',
-                duration: 1.5,
-            },
-            {
-                title: 'Buffet partenaires',
-                location: 'Bât. 2A',
-                startTime: '12h30',
-                duration: 1.5,
-                borderDisable: true,
-            },
-            {
-                title: 'Ateliers & Challenges',
-                location: 'Amphi GRIGNARD & Salles 2A',
-                startTime: '14h',
-                duration: 1.5,
-            },
-            {
-                title: 'Atelier E-sport',
-                location: 'Amphi GRIGNARD & Salles 2A',
-                startTime: '16h',
-                duration: 2,
-            },
-            {
-                title: 'Soirée conviviale',
-                startTime: '20h',
-                duration: 4,
-            },
-        ],
-    },
-    {
-        day: 'Jeudi 28/05',
-        shortDay: 'Jeudi',
-        date: '28 mai',
-        events: [
-            {
-                title: 'Petit déjeuner',
-                location: 'Bât. 2A',
-                startTime: '9h',
-                duration: 0.5,
-                borderDisable: true,
-            },
-            {
-                title: 'Team building',
-                location: 'Centre-ville',
-                startTime: '9h30',
-                duration: 2.5,
-            },
-            {
-                title: 'Pique-nique',
-                location: 'Prairie des filtres',
-                startTime: '12h',
-                duration: 2,
-                borderDisable: true,
-            },
-            {
-                title: 'Conférences & Ateliers',
-                location: 'Amphi CONCORDE / GRIGNARD',
-                startTime: '15h',
-                duration: 1.5,
-            },
-            {
-                title: 'Atelier pitch ascenseur',
-                location: 'Bât. U6',
-                startTime: '16h45',
-                duration: 1.25,
-            },
-            {
-                title: 'Soirée conviviale',
-                location: '« Central » de la fac',
-                startTime: '20h',
-                duration: 4,
-            },
-        ],
-    },
-    {
-        day: 'Vendredi 29/05',
-        shortDay: 'Vendredi',
-        date: '29 mai',
-        events: [
-            {
-                title: 'Petit déjeuner',
-                location: 'Bât. 2A',
-                startTime: '8h',
-                duration: 1,
-                borderDisable: true,
-            },
-            {
-                title: 'Concours MIAGE',
-                location: 'Amphi Médecine',
-                startTime: '9h',
-                duration: 2,
-            },
-            {
-                title: 'Activité Vélo Smoothie',
-                location: 'Amphi Médecine',
-                startTime: '11h',
-                duration: 1.5,
-            },
-            {
-                title: 'Pique-nique',
-                location: 'Jardin des Plantes',
-                startTime: '12h30',
-                duration: 1.5,
-                borderDisable: true,
-            },
-            {
-                title: 'Résultats des concours',
-                location: 'Amphi Médecine',
-                startTime: '14h',
-                duration: 2,
-            },
-            {
-                title: 'GALA',
-                startTime: '20h',
-                duration: 6,
-            },
-        ],
-    },
-];
+import { programme, type EventBlock } from '@/data/programme';
 
 const timeToMinutes = (time: string): number => {
     const [h, m] = time.replace('h', ':').split(':');
@@ -227,7 +28,6 @@ function renderContent(content?: string) {
     ));
 }
 
-/* ── Icône épingle ── */
 function PinIcon() {
     return (
         <svg className="w-3 h-3 flex-shrink-0 text-[#ef6a9f]" fill="currentColor" viewBox="0 0 10 14">
@@ -236,13 +36,20 @@ function PinIcon() {
     );
 }
 
-/* ── Couleurs selon l'heure (ambiance) ── */
 function getEventAccent(startTime: string): { dot: string; badge: string } {
     const mins = timeToMinutes(startTime);
     if (mins < 12 * 60) return { dot: 'bg-amber-400', badge: 'bg-amber-400/15 text-amber-600' };
     if (mins < 14 * 60) return { dot: 'bg-orange-400', badge: 'bg-orange-400/15 text-orange-600' };
     if (mins < 18 * 60) return { dot: 'bg-[#ef6a9f]', badge: 'bg-[#ff89b8]/20 text-[#c4527a]' };
     return { dot: 'bg-violet-400', badge: 'bg-violet-400/15 text-violet-600' };
+}
+
+function formatDuration(duration: number): string {
+    const h = Math.floor(duration);
+    const m = Math.round((duration - h) * 60);
+    if (h === 0) return `${m}min`;
+    if (m === 0) return `${h}h`;
+    return `${h}h${m}`;
 }
 
 export default function AppProgramme() {
@@ -281,7 +88,6 @@ export default function AppProgramme() {
                         {pauseEvents.length > 0 && ` · ${pauseEvents.length} pause${pauseEvents.length > 1 ? 's' : ''}`}
                     </p>
                 </div>
-                {/* Navigation rapide */}
                 <div className="flex gap-1">
                     <button
                         onClick={() => setSelectedDay(i => Math.max(0, i - 1))}
@@ -306,7 +112,6 @@ export default function AppProgramme() {
 
             {/* ── Timeline ── */}
             <div className="relative pl-8">
-                {/* Ligne verticale */}
                 <div className="absolute left-[15px] top-2 bottom-2 w-px bg-gradient-to-b from-[#ff89b8]/60 via-[#ff89b8]/30 to-transparent rounded-full" />
 
                 <div className="flex flex-col gap-1">
@@ -315,9 +120,9 @@ export default function AppProgramme() {
 
                         /* ── Pause / break ── */
                         if (event.borderDisable) {
+                            if (!event.title && !event.content) return null;
                             return (
-                                <div key={i} className="flex items-center gap-3 py-2 group">
-                                    {/* Dot */}
+                                <div key={i} className="flex items-center gap-3 py-2">
                                     <div className="absolute left-[11px] w-2 h-2 rounded-full bg-white/20 ring-2 ring-white/10" />
                                     <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/6 border border-white/10 w-full">
                                         <span className="text-white/40 text-xs font-bold tabular-nums">{event.startTime}</span>
@@ -333,6 +138,9 @@ export default function AppProgramme() {
                                                 {event.location}
                                             </span>
                                         )}
+                                        {event.content && !event.title && (
+                                            <span className="text-white/40 text-xs italic">{event.content}</span>
+                                        )}
                                     </div>
                                 </div>
                             );
@@ -340,13 +148,11 @@ export default function AppProgramme() {
 
                         /* ── Événement principal ── */
                         return (
-                            <div key={i} className="flex items-start gap-3 py-1.5 group">
-                                {/* Dot coloré */}
+                            <div key={i} className="flex items-start gap-3 py-1.5">
                                 <div className={`absolute left-[10px] mt-[18px] w-2.5 h-2.5 rounded-full ${accent.dot} shadow-md ring-2 ring-white/20 flex-shrink-0`} />
 
-                                {/* Carte */}
                                 <div className="flex-1 rounded-2xl bg-white/92 backdrop-blur-sm border border-white/60 shadow-md p-4 transition-all duration-200 hover:shadow-lg hover:scale-[1.01]">
-                                    {/* Ligne du haut : horaire + badge durée */}
+                                    {/* Horaire + badge durée */}
                                     <div className="flex items-start justify-between gap-2 mb-2">
                                         <div className="flex items-center gap-1.5">
                                             <span className="text-[#ef6a9f] font-extrabold text-sm tabular-nums">{event.startTime}</span>
@@ -356,14 +162,7 @@ export default function AppProgramme() {
                                             <span className="text-[#ef6a9f]/60 font-semibold text-xs tabular-nums">{getEndTime(event.startTime, event.duration)}</span>
                                         </div>
                                         <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 ${accent.badge}`}>
-                                            {(() => {
-                                                const d = event.duration;
-                                                const h = Math.floor(d);
-                                                const m = Math.round((d - h) * 60);
-                                                if (h === 0) return `${m}min`;
-                                                if (m === 0) return `${h}h`;
-                                                return `${h}h${m}`;
-                                            })()}
+                                            {formatDuration(event.duration)}
                                         </span>
                                     </div>
 

@@ -11,7 +11,7 @@ export async function middleware(request: NextRequest) {
         || pathname.startsWith('/app/profile')
         || pathname.startsWith('/app/notifications')
         || pathname.startsWith('/app/programme')
-        || pathname.startsWith('/app/roundtables');
+        || pathname.startsWith('/app/inscriptions');
 
     if (!isProtectedRoute) return NextResponse.next();
 

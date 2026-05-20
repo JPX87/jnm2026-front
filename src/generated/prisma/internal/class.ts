@@ -11,49 +11,66 @@
  * Please import the `PrismaClient` class from the `client.ts` file instead.
  */
 
-import * as runtime from "@prisma/client/runtime/client"
+import * as runtime from "@prisma/client/runtime/library"
 import type * as Prisma from "./prismaNamespace"
 
 
 const config: runtime.GetPrismaClientConfig = {
-  "previewFeatures": [],
-  "clientVersion": "7.8.0",
-  "engineVersion": "3c6e192761c0362d496ed980de936e2f3cebcd3a",
+  "generator": {
+    "name": "client",
+    "provider": {
+      "fromEnvVar": null,
+      "value": "prisma-client"
+    },
+    "output": {
+      "value": "C:\\Users\\guill\\Documents\\Project\\jnm2026-front\\src\\generated\\prisma",
+      "fromEnvVar": null
+    },
+    "config": {
+      "engineType": "library"
+    },
+    "binaryTargets": [
+      {
+        "fromEnvVar": null,
+        "value": "windows",
+        "native": true
+      }
+    ],
+    "previewFeatures": [],
+    "sourceFilePath": "C:\\Users\\guill\\Documents\\Project\\jnm2026-front\\prisma\\schema.prisma",
+    "isCustomOutput": true
+  },
+  "relativePath": "../../../prisma",
+  "clientVersion": "6.19.3",
+  "engineVersion": "c2990dca591cba766e3b7ef5d9e8a84796e47ab7",
+  "datasourceNames": [
+    "db"
+  ],
   "activeProvider": "mysql",
-  "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"mysql\"\n}\n\nmodel User {\n  id           Int           @id @default(autoincrement())\n  email        String        @unique\n  firstname    String?\n  lastname     String?\n  password     String\n  miage        String?\n  ville        String?\n  hotelRoom    String\n  hotelFloor   String?\n  doorCode     String?\n  isAdmin      Boolean       @default(false)\n  createdAt    DateTime      @default(now())\n  messageReads MessageRead[]\n}\n\nmodel Message {\n  id        Int           @id @default(autoincrement())\n  title     String\n  content   String\n  createdAt DateTime      @default(now())\n  reads     MessageRead[]\n}\n\nmodel MessageRead {\n  userId    Int\n  messageId Int\n  readAt    DateTime @default(now())\n  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n  message   Message  @relation(fields: [messageId], references: [id], onDelete: Cascade)\n\n  @@id([userId, messageId])\n}\n",
+  "postinstall": false,
+  "inlineDatasources": {
+    "db": {
+      "url": {
+        "fromEnvVar": "DATABASE_URL",
+        "value": null
+      }
+    }
+  },
+  "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"mysql\"\n  url      = env(\"DATABASE_URL\") //fake env only for CI\n}\n\nmodel User {\n  id                    Int                    @id @default(autoincrement())\n  email                 String                 @unique\n  firstname             String?\n  lastname              String?\n  password              String\n  miage                 String?\n  ville                 String?\n  hotelRoom             String\n  hotelFloor            String?\n  doorCode              String?\n  isAdmin               Boolean                @default(false)\n  createdAt             DateTime               @default(now())\n  messageReads          MessageRead[]\n  activityRegistrations ActivityRegistration[]\n}\n\nmodel Message {\n  id        Int           @id @default(autoincrement())\n  title     String\n  content   String\n  createdAt DateTime      @default(now())\n  reads     MessageRead[]\n}\n\nmodel MessageRead {\n  userId    Int\n  messageId Int\n  readAt    DateTime @default(now())\n  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n  message   Message  @relation(fields: [messageId], references: [id], onDelete: Cascade)\n\n  @@id([userId, messageId])\n}\n\nmodel Setting {\n  key   String @id\n  value String\n}\n\nmodel ActivityGroup {\n  id          Int        @id @default(autoincrement())\n  title       String\n  description String?\n  isOpen      Boolean    @default(false)\n  maxPerUser  Int        @default(1)\n  order       Int        @default(0)\n  createdAt   DateTime   @default(now())\n  activities  Activity[]\n}\n\nmodel Activity {\n  id            Int                    @id @default(autoincrement())\n  title         String\n  description   String?\n  maxSeats      Int?\n  order         Int                    @default(0)\n  groupId       Int\n  group         ActivityGroup          @relation(fields: [groupId], references: [id], onDelete: Cascade)\n  speakers      ActivitySpeaker[]\n  registrations ActivityRegistration[]\n}\n\nmodel ActivitySpeaker {\n  id          Int      @id @default(autoincrement())\n  name        String\n  role        String?\n  company     String?\n  linkedinUrl String?\n  activityId  Int\n  activity    Activity @relation(fields: [activityId], references: [id], onDelete: Cascade)\n}\n\nmodel ActivityRegistration {\n  userId     Int\n  activityId Int\n  createdAt  DateTime @default(now())\n  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n  activity   Activity @relation(fields: [activityId], references: [id], onDelete: Cascade)\n\n  @@id([userId, activityId])\n}\n",
+  "inlineSchemaHash": "827c1f134284555d06eb081c6041ac9ca306c8a655dfd7de098e0579535cb9dc",
+  "copyEngine": true,
   "runtimeDataModel": {
     "models": {},
     "enums": {},
     "types": {}
   },
-  "parameterizationSchema": {
-    "strings": [],
-    "graph": ""
-  }
+  "dirname": ""
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"firstname\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lastname\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"miage\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"ville\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"hotelRoom\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"hotelFloor\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"doorCode\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"isAdmin\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"messageReads\",\"kind\":\"object\",\"type\":\"MessageRead\",\"relationName\":\"MessageReadToUser\"}],\"dbName\":null},\"Message\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"content\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"reads\",\"kind\":\"object\",\"type\":\"MessageRead\",\"relationName\":\"MessageToMessageRead\"}],\"dbName\":null},\"MessageRead\":{\"fields\":[{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"messageId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"readAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"MessageReadToUser\"},{\"name\":\"message\",\"kind\":\"object\",\"type\":\"Message\",\"relationName\":\"MessageToMessageRead\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
-config.parameterizationSchema = {
-  strings: JSON.parse("[\"where\",\"orderBy\",\"cursor\",\"user\",\"reads\",\"_count\",\"message\",\"messageReads\",\"User.findUnique\",\"User.findUniqueOrThrow\",\"User.findFirst\",\"User.findFirstOrThrow\",\"User.findMany\",\"data\",\"User.createOne\",\"User.createMany\",\"User.updateOne\",\"User.updateMany\",\"create\",\"update\",\"User.upsertOne\",\"User.deleteOne\",\"User.deleteMany\",\"having\",\"_avg\",\"_sum\",\"_min\",\"_max\",\"User.groupBy\",\"User.aggregate\",\"Message.findUnique\",\"Message.findUniqueOrThrow\",\"Message.findFirst\",\"Message.findFirstOrThrow\",\"Message.findMany\",\"Message.createOne\",\"Message.createMany\",\"Message.updateOne\",\"Message.updateMany\",\"Message.upsertOne\",\"Message.deleteOne\",\"Message.deleteMany\",\"Message.groupBy\",\"Message.aggregate\",\"MessageRead.findUnique\",\"MessageRead.findUniqueOrThrow\",\"MessageRead.findFirst\",\"MessageRead.findFirstOrThrow\",\"MessageRead.findMany\",\"MessageRead.createOne\",\"MessageRead.createMany\",\"MessageRead.updateOne\",\"MessageRead.updateMany\",\"MessageRead.upsertOne\",\"MessageRead.deleteOne\",\"MessageRead.deleteMany\",\"MessageRead.groupBy\",\"MessageRead.aggregate\",\"AND\",\"OR\",\"NOT\",\"userId\",\"messageId\",\"readAt\",\"equals\",\"in\",\"notIn\",\"lt\",\"lte\",\"gt\",\"gte\",\"not\",\"id\",\"title\",\"content\",\"createdAt\",\"contains\",\"startsWith\",\"endsWith\",\"search\",\"every\",\"some\",\"none\",\"email\",\"firstname\",\"lastname\",\"password\",\"miage\",\"ville\",\"hotelRoom\",\"hotelFloor\",\"doorCode\",\"isAdmin\",\"userId_messageId\",\"is\",\"isNot\",\"connectOrCreate\",\"upsert\",\"createMany\",\"set\",\"disconnect\",\"delete\",\"connect\",\"updateMany\",\"deleteMany\",\"_relevance\",\"increment\",\"decrement\",\"multiply\",\"divide\"]"),
-  graph: "rAEbKhAHAABaACA6AABjADA7AAALABA8AABjADBIAgAAAAFLQABZACFTAQAAAAFUAQBkACFVAQBkACFWAQBYACFXAQBkACFYAQBkACFZAQBYACFaAQBkACFbAQBkACFcIABlACEBAAAAAQAgCAMAAGgAIAYAAGkAIDoAAGcAMDsAAAMAEDwAAGcAMD0CAFcAIT4CAFcAIT9AAFkAIQIDAACfAQAgBgAAoAEAIAkDAABoACAGAABpACA6AABnADA7AAADABA8AABnADA9AgBXACE-AgBXACE_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-AgBwACE_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_QABvACEDAwAAcQAgPQIAcAAhP0AAbwAhAwMAAHMAID0CAAAAAT9AAAAAAQQSAAB8ADBgAAB9ADBiAAB_ACBmAACAAQAwAAFPAQAAAAEAAAAAAAABYwEAAAABAWMgAAAAAQsSAACUAQAwEwAAmAEAMGAAAJUBADBhAACWAQAwYgAAlwEAIGMAAIABADBkAACAAQAwZQAAgAEAMGYAAIABADBnAACZAQAwaAAAgwEAMAMGAAB0ACA-AgAAAAE_QAAAAAECAAAABQAgEgAAnAEAIAMAAAAFACASAACcAQAgEwAAmwEAIAENAAChAQAwAgAAAAUAIA0AAJsBACACAAAAhAEAIA0AAJoBACACPgIAcAAhP0AAbwAhAwYAAHIAID4CAHAAIT9AAG8AIQMGAAB0ACA-AgAAAAE_QAAAAAEEEgAAlAEAMGAAAJUBADBiAACXAQAgZgAAgAEAMAFPAQAAAAEIBwAAiQEAIFQAAIsBACBVAACLAQAgVwAAiwEAIFgAAIsBACBaAACLAQAgWwAAiwEAIGkAAJ4BACACBAAAiQEAIGkAAIoBACACPgIAAAABP0AAAAABAj0CAAAAAT9AAAAAAQRIAgAAAAFJAQAAAAFKAQAAAAFLQAAAAAECAAAAHwAgEgAAowEAIAxIAgAAAAFLQAAAAAFTAQAAAAFUAQAAAAFVAQAAAAFWAQAAAAFXAQAAAAFYAQAAAAFZAQAAAAFaAQAAAAFbAQAAAAFcIAAAAAECAAAAAQAgEgAApQEAIAMAAAAiACASAACjAQAgEwAAqQEAIAYAAAAiACANAACpAQAgSAIAcAAhSQEAegAhSgEAegAhS0AAbwAhBEgCAHAAIUkBAHoAIUoBAHoAIUtAAG8AIQMAAAALACASAAClAQAgEwAArAEAIA4AAAALACANAACsAQAgSAIAcAAhS0AAbwAhUwEAegAhVAEAkQEAIVUBAJEBACFWAQB6ACFXAQCRAQAhWAEAkQEAIVkBAHoAIVoBAJEBACFbAQCRAQAhXCAAkgEAIQxIAgBwACFLQABvACFTAQB6ACFUAQCRAQAhVQEAkQEAIVYBAHoAIVcBAJEBACFYAQCRAQAhWQEAegAhWgEAkQEAIVsBAJEBACFcIACSAQAhAgUABQcGAgIDAAEGAAMCBAcCBQAEAQQIAAEHCQAABQUACBgACRkAChoACxsADAAAAAAABQUACBgACRkAChoACxsADAUFAA8YABAZABEaABIbABMAAAAAAAUFAA8YABAZABEaABIbABMFBQAWGAAXGQAYGgAZGwAaAAAAAAAFBQAWGAAXGQAYGgAZGwAaCAIBCQoBCg0BCw4BDA8BDhEBDxMGEBUBERcGFBgBFRkBFhoGHB0HHR4NHiADHyEDICQDISUDIiYDIygDJCoGJSwDJi4GJy8DKDADKTEGKjQOKzUULDYCLTcCLjgCLzkCMDoCMTwCMj4GM0ACNEIGNUMCNkQCN0UGOEgVOUkb"
-}
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"dbName\":null,\"schema\":null,\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":true,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"Int\",\"nativeType\":null,\"default\":{\"name\":\"autoincrement\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"email\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":true,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"firstname\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"lastname\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"password\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"miage\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"ville\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"hotelRoom\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"hotelFloor\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"doorCode\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"isAdmin\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"Boolean\",\"nativeType\":null,\"default\":false,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"DateTime\",\"nativeType\":null,\"default\":{\"name\":\"now\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"messageReads\",\"kind\":\"object\",\"isList\":true,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"MessageRead\",\"nativeType\":null,\"relationName\":\"MessageReadToUser\",\"relationFromFields\":[],\"relationToFields\":[],\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"activityRegistrations\",\"kind\":\"object\",\"isList\":true,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"ActivityRegistration\",\"nativeType\":null,\"relationName\":\"ActivityRegistrationToUser\",\"relationFromFields\":[],\"relationToFields\":[],\"isGenerated\":false,\"isUpdatedAt\":false}],\"primaryKey\":null,\"uniqueFields\":[],\"uniqueIndexes\":[],\"isGenerated\":false},\"Message\":{\"dbName\":null,\"schema\":null,\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":true,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"Int\",\"nativeType\":null,\"default\":{\"name\":\"autoincrement\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"title\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"content\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"DateTime\",\"nativeType\":null,\"default\":{\"name\":\"now\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"reads\",\"kind\":\"object\",\"isList\":true,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"MessageRead\",\"nativeType\":null,\"relationName\":\"MessageToMessageRead\",\"relationFromFields\":[],\"relationToFields\":[],\"isGenerated\":false,\"isUpdatedAt\":false}],\"primaryKey\":null,\"uniqueFields\":[],\"uniqueIndexes\":[],\"isGenerated\":false},\"MessageRead\":{\"dbName\":null,\"schema\":null,\"fields\":[{\"name\":\"userId\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":true,\"hasDefaultValue\":false,\"type\":\"Int\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"messageId\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":true,\"hasDefaultValue\":false,\"type\":\"Int\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"readAt\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"DateTime\",\"nativeType\":null,\"default\":{\"name\":\"now\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"user\",\"kind\":\"object\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"User\",\"nativeType\":null,\"relationName\":\"MessageReadToUser\",\"relationFromFields\":[\"userId\"],\"relationToFields\":[\"id\"],\"relationOnDelete\":\"Cascade\",\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"message\",\"kind\":\"object\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"Message\",\"nativeType\":null,\"relationName\":\"MessageToMessageRead\",\"relationFromFields\":[\"messageId\"],\"relationToFields\":[\"id\"],\"relationOnDelete\":\"Cascade\",\"isGenerated\":false,\"isUpdatedAt\":false}],\"primaryKey\":{\"name\":null,\"fields\":[\"userId\",\"messageId\"]},\"uniqueFields\":[],\"uniqueIndexes\":[],\"isGenerated\":false},\"Setting\":{\"dbName\":null,\"schema\":null,\"fields\":[{\"name\":\"key\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":true,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"value\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false}],\"primaryKey\":null,\"uniqueFields\":[],\"uniqueIndexes\":[],\"isGenerated\":false},\"ActivityGroup\":{\"dbName\":null,\"schema\":null,\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":true,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"Int\",\"nativeType\":null,\"default\":{\"name\":\"autoincrement\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"title\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"description\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"isOpen\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"Boolean\",\"nativeType\":null,\"default\":false,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"maxPerUser\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"Int\",\"nativeType\":null,\"default\":1,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"order\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"Int\",\"nativeType\":null,\"default\":0,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"DateTime\",\"nativeType\":null,\"default\":{\"name\":\"now\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"activities\",\"kind\":\"object\",\"isList\":true,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"Activity\",\"nativeType\":null,\"relationName\":\"ActivityToActivityGroup\",\"relationFromFields\":[],\"relationToFields\":[],\"isGenerated\":false,\"isUpdatedAt\":false}],\"primaryKey\":null,\"uniqueFields\":[],\"uniqueIndexes\":[],\"isGenerated\":false},\"Activity\":{\"dbName\":null,\"schema\":null,\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":true,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"Int\",\"nativeType\":null,\"default\":{\"name\":\"autoincrement\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"title\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"description\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"maxSeats\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"Int\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"order\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"Int\",\"nativeType\":null,\"default\":0,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"groupId\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":true,\"hasDefaultValue\":false,\"type\":\"Int\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"group\",\"kind\":\"object\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"ActivityGroup\",\"nativeType\":null,\"relationName\":\"ActivityToActivityGroup\",\"relationFromFields\":[\"groupId\"],\"relationToFields\":[\"id\"],\"relationOnDelete\":\"Cascade\",\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"speakers\",\"kind\":\"object\",\"isList\":true,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"ActivitySpeaker\",\"nativeType\":null,\"relationName\":\"ActivityToActivitySpeaker\",\"relationFromFields\":[],\"relationToFields\":[],\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"registrations\",\"kind\":\"object\",\"isList\":true,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"ActivityRegistration\",\"nativeType\":null,\"relationName\":\"ActivityToActivityRegistration\",\"relationFromFields\":[],\"relationToFields\":[],\"isGenerated\":false,\"isUpdatedAt\":false}],\"primaryKey\":null,\"uniqueFields\":[],\"uniqueIndexes\":[],\"isGenerated\":false},\"ActivitySpeaker\":{\"dbName\":null,\"schema\":null,\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":true,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"Int\",\"nativeType\":null,\"default\":{\"name\":\"autoincrement\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"name\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"role\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"company\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"linkedinUrl\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"activityId\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":true,\"hasDefaultValue\":false,\"type\":\"Int\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"activity\",\"kind\":\"object\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"Activity\",\"nativeType\":null,\"relationName\":\"ActivityToActivitySpeaker\",\"relationFromFields\":[\"activityId\"],\"relationToFields\":[\"id\"],\"relationOnDelete\":\"Cascade\",\"isGenerated\":false,\"isUpdatedAt\":false}],\"primaryKey\":null,\"uniqueFields\":[],\"uniqueIndexes\":[],\"isGenerated\":false},\"ActivityRegistration\":{\"dbName\":null,\"schema\":null,\"fields\":[{\"name\":\"userId\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":true,\"hasDefaultValue\":false,\"type\":\"Int\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"activityId\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":true,\"hasDefaultValue\":false,\"type\":\"Int\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"DateTime\",\"nativeType\":null,\"default\":{\"name\":\"now\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"user\",\"kind\":\"object\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"User\",\"nativeType\":null,\"relationName\":\"ActivityRegistrationToUser\",\"relationFromFields\":[\"userId\"],\"relationToFields\":[\"id\"],\"relationOnDelete\":\"Cascade\",\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"activity\",\"kind\":\"object\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"Activity\",\"nativeType\":null,\"relationName\":\"ActivityToActivityRegistration\",\"relationFromFields\":[\"activityId\"],\"relationToFields\":[\"id\"],\"relationOnDelete\":\"Cascade\",\"isGenerated\":false,\"isUpdatedAt\":false}],\"primaryKey\":{\"name\":null,\"fields\":[\"userId\",\"activityId\"]},\"uniqueFields\":[],\"uniqueIndexes\":[],\"isGenerated\":false}},\"enums\":{},\"types\":{}}")
+config.engineWasm = undefined
+config.compilerWasm = undefined
 
-async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Module> {
-  const { Buffer } = await import('node:buffer')
-  const wasmArray = Buffer.from(wasmBase64, 'base64')
-  return new WebAssembly.Module(wasmArray)
-}
-
-config.compilerWasm = {
-  getRuntime: async () => await import("@prisma/client/runtime/query_compiler_fast_bg.mysql.mjs"),
-
-  getQueryCompilerWasmModule: async () => {
-    const { wasm } = await import("@prisma/client/runtime/query_compiler_fast_bg.mysql.wasm-base64.mjs")
-    return await decodeBase64AsWasm(wasm)
-  },
-
-  importName: "./query_compiler_fast_bg.js"
-}
 
 
 
@@ -67,14 +84,12 @@ export interface PrismaClientConstructor {
    * Type-safe database client for TypeScript
    * @example
    * ```
-   * const prisma = new PrismaClient({
-   *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
-   * })
+   * const prisma = new PrismaClient()
    * // Fetch zero or more Users
    * const users = await prisma.user.findMany()
    * ```
    * 
-   * Read more in our [docs](https://pris.ly/d/client).
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
    */
 
   new <
@@ -82,7 +97,7 @@ export interface PrismaClientConstructor {
     LogOpts extends LogOptions<Options> = LogOptions<Options>,
     OmitOpts extends Prisma.PrismaClientOptions['omit'] = Options extends { omit: infer U } ? U : Prisma.PrismaClientOptions['omit'],
     ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-  >(options: Prisma.Subset<Options, Prisma.PrismaClientOptions> ): PrismaClient<LogOpts, OmitOpts, ExtArgs>
+  >(options?: Prisma.Subset<Options, Prisma.PrismaClientOptions> ): PrismaClient<LogOpts, OmitOpts, ExtArgs>
 }
 
 /**
@@ -91,19 +106,17 @@ export interface PrismaClientConstructor {
  * Type-safe database client for TypeScript
  * @example
  * ```
- * const prisma = new PrismaClient({
- *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
- * })
+ * const prisma = new PrismaClient()
  * // Fetch zero or more Users
  * const users = await prisma.user.findMany()
  * ```
  * 
- * Read more in our [docs](https://pris.ly/d/client).
+ * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
  */
 
 export interface PrismaClient<
   in LogOpts extends Prisma.LogLevel = never,
-  in out OmitOpts extends Prisma.PrismaClientOptions['omit'] = undefined,
+  in out OmitOpts extends Prisma.PrismaClientOptions['omit'] = Prisma.PrismaClientOptions['omit'],
   in out ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
 > {
   [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['other'] }
@@ -127,7 +140,7 @@ export interface PrismaClient<
    * const result = await prisma.$executeRaw`UPDATE User SET cool = ${true} WHERE email = ${'user@email.com'};`
    * ```
    *
-   * Read more in our [docs](https://pris.ly/d/raw-queries).
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $executeRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<number>;
 
@@ -139,7 +152,7 @@ export interface PrismaClient<
    * const result = await prisma.$executeRawUnsafe('UPDATE User SET cool = $1 WHERE email = $2 ;', true, 'user@email.com')
    * ```
    *
-   * Read more in our [docs](https://pris.ly/d/raw-queries).
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $executeRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<number>;
 
@@ -150,7 +163,7 @@ export interface PrismaClient<
    * const result = await prisma.$queryRaw`SELECT * FROM User WHERE id = ${1} OR email = ${'user@email.com'};`
    * ```
    *
-   * Read more in our [docs](https://pris.ly/d/raw-queries).
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $queryRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<T>;
 
@@ -162,7 +175,7 @@ export interface PrismaClient<
    * const result = await prisma.$queryRawUnsafe('SELECT * FROM User WHERE id = $1 OR email = $2;', 1, 'user@email.com')
    * ```
    *
-   * Read more in our [docs](https://pris.ly/d/raw-queries).
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $queryRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<T>;
 
@@ -178,11 +191,12 @@ export interface PrismaClient<
    * ])
    * ```
    * 
-   * Read more in our [docs](https://www.prisma.io/docs/orm/prisma-client/queries/transactions).
+   * Read more in our [docs](https://www.prisma.io/docs/concepts/components/prisma-client/transactions).
    */
-  $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): runtime.Types.Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
+  $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { isolationLevel?: Prisma.TransactionIsolationLevel }): runtime.Types.Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
 
   $transaction<R>(fn: (prisma: Omit<PrismaClient, runtime.ITXClientDenyList>) => runtime.Types.Utils.JsPromise<R>, options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): runtime.Types.Utils.JsPromise<R>
+
 
   $extends: runtime.Types.Extensions.ExtendsHook<"extends", Prisma.TypeMapCb<OmitOpts>, ExtArgs, runtime.Types.Utils.Call<Prisma.TypeMapCb<OmitOpts>, {
     extArgs: ExtArgs
@@ -217,8 +231,59 @@ export interface PrismaClient<
     * ```
     */
   get messageRead(): Prisma.MessageReadDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.setting`: Exposes CRUD operations for the **Setting** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Settings
+    * const settings = await prisma.setting.findMany()
+    * ```
+    */
+  get setting(): Prisma.SettingDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.activityGroup`: Exposes CRUD operations for the **ActivityGroup** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ActivityGroups
+    * const activityGroups = await prisma.activityGroup.findMany()
+    * ```
+    */
+  get activityGroup(): Prisma.ActivityGroupDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.activity`: Exposes CRUD operations for the **Activity** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Activities
+    * const activities = await prisma.activity.findMany()
+    * ```
+    */
+  get activity(): Prisma.ActivityDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.activitySpeaker`: Exposes CRUD operations for the **ActivitySpeaker** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ActivitySpeakers
+    * const activitySpeakers = await prisma.activitySpeaker.findMany()
+    * ```
+    */
+  get activitySpeaker(): Prisma.ActivitySpeakerDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.activityRegistration`: Exposes CRUD operations for the **ActivityRegistration** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ActivityRegistrations
+    * const activityRegistrations = await prisma.activityRegistration.findMany()
+    * ```
+    */
+  get activityRegistration(): Prisma.ActivityRegistrationDelegate<ExtArgs, { omit: OmitOpts }>;
 }
 
-export function getPrismaClientClass(): PrismaClientConstructor {
+export function getPrismaClientClass(dirname: string): PrismaClientConstructor {
+  config.dirname = dirname
   return runtime.getPrismaClient(config) as unknown as PrismaClientConstructor
 }

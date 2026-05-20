@@ -8,7 +8,7 @@
  *
  * 🟢 You can import this file directly.
  */
-import type * as runtime from "@prisma/client/runtime/client"
+import type * as runtime from "@prisma/client/runtime/library"
 import type * as $Enums from "../enums"
 import type * as Prisma from "../internal/prismaNamespace"
 
@@ -182,7 +182,7 @@ export type MessageReadGroupByOutputType = {
   _max: MessageReadMaxAggregateOutputType | null
 }
 
-export type GetMessageReadGroupByPayload<T extends MessageReadGroupByArgs> = Prisma.PrismaPromise<
+type GetMessageReadGroupByPayload<T extends MessageReadGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<MessageReadGroupByOutputType, T['by']> &
       {
@@ -1140,11 +1140,6 @@ export type MessageReadFindManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Skip the first `n` MessageReads.
    */
   skip?: number
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-   * 
-   * Filter by unique combinations of MessageReads.
-   */
   distinct?: Prisma.MessageReadScalarFieldEnum | Prisma.MessageReadScalarFieldEnum[]
 }
 

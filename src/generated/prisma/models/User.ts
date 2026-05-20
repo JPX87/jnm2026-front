@@ -8,7 +8,7 @@
  *
  * 🟢 You can import this file directly.
  */
-import type * as runtime from "@prisma/client/runtime/client"
+import type * as runtime from "@prisma/client/runtime/library"
 import type * as $Enums from "../enums"
 import type * as Prisma from "../internal/prismaNamespace"
 
@@ -241,7 +241,7 @@ export type UserGroupByOutputType = {
   _max: UserMaxAggregateOutputType | null
 }
 
-export type GetUserGroupByPayload<T extends UserGroupByArgs> = Prisma.PrismaPromise<
+type GetUserGroupByPayload<T extends UserGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<UserGroupByOutputType, T['by']> &
       {
@@ -273,6 +273,7 @@ export type UserWhereInput = {
   isAdmin?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   messageReads?: Prisma.MessageReadListRelationFilter
+  activityRegistrations?: Prisma.ActivityRegistrationListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -289,6 +290,7 @@ export type UserOrderByWithRelationInput = {
   isAdmin?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   messageReads?: Prisma.MessageReadOrderByRelationAggregateInput
+  activityRegistrations?: Prisma.ActivityRegistrationOrderByRelationAggregateInput
   _relevance?: Prisma.UserOrderByRelevanceInput
 }
 
@@ -309,6 +311,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   isAdmin?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   messageReads?: Prisma.MessageReadListRelationFilter
+  activityRegistrations?: Prisma.ActivityRegistrationListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -362,6 +365,7 @@ export type UserCreateInput = {
   isAdmin?: boolean
   createdAt?: Date | string
   messageReads?: Prisma.MessageReadCreateNestedManyWithoutUserInput
+  activityRegistrations?: Prisma.ActivityRegistrationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -378,6 +382,7 @@ export type UserUncheckedCreateInput = {
   isAdmin?: boolean
   createdAt?: Date | string
   messageReads?: Prisma.MessageReadUncheckedCreateNestedManyWithoutUserInput
+  activityRegistrations?: Prisma.ActivityRegistrationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -393,6 +398,7 @@ export type UserUpdateInput = {
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   messageReads?: Prisma.MessageReadUpdateManyWithoutUserNestedInput
+  activityRegistrations?: Prisma.ActivityRegistrationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -409,6 +415,7 @@ export type UserUncheckedUpdateInput = {
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   messageReads?: Prisma.MessageReadUncheckedUpdateManyWithoutUserNestedInput
+  activityRegistrations?: Prisma.ActivityRegistrationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -557,6 +564,20 @@ export type UserUpdateOneRequiredWithoutMessageReadsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMessageReadsInput, Prisma.UserUpdateWithoutMessageReadsInput>, Prisma.UserUncheckedUpdateWithoutMessageReadsInput>
 }
 
+export type UserCreateNestedOneWithoutActivityRegistrationsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutActivityRegistrationsInput, Prisma.UserUncheckedCreateWithoutActivityRegistrationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutActivityRegistrationsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutActivityRegistrationsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutActivityRegistrationsInput, Prisma.UserUncheckedCreateWithoutActivityRegistrationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutActivityRegistrationsInput
+  upsert?: Prisma.UserUpsertWithoutActivityRegistrationsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutActivityRegistrationsInput, Prisma.UserUpdateWithoutActivityRegistrationsInput>, Prisma.UserUncheckedUpdateWithoutActivityRegistrationsInput>
+}
+
 export type UserCreateWithoutMessageReadsInput = {
   email: string
   firstname?: string | null
@@ -569,6 +590,7 @@ export type UserCreateWithoutMessageReadsInput = {
   doorCode?: string | null
   isAdmin?: boolean
   createdAt?: Date | string
+  activityRegistrations?: Prisma.ActivityRegistrationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutMessageReadsInput = {
@@ -584,6 +606,7 @@ export type UserUncheckedCreateWithoutMessageReadsInput = {
   doorCode?: string | null
   isAdmin?: boolean
   createdAt?: Date | string
+  activityRegistrations?: Prisma.ActivityRegistrationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutMessageReadsInput = {
@@ -614,6 +637,7 @@ export type UserUpdateWithoutMessageReadsInput = {
   doorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  activityRegistrations?: Prisma.ActivityRegistrationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMessageReadsInput = {
@@ -629,6 +653,85 @@ export type UserUncheckedUpdateWithoutMessageReadsInput = {
   doorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  activityRegistrations?: Prisma.ActivityRegistrationUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutActivityRegistrationsInput = {
+  email: string
+  firstname?: string | null
+  lastname?: string | null
+  password: string
+  miage?: string | null
+  ville?: string | null
+  hotelRoom: string
+  hotelFloor?: string | null
+  doorCode?: string | null
+  isAdmin?: boolean
+  createdAt?: Date | string
+  messageReads?: Prisma.MessageReadCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutActivityRegistrationsInput = {
+  id?: number
+  email: string
+  firstname?: string | null
+  lastname?: string | null
+  password: string
+  miage?: string | null
+  ville?: string | null
+  hotelRoom: string
+  hotelFloor?: string | null
+  doorCode?: string | null
+  isAdmin?: boolean
+  createdAt?: Date | string
+  messageReads?: Prisma.MessageReadUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutActivityRegistrationsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutActivityRegistrationsInput, Prisma.UserUncheckedCreateWithoutActivityRegistrationsInput>
+}
+
+export type UserUpsertWithoutActivityRegistrationsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutActivityRegistrationsInput, Prisma.UserUncheckedUpdateWithoutActivityRegistrationsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutActivityRegistrationsInput, Prisma.UserUncheckedCreateWithoutActivityRegistrationsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutActivityRegistrationsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutActivityRegistrationsInput, Prisma.UserUncheckedUpdateWithoutActivityRegistrationsInput>
+}
+
+export type UserUpdateWithoutActivityRegistrationsInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  miage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ville?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hotelRoom?: Prisma.StringFieldUpdateOperationsInput | string
+  hotelFloor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  doorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  messageReads?: Prisma.MessageReadUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutActivityRegistrationsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  miage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ville?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hotelRoom?: Prisma.StringFieldUpdateOperationsInput | string
+  hotelFloor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  doorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  messageReads?: Prisma.MessageReadUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -638,10 +741,12 @@ export type UserUncheckedUpdateWithoutMessageReadsInput = {
 
 export type UserCountOutputType = {
   messageReads: number
+  activityRegistrations: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   messageReads?: boolean | UserCountOutputTypeCountMessageReadsArgs
+  activityRegistrations?: boolean | UserCountOutputTypeCountActivityRegistrationsArgs
 }
 
 /**
@@ -661,6 +766,13 @@ export type UserCountOutputTypeCountMessageReadsArgs<ExtArgs extends runtime.Typ
   where?: Prisma.MessageReadWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountActivityRegistrationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ActivityRegistrationWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -676,6 +788,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   isAdmin?: boolean
   createdAt?: boolean
   messageReads?: boolean | Prisma.User$messageReadsArgs<ExtArgs>
+  activityRegistrations?: boolean | Prisma.User$activityRegistrationsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -699,6 +812,7 @@ export type UserSelectScalar = {
 export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "firstname" | "lastname" | "password" | "miage" | "ville" | "hotelRoom" | "hotelFloor" | "doorCode" | "isAdmin" | "createdAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   messageReads?: boolean | Prisma.User$messageReadsArgs<ExtArgs>
+  activityRegistrations?: boolean | Prisma.User$activityRegistrationsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -706,6 +820,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "User"
   objects: {
     messageReads: Prisma.$MessageReadPayload<ExtArgs>[]
+    activityRegistrations: Prisma.$ActivityRegistrationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1061,6 +1176,7 @@ readonly fields: UserFieldRefs;
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   messageReads<T extends Prisma.User$messageReadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$messageReadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MessageReadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  activityRegistrations<T extends Prisma.User$activityRegistrationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$activityRegistrationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActivityRegistrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1298,11 +1414,6 @@ export type UserFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    * Skip the first `n` Users.
    */
   skip?: number
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-   * 
-   * Filter by unique combinations of Users.
-   */
   distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[]
 }
 
@@ -1471,6 +1582,30 @@ export type User$messageReadsArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.MessageReadScalarFieldEnum | Prisma.MessageReadScalarFieldEnum[]
+}
+
+/**
+ * User.activityRegistrations
+ */
+export type User$activityRegistrationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ActivityRegistration
+   */
+  select?: Prisma.ActivityRegistrationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ActivityRegistration
+   */
+  omit?: Prisma.ActivityRegistrationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ActivityRegistrationInclude<ExtArgs> | null
+  where?: Prisma.ActivityRegistrationWhereInput
+  orderBy?: Prisma.ActivityRegistrationOrderByWithRelationInput | Prisma.ActivityRegistrationOrderByWithRelationInput[]
+  cursor?: Prisma.ActivityRegistrationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ActivityRegistrationScalarFieldEnum | Prisma.ActivityRegistrationScalarFieldEnum[]
 }
 
 /**

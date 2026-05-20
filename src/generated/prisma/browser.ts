@@ -32,3 +32,28 @@ export type Message = Prisma.MessageModel
  * 
  */
 export type MessageRead = Prisma.MessageReadModel
+/**
+ * Model Setting
+ * 
+ */
+export type Setting = Prisma.SettingModel
+/**
+ * Model ActivityGroup
+ * 
+ */
+export type ActivityGroup = Prisma.ActivityGroupModel
+/**
+ * Model Activity
+ * 
+ */
+export type Activity = Prisma.ActivityModel
+/**
+ * Model ActivitySpeaker
+ * 
+ */
+export type ActivitySpeaker = Prisma.ActivitySpeakerModel
+/**
+ * Model ActivityRegistration
+ * 
+ */
+export type ActivityRegistration = Prisma.ActivityRegistrationModel

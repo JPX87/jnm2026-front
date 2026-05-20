@@ -15,7 +15,7 @@
  * model files in the `model` directory!
  */
 
-import * as runtime from "@prisma/client/runtime/client"
+import * as runtime from "@prisma/client/runtime/library"
 import type * as Prisma from "../models"
 import { type PrismaClient } from "./class"
 
@@ -65,6 +65,14 @@ export type Decimal = runtime.Decimal
 export type DecimalJsLike = runtime.DecimalJsLike
 
 /**
+ * Metrics
+ */
+export type Metrics = runtime.Metrics
+export type Metric<T> = runtime.Metric<T>
+export type MetricHistogram = runtime.MetricHistogram
+export type MetricHistogramBucket = runtime.MetricHistogramBucket
+
+/**
 * Extensions
 */
 export type Extension = runtime.Types.Extensions.UserArgs
@@ -80,12 +88,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 7.8.0
- * Query Engine version: 3c6e192761c0362d496ed980de936e2f3cebcd3a
+ * Prisma Client JS version: 6.19.3
+ * Query Engine version: c2990dca591cba766e3b7ef5d9e8a84796e47ab7
  */
 export const prismaVersion: PrismaVersion = {
-  client: "7.8.0",
-  engine: "3c6e192761c0362d496ed980de936e2f3cebcd3a"
+  client: "6.19.3",
+  engine: "c2990dca591cba766e3b7ef5d9e8a84796e47ab7"
 }
 
 /**
@@ -102,30 +110,28 @@ export type InputJsonValue = runtime.InputJsonValue
 
 
 export const NullTypes = {
-  DbNull: runtime.NullTypes.DbNull as (new (secret: never) => typeof runtime.DbNull),
-  JsonNull: runtime.NullTypes.JsonNull as (new (secret: never) => typeof runtime.JsonNull),
-  AnyNull: runtime.NullTypes.AnyNull as (new (secret: never) => typeof runtime.AnyNull),
+  DbNull: runtime.objectEnumValues.classes.DbNull as (new (secret: never) => typeof runtime.objectEnumValues.instances.DbNull),
+  JsonNull: runtime.objectEnumValues.classes.JsonNull as (new (secret: never) => typeof runtime.objectEnumValues.instances.JsonNull),
+  AnyNull: runtime.objectEnumValues.classes.AnyNull as (new (secret: never) => typeof runtime.objectEnumValues.instances.AnyNull),
 }
 /**
  * Helper for filtering JSON entries that have `null` on the database (empty on the db)
  *
  * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
  */
-export const DbNull = runtime.DbNull
-
+export const DbNull = runtime.objectEnumValues.instances.DbNull
 /**
  * Helper for filtering JSON entries that have JSON `null` values (not empty on the db)
  *
  * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
  */
-export const JsonNull = runtime.JsonNull
-
+export const JsonNull = runtime.objectEnumValues.instances.JsonNull
 /**
  * Helper for filtering JSON entries that are `Prisma.DbNull` or `Prisma.JsonNull`
  *
  * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
  */
-export const AnyNull = runtime.AnyNull
+export const AnyNull = runtime.objectEnumValues.instances.AnyNull
 
 
 type SelectAndInclude = {
@@ -386,7 +392,12 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   User: 'User',
   Message: 'Message',
-  MessageRead: 'MessageRead'
+  MessageRead: 'MessageRead',
+  Setting: 'Setting',
+  ActivityGroup: 'ActivityGroup',
+  Activity: 'Activity',
+  ActivitySpeaker: 'ActivitySpeaker',
+  ActivityRegistration: 'ActivityRegistration'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -402,7 +413,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "message" | "messageRead"
+    modelProps: "user" | "message" | "messageRead" | "setting" | "activityGroup" | "activity" | "activitySpeaker" | "activityRegistration"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -604,6 +615,336 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Setting: {
+      payload: Prisma.$SettingPayload<ExtArgs>
+      fields: Prisma.SettingFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SettingFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SettingPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SettingFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SettingPayload>
+        }
+        findFirst: {
+          args: Prisma.SettingFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SettingPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SettingFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SettingPayload>
+        }
+        findMany: {
+          args: Prisma.SettingFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SettingPayload>[]
+        }
+        create: {
+          args: Prisma.SettingCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SettingPayload>
+        }
+        createMany: {
+          args: Prisma.SettingCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.SettingDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SettingPayload>
+        }
+        update: {
+          args: Prisma.SettingUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SettingPayload>
+        }
+        deleteMany: {
+          args: Prisma.SettingDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SettingUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.SettingUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SettingPayload>
+        }
+        aggregate: {
+          args: Prisma.SettingAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSetting>
+        }
+        groupBy: {
+          args: Prisma.SettingGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SettingGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SettingCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SettingCountAggregateOutputType> | number
+        }
+      }
+    }
+    ActivityGroup: {
+      payload: Prisma.$ActivityGroupPayload<ExtArgs>
+      fields: Prisma.ActivityGroupFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ActivityGroupFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityGroupPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ActivityGroupFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityGroupPayload>
+        }
+        findFirst: {
+          args: Prisma.ActivityGroupFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityGroupPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ActivityGroupFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityGroupPayload>
+        }
+        findMany: {
+          args: Prisma.ActivityGroupFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityGroupPayload>[]
+        }
+        create: {
+          args: Prisma.ActivityGroupCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityGroupPayload>
+        }
+        createMany: {
+          args: Prisma.ActivityGroupCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.ActivityGroupDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityGroupPayload>
+        }
+        update: {
+          args: Prisma.ActivityGroupUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityGroupPayload>
+        }
+        deleteMany: {
+          args: Prisma.ActivityGroupDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ActivityGroupUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.ActivityGroupUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityGroupPayload>
+        }
+        aggregate: {
+          args: Prisma.ActivityGroupAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateActivityGroup>
+        }
+        groupBy: {
+          args: Prisma.ActivityGroupGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ActivityGroupGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ActivityGroupCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ActivityGroupCountAggregateOutputType> | number
+        }
+      }
+    }
+    Activity: {
+      payload: Prisma.$ActivityPayload<ExtArgs>
+      fields: Prisma.ActivityFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ActivityFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ActivityFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityPayload>
+        }
+        findFirst: {
+          args: Prisma.ActivityFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ActivityFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityPayload>
+        }
+        findMany: {
+          args: Prisma.ActivityFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityPayload>[]
+        }
+        create: {
+          args: Prisma.ActivityCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityPayload>
+        }
+        createMany: {
+          args: Prisma.ActivityCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.ActivityDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityPayload>
+        }
+        update: {
+          args: Prisma.ActivityUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityPayload>
+        }
+        deleteMany: {
+          args: Prisma.ActivityDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ActivityUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.ActivityUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityPayload>
+        }
+        aggregate: {
+          args: Prisma.ActivityAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateActivity>
+        }
+        groupBy: {
+          args: Prisma.ActivityGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ActivityGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ActivityCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ActivityCountAggregateOutputType> | number
+        }
+      }
+    }
+    ActivitySpeaker: {
+      payload: Prisma.$ActivitySpeakerPayload<ExtArgs>
+      fields: Prisma.ActivitySpeakerFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ActivitySpeakerFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivitySpeakerPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ActivitySpeakerFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivitySpeakerPayload>
+        }
+        findFirst: {
+          args: Prisma.ActivitySpeakerFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivitySpeakerPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ActivitySpeakerFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivitySpeakerPayload>
+        }
+        findMany: {
+          args: Prisma.ActivitySpeakerFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivitySpeakerPayload>[]
+        }
+        create: {
+          args: Prisma.ActivitySpeakerCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivitySpeakerPayload>
+        }
+        createMany: {
+          args: Prisma.ActivitySpeakerCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.ActivitySpeakerDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivitySpeakerPayload>
+        }
+        update: {
+          args: Prisma.ActivitySpeakerUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivitySpeakerPayload>
+        }
+        deleteMany: {
+          args: Prisma.ActivitySpeakerDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ActivitySpeakerUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.ActivitySpeakerUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivitySpeakerPayload>
+        }
+        aggregate: {
+          args: Prisma.ActivitySpeakerAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateActivitySpeaker>
+        }
+        groupBy: {
+          args: Prisma.ActivitySpeakerGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ActivitySpeakerGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ActivitySpeakerCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ActivitySpeakerCountAggregateOutputType> | number
+        }
+      }
+    }
+    ActivityRegistration: {
+      payload: Prisma.$ActivityRegistrationPayload<ExtArgs>
+      fields: Prisma.ActivityRegistrationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ActivityRegistrationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityRegistrationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ActivityRegistrationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityRegistrationPayload>
+        }
+        findFirst: {
+          args: Prisma.ActivityRegistrationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityRegistrationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ActivityRegistrationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityRegistrationPayload>
+        }
+        findMany: {
+          args: Prisma.ActivityRegistrationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityRegistrationPayload>[]
+        }
+        create: {
+          args: Prisma.ActivityRegistrationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityRegistrationPayload>
+        }
+        createMany: {
+          args: Prisma.ActivityRegistrationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.ActivityRegistrationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityRegistrationPayload>
+        }
+        update: {
+          args: Prisma.ActivityRegistrationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityRegistrationPayload>
+        }
+        deleteMany: {
+          args: Prisma.ActivityRegistrationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ActivityRegistrationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.ActivityRegistrationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityRegistrationPayload>
+        }
+        aggregate: {
+          args: Prisma.ActivityRegistrationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateActivityRegistration>
+        }
+        groupBy: {
+          args: Prisma.ActivityRegistrationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ActivityRegistrationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ActivityRegistrationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ActivityRegistrationCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -680,6 +1021,60 @@ export const MessageReadScalarFieldEnum = {
 export type MessageReadScalarFieldEnum = (typeof MessageReadScalarFieldEnum)[keyof typeof MessageReadScalarFieldEnum]
 
 
+export const SettingScalarFieldEnum = {
+  key: 'key',
+  value: 'value'
+} as const
+
+export type SettingScalarFieldEnum = (typeof SettingScalarFieldEnum)[keyof typeof SettingScalarFieldEnum]
+
+
+export const ActivityGroupScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  isOpen: 'isOpen',
+  maxPerUser: 'maxPerUser',
+  order: 'order',
+  createdAt: 'createdAt'
+} as const
+
+export type ActivityGroupScalarFieldEnum = (typeof ActivityGroupScalarFieldEnum)[keyof typeof ActivityGroupScalarFieldEnum]
+
+
+export const ActivityScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  maxSeats: 'maxSeats',
+  order: 'order',
+  groupId: 'groupId'
+} as const
+
+export type ActivityScalarFieldEnum = (typeof ActivityScalarFieldEnum)[keyof typeof ActivityScalarFieldEnum]
+
+
+export const ActivitySpeakerScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  role: 'role',
+  company: 'company',
+  linkedinUrl: 'linkedinUrl',
+  activityId: 'activityId'
+} as const
+
+export type ActivitySpeakerScalarFieldEnum = (typeof ActivitySpeakerScalarFieldEnum)[keyof typeof ActivitySpeakerScalarFieldEnum]
+
+
+export const ActivityRegistrationScalarFieldEnum = {
+  userId: 'userId',
+  activityId: 'activityId',
+  createdAt: 'createdAt'
+} as const
+
+export type ActivityRegistrationScalarFieldEnum = (typeof ActivityRegistrationScalarFieldEnum)[keyof typeof ActivityRegistrationScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -717,6 +1112,40 @@ export const MessageOrderByRelevanceFieldEnum = {
 } as const
 
 export type MessageOrderByRelevanceFieldEnum = (typeof MessageOrderByRelevanceFieldEnum)[keyof typeof MessageOrderByRelevanceFieldEnum]
+
+
+export const SettingOrderByRelevanceFieldEnum = {
+  key: 'key',
+  value: 'value'
+} as const
+
+export type SettingOrderByRelevanceFieldEnum = (typeof SettingOrderByRelevanceFieldEnum)[keyof typeof SettingOrderByRelevanceFieldEnum]
+
+
+export const ActivityGroupOrderByRelevanceFieldEnum = {
+  title: 'title',
+  description: 'description'
+} as const
+
+export type ActivityGroupOrderByRelevanceFieldEnum = (typeof ActivityGroupOrderByRelevanceFieldEnum)[keyof typeof ActivityGroupOrderByRelevanceFieldEnum]
+
+
+export const ActivityOrderByRelevanceFieldEnum = {
+  title: 'title',
+  description: 'description'
+} as const
+
+export type ActivityOrderByRelevanceFieldEnum = (typeof ActivityOrderByRelevanceFieldEnum)[keyof typeof ActivityOrderByRelevanceFieldEnum]
+
+
+export const ActivitySpeakerOrderByRelevanceFieldEnum = {
+  name: 'name',
+  role: 'role',
+  company: 'company',
+  linkedinUrl: 'linkedinUrl'
+} as const
+
+export type ActivitySpeakerOrderByRelevanceFieldEnum = (typeof ActivitySpeakerOrderByRelevanceFieldEnum)[keyof typeof ActivitySpeakerOrderByRelevanceFieldEnum]
 
 
 
@@ -766,22 +1195,26 @@ export type BatchPayload = {
   count: number
 }
 
+
+export type Datasource = {
+  url?: string
+}
+export type Datasources = {
+  db?: Datasource
+}
+
 export const defineExtension = runtime.Extensions.defineExtension as unknown as runtime.Types.Extensions.ExtendsHook<"define", TypeMapCb, runtime.Types.Extensions.DefaultArgs>
 export type DefaultPrismaClient = PrismaClient
 export type ErrorFormat = 'pretty' | 'colorless' | 'minimal'
-export type PrismaClientOptions = ({
+export interface PrismaClientOptions {
   /**
-   * Instance of a Driver Adapter, e.g., like one provided by `@prisma/adapter-pg`.
+   * Overwrites the datasource url from your schema.prisma file
    */
-  adapter: runtime.SqlDriverAdapterFactory
-  accelerateUrl?: never
-} | {
+  datasources?: Datasources
   /**
-   * Prisma Accelerate URL allowing the client to connect through Accelerate instead of a direct database.
+   * Overwrites the datasource url from your schema.prisma file
    */
-  accelerateUrl: string
-  adapter?: never
-}) & {
+  datasourceUrl?: string
   /**
    * @default "colorless"
    */
@@ -808,7 +1241,7 @@ export type PrismaClientOptions = ({
    *  { emit: 'stdout', level: 'error' }
    * 
    * ```
-   * Read more in our [docs](https://pris.ly/d/logging).
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
    */
   log?: (LogLevel | LogDefinition)[]
   /**
@@ -821,6 +1254,10 @@ export type PrismaClientOptions = ({
     timeout?: number
     isolationLevel?: TransactionIsolationLevel
   }
+  /**
+   * Instance of a Driver Adapter, e.g., like one provided by `@prisma/adapter-planetscale`
+   */
+  adapter?: runtime.SqlDriverAdapterFactory | null
   /**
    * Global configuration for omitting model fields by default.
    * 
@@ -836,42 +1273,16 @@ export type PrismaClientOptions = ({
    * ```
    */
   omit?: GlobalOmitConfig
-  /**
-   * SQL commenter plugins that add metadata to SQL queries as comments.
-   * Comments follow the sqlcommenter format: https://google.github.io/sqlcommenter/
-   * 
-   * @example
-   * ```
-   * const prisma = new PrismaClient({
-   *   adapter,
-   *   comments: [
-   *     traceContext(),
-   *     queryInsights(),
-   *   ],
-   * })
-   * ```
-   */
-  comments?: runtime.SqlCommenterPlugin[]
-  /**
-   * Optional maximum size for the query plan cache. If not provided, a default size will be used.
-   * A value of `0` can be used to disable the cache entirely. A higher cache size can improve
-   * performance for applications that execute a large number of unique queries, while a smaller
-   * cache size can reduce memory usage.
-   * 
-   * @example
-   * ```
-   * const prisma = new PrismaClient({
-   *   adapter,
-   *   queryPlanCacheMaxSize: 100,
-   * })
-   * ```
-   */
-  queryPlanCacheMaxSize?: number
 }
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   message?: Prisma.MessageOmit
   messageRead?: Prisma.MessageReadOmit
+  setting?: Prisma.SettingOmit
+  activityGroup?: Prisma.ActivityGroupOmit
+  activity?: Prisma.ActivityOmit
+  activitySpeaker?: Prisma.ActivitySpeakerOmit
+  activityRegistration?: Prisma.ActivityRegistrationOmit
 }
 
 /* Types for Logging */
