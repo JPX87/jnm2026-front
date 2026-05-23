@@ -1,27 +1,18 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import { Oswald, Open_Sans } from "next/font/google";
 import '@/scss/globals.scss'
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 const oswald = Oswald({
   variable: "--font-oswald",
   subsets: ["latin"],
+  display: "swap",
   weight: ["200", "300", "400", "500", "600", "700"],
 });
 
 const openSans = Open_Sans({
   variable: "--font-open-sans",
   subsets: ["latin"],
+  display: "swap",
   weight: ["300", "400", "500", "600", "700", "800"],
   style: ["normal", "italic"],
 });
@@ -39,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="fr" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${oswald.variable} ${openSans.variable} antialiased`}
+        className={`${openSans.variable} ${oswald.variable} font-sans antialiased`}
       >
         {children}
       </body>

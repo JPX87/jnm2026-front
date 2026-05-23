@@ -12,11 +12,15 @@
     "lint": "eslint",
     "postinstall": "prisma generate",
     "docker:build": "docker build -t jnm-front .",
-    "docker:run": "docker run -p 3000:3000 --name jnm-container --rm jnm-front"
+    "docker:run": "docker run -p 3000:3000 --name jnm-container --rm jnm-front",
+    "db:seed": "tsx prisma/seed.ts"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/adapter-mariadb": "^7.3.0",
-    "@prisma/client": "^7.3.0",
+    "@prisma/client": "^6.19.3",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.4.2",
     "bcrypt": "^6.0.0",

@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import Head from "next/head";
-import { Oswald, Open_Sans } from "next/font/google";
+import Script from "next/script";
 import '@/scss/globals.scss'
 import HeaderGrid from "@/components/layout/Header/HeaderGrid";
 import NavigationLoader from "@/components/ui/NavigationLoader/NavigationLoader";
@@ -8,19 +7,6 @@ import { ThemeProvider } from "@/components/ui/theme/ThemeProvider/ThemeProvider
 import ScrollToHash from "@/lib/ScrollToHash";
 import Footer from "../Footer/Footer";
 import { getEventSchema, getOrganizationSchema, SITE_CONFIG } from "@/lib/seo";
-
-// Configuration des polices
-const oswald = Oswald({
-  variable: "--font-oswald",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const openSans = Open_Sans({
-  variable: "--font-open-sans",
-  subsets: ["latin"],
-  display: "swap",
-});
 
 // VIEWPORT (Mobile & Theme color)
 export const viewport: Viewport = {
@@ -132,59 +118,28 @@ export default function RootLayout({
   header?: boolean;
 }>) {
   return (
-    <html lang="fr" suppressHydrationWarning>
-      <Head>
-        {/* Google Tag Manager 
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=YOUR_GA_ID"
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'YOUR_GA_ID');
-            `,
-          }}
-        />*/}
-
-        {/* Schémas JSON-LD globaux */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(getOrganizationSchema()),
-          }}
-          suppressHydrationWarning
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(getEventSchema()),
-          }}
-          suppressHydrationWarning
-        />
-
-        {/* Preconnect pour améliorer les performances */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      </Head>
-      <body
-        className={`${openSans.variable} ${oswald.variable} font-sans antialiased`}
+    <>
+      <Script
+        id="schema-organization"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(getOrganizationSchema()) }}
+      />
+      <Script
+        id="schema-event"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(getEventSchema()) }}
+      />
+      <ThemeProvider attribute="data-theme"
+        defaultTheme="system"
+        enableSystem
+        themes={["light", "dark"]}
       >
-        <ThemeProvider attribute="data-theme"
-          defaultTheme="system"
-          enableSystem
-          themes={["light", "dark"]}
-        >
-          <ScrollToHash />
-          <NavigationLoader />
-          {header && <HeaderGrid />}
-          {children}
-          <Footer />
-        </ThemeProvider>
-      </body>
-    </html>
+        <ScrollToHash />
+        <NavigationLoader />
+        {header && <HeaderGrid />}
+        {children}
+        <Footer />
+      </ThemeProvider>
+    </>
   );
 }
