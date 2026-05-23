@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+//import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 
 const partners = [
@@ -21,15 +21,17 @@ const partners = [
 ];
 
 const tierConfig = [
-  { bodyW: 260, bodyH: 200, handleW: 100, handleH: 28, logoW: 210, logoH: 80, maxW: "78%", maxH: "58%", label: "MAJEUR", labelSize: 13 },
-  { bodyW: 200, bodyH: 155, handleW: 78, handleH: 22, logoW: 160, logoH: 62, maxW: "74%", maxH: "54%", label: "LEADER", labelSize: 11 },
-  { bodyW: 158, bodyH: 124, handleW: 62, handleH: 18, logoW: 124, logoH: 48, maxW: "70%", maxH: "50%", label: "ACTEUR", labelSize: 10 },
-  { bodyW: 128, bodyH: 100, handleW: 50, handleH: 14, logoW: 100, logoH: 38, maxW: "66%", maxH: "46%", label: "ASSOCIÉ", labelSize: 9 },
-  { bodyW: 158, bodyH: 124, handleW: 62, handleH: 18, logoW: 124, logoH: 48, maxW: "76%", maxH: "46%", label: "", labelSize: 9 },
+  { bodyW: 200, bodyH: 155, handleW: 78, handleH: 22, logoW: 160, logoH: 62, maxW: "74%", maxH: "54%", label: "MAJEUR", labelSize: 13 },
+  { bodyW: 200, bodyH: 155, handleW: 78, handleH: 22, logoW: 160, logoH: 62, maxW: "74%", maxH: "54%", label: "LEADER", labelSize: 13 },
+  { bodyW: 200, bodyH: 155, handleW: 78, handleH: 22, logoW: 160, logoH: 62, maxW: "74%", maxH: "54%", label: "ACTEUR", labelSize: 13 },
+  { bodyW: 200, bodyH: 155, handleW: 78, handleH: 22, logoW: 160, logoH: 62, maxW: "74%", maxH: "54%", label: "ASSOCIÉ", labelSize: 13 },
+  { bodyW: 200, bodyH: 155, handleW: 78, handleH: 22, logoW: 160, logoH: 62, maxW: "74%", maxH: "54%", label: "", labelSize: 13 },
 ];
 
 const GAP = 40;
-const BG = "#111111";
+const BG_DARK = "#111111";
+const BG_WHITE = "#fff8f3";
+
 const ROLLER_R = 11;
 const LATTE_PITCH = 28;
 const LATTE_W = 3;
@@ -62,7 +64,7 @@ function Valise({ partner }: { partner: (typeof partners)[number] }) {
         width={W}
         height={totalH}
         viewBox={`0 0 ${W} ${totalH}`}
-        style={{ position: "absolute", inset: 0, filter: "drop-shadow(0 6px 16px rgba(0,0,0,0.6))" }}
+        style={{ position: "absolute", inset: 0, filter: `drop-shadow(0 6px 16px rgba(0,0,0,0.4))` }}
       >
         <ellipse cx={W / 2} cy={totalH - 1} rx={W * 0.42} ry={5} fill="rgba(0,0,0,0.4)" />
         <path
@@ -287,17 +289,18 @@ export default function PartenairesCarouselSuitCase() {
       <div
         style={{
           width: "100%",
-          backgroundColor: BG,
           overflow: "hidden",
           position: "relative",
           cursor: "grab",
           userSelect: "none",
+          transition: "all 0.3s ease",
         }}
-        className="pt-3 md:pt-5 carousel-belt"
+        className="pt-3 md:pt-5 carousel-belt bg-[#fff8f3] dark:bg-[#111111]"
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
         onPointerLeave={onPointerUp}
+        suppressHydrationWarning
       >
         {/* Valises */}
         <div
@@ -324,8 +327,10 @@ export default function PartenairesCarouselSuitCase() {
             position: "absolute",
             inset: 0,
             pointerEvents: "none",
-            background: `linear-gradient(90deg, ${BG} 0%, transparent 10%, transparent 90%, ${BG} 100%)`,
+            transition: "all 0.3s ease",
           }}
+          className="carousel-gradient"
+          suppressHydrationWarning
         />
       </div>
 
@@ -334,6 +339,12 @@ export default function PartenairesCarouselSuitCase() {
         @keyframes rouleau-spin {
           0% { transform: rotate(360deg); }
           100%   { transform: rotate(0deg); }
+        }
+        .carousel-gradient {
+          background: linear-gradient(90deg, #fff8f3 0%, transparent 10%, transparent 90%, #fff8f3 100%);
+        }
+        [data-theme='dark'] .carousel-gradient {
+          background: linear-gradient(90deg, #111111 0%, transparent 10%, transparent 90%, #111111 100%);
         }
       `}</style>
     </div>
