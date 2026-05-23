@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Countdown from "@/components/features/Countdown/Countdown";
+import PartenairesCarouselSuitCase from "@/components/ui/PartenairesCarouselSuitCase/PartenairesCarouselSuitCase";
 import { Slice } from "@/components/layout/Slice/Slice";
 import { Avionn } from "@/components/ui/shapes/Avionn/Avionn";
 import MessageBubble from "@/components/ui/shapes/MessageBubble/MessageBubble";
@@ -79,9 +80,14 @@ export default function Home() {
       />
 
       <main className="home relative" id="top">
+        {/* Section Partenaires - hors du Slice pour éviter le chevauchement avec le header fixe */}
+        <div className="pt-20 md:pt-24 w-full">
+          <PartenairesCarouselSuitCase />
+        </div>
+
         {/* Section Countdown - Section critique pour l'engagement */}
-        <Slice absolute first>
-          <h1 id="countdown" className="text-center text-4xl 2xs:text-[55px] xs:text-6xl xs:text-7xl lg:text-8xl xl:text-[150px] sm:mt-0 mb-[20%] sm:m-auto font-bold my-[20px] sm:my-[50px]">
+        <Slice absolute first className="top-10 md:!top-20" parentClassName="h-[45vh]">
+          <h1 id="countdown" className="text-center text-2xl 2xs:text-[36px] xs:text-4xl xs:text-5xl lg:text-6xl xl:text-[100px] sm:mt-0 mb-[20%] sm:m-auto font-bold my-[20px] sm:my-[50px]">
             EMBARQUEMENT DANS
           </h1>
           <Countdown className="mx-auto mb-[30%] xs:mb-0" targetDate={targetDate} />
@@ -89,7 +95,7 @@ export default function Home() {
         </Slice>
 
         {/* Section CTA - Engagement et conversion */}
-        <Slice absolute parentClassName="h-[60vh] mb-16 sm:mb-0 sm:h-screen">
+        <Slice absolute className="!top-52 md:!top-80" parentClassName="h-[80vh] min-h-[700px] mb-12 sm:h-screen sm:mb-18 md:mb-22 xl:mt-10">
           <div className="relative w-10/12 flex flex-col gap-3 py-14 px-6 justify-center rounded-3xl bg-(--color-tertiary) text-(--color-secondary) dark:text-(--color-seconde-black) m-auto">
             <h2 id="contact" className="text-center text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold my-[50px] transition-all">
               DES QUESTIONS SUR LES JNM ?

@@ -68,13 +68,15 @@ const nextConfig: NextConfig = {
           },
         ],
       },
-      // Assets dynamiques (JS, CSS)
+      // Assets dynamiques (JS, CSS) - pas de cache immutable en dev
       {
         source: '/(_next|~partytown)/:path*',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable'
+            value: process.env.NODE_ENV === 'production'
+              ? 'public, max-age=31536000, immutable'
+              : 'no-store',
           },
         ],
       },
