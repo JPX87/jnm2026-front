@@ -76,6 +76,18 @@ export default async function DashboardLayout({
                     </Link>
 
                     <Link
+                        href="/app/votes"
+                        className="group flex items-center gap-3 lg:gap-4 px-4 lg:px-5 py-3 lg:py-4 rounded-xl lg:rounded-2xl text-[#ef6a9f] font-semibold hover:bg-gradient-to-r hover:from-[#ff89b8]/10 hover:to-[#ef6a9f]/10 transition-all duration-300"
+                    >
+                        <span className="flex items-center justify-center w-10 h-10 lg:w-12 lg:h-12 rounded-lg lg:rounded-xl bg-gradient-to-br from-[#ff89b8] to-[#ef6a9f] text-white shadow-lg group-hover:shadow-xl group-hover:scale-110 transition-all duration-300">
+                            <svg className="w-5 h-5 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                            </svg>
+                        </span>
+                        <span className="text-base lg:text-lg">Mes votes</span>
+                    </Link>
+
+                    <Link
                         href="/app/notifications"
                         className="group flex items-center gap-3 lg:gap-4 px-4 lg:px-5 py-3 lg:py-4 rounded-xl lg:rounded-2xl text-[#ef6a9f] font-semibold hover:bg-gradient-to-r hover:from-[#ff89b8]/10 hover:to-[#ef6a9f]/10 transition-all duration-300"
                     >

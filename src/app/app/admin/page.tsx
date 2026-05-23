@@ -16,6 +16,7 @@ type User = {
     hotelFloor: string | null;
     doorCode: string | null;
     isAdmin: boolean;
+    isJury: boolean;
     createdAt: string;
 };
 
@@ -30,6 +31,7 @@ type UserFormData = {
     hotelFloor: string;
     doorCode: string;
     isAdmin: boolean;
+    isJury: boolean;
 };
 
 type ImportResult = {
@@ -39,7 +41,7 @@ type ImportResult = {
 
 const emptyForm: UserFormData = {
     email: '', password: '', firstname: '', lastname: '',
-    miage: '', ville: '', hotelRoom: '', hotelFloor: '', doorCode: '', isAdmin: false,
+    miage: '', ville: '', hotelRoom: '', hotelFloor: '', doorCode: '', isAdmin: false, isJury: false,
 };
 
 export default function AdminPage() {
@@ -56,6 +58,8 @@ export default function AdminPage() {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [mounted, setMounted] = useState(false);
     const [loginEnabled, setLoginEnabled] = useState(true);
+    const [voteVideoOpen, setVoteVideoOpen] = useState(false);
+    const [voteRugbyOpen, setVoteRugbyOpen] = useState(false);
     const [settingsLoading, setSettingsLoading] = useState(true);
     const [settingsError, setSettingsError] = useState('');
     const [settingsSaved, setSettingsSaved] = useState(false);
@@ -68,31 +72,38 @@ export default function AdminPage() {
             .then(data => {
                 if (data.error) throw new Error(data.error);
                 setLoginEnabled(data.loginEnabled === 'true');
+                setVoteVideoOpen(data.voteVideoOpen === 'true');
+                setVoteRugbyOpen(data.voteRugbyOpen === 'true');
             })
             .catch(() => setSettingsError('Impossible de charger les paramètres'))
             .finally(() => setSettingsLoading(false));
     }, []);
 
-    const toggleLogin = async () => {
-        const prev = loginEnabled;
-        const next = !loginEnabled;
-        setLoginEnabled(next);
+    const toggleSetting = async (
+        key: string,
+        current: boolean,
+        setter: (v: boolean) => void,
+    ) => {
+        const next = !current;
+        setter(next);
         setSettingsError('');
         setSettingsSaved(false);
         try {
             const res = await apiFetch('/api/admin/settings', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ key: 'loginEnabled', value: String(next) }),
+                body: JSON.stringify({ key, value: String(next) }),
             });
             if (!res.ok) throw new Error();
             setSettingsSaved(true);
             setTimeout(() => setSettingsSaved(false), 2000);
         } catch {
-            setLoginEnabled(prev);
+            setter(current);
             setSettingsError('Erreur lors de la sauvegarde');
         }
     };
+
+    const toggleLogin = () => toggleSetting('loginEnabled', loginEnabled, setLoginEnabled);
 
     const fetchUsers = useCallback(async () => {
         setLoading(true);
@@ -120,6 +131,7 @@ export default function AdminPage() {
             hotelRoom: user.hotelRoom, hotelFloor: user.hotelFloor ?? '',
             doorCode: user.doorCode ?? '',
             isAdmin: user.isAdmin,
+            isJury: user.isJury,
         });
         setError('');
         setShowModal(true);
@@ -187,6 +199,7 @@ export default function AdminPage() {
     };
 
     const adminCount = users.filter(u => u.isAdmin).length;
+    const juryCount = users.filter(u => u.isJury).length;
 
     return (
         <div className="max-w-7xl mx-auto px-4 sm:px-0">
@@ -202,33 +215,41 @@ export default function AdminPage() {
                     </div>
                     <h2 className="text-lg font-bold text-gray-800">Paramètres</h2>
                 </div>
-                <div className="flex items-center justify-between gap-4 pt-4 border-t border-[#ff89b8]/15">
-                    <div>
-                        <p className="text-gray-800 font-semibold text-sm">Bouton de connexion</p>
-                        <p className="text-gray-500 text-xs mt-0.5">Affiche ou masque le bouton &quot;Se connecter&quot; sur la page d&apos;accueil publique</p>
-                        {settingsError && <p className="text-red-500 text-xs mt-1 font-medium">{settingsError}</p>}
-                        {settingsSaved && <p className="text-green-600 text-xs mt-1 font-medium">Sauvegardé</p>}
-                    </div>
-                    <div className="flex items-center gap-2 flex-shrink-0">
-                        <span className={`text-xs font-semibold ${settingsLoading ? 'text-gray-400' : loginEnabled ? 'text-green-600' : 'text-gray-400'}`}>
-                            {settingsLoading ? 'Chargement...' : loginEnabled ? 'Activé' : 'Désactivé'}
-                        </span>
-                        <button
-                            onClick={toggleLogin}
-                            disabled={settingsLoading}
-                            className="relative flex-shrink-0 disabled:opacity-50"
-                            aria-label="Activer/désactiver le bouton de connexion"
-                        >
-                            <div className={`w-12 h-6 rounded-full transition-colors duration-300 ${loginEnabled ? 'bg-gradient-to-r from-[#ff89b8] to-[#ef6a9f]' : 'bg-gray-200'}`}>
-                                <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-300 ${loginEnabled ? 'translate-x-6' : 'translate-x-0'}`} />
+                {settingsError && <p className="text-red-500 text-xs mb-3 font-medium">{settingsError}</p>}
+                {settingsSaved && <p className="text-green-600 text-xs mb-3 font-medium">Sauvegardé</p>}
+
+                <div className="space-y-0 divide-y divide-[#ff89b8]/10 pt-2 border-t border-[#ff89b8]/15">
+                    {([
+                        { key: 'loginEnabled', label: 'Bouton de connexion', desc: 'Affiche ou masque le bouton "Se connecter" sur la page publique', value: loginEnabled, setter: setLoginEnabled, color: 'pink' },
+                        { key: 'voteVideoOpen', label: '🎬 Vote Concours Vidéo', desc: 'Ouvre ou ferme le vote participants pour le concours vidéo', value: voteVideoOpen, setter: setVoteVideoOpen, color: 'purple' },
+                        { key: 'voteRugbyOpen', label: '🏉 Vote Ballons de Rugby', desc: 'Ouvre ou ferme le vote participants pour le concours rugby', value: voteRugbyOpen, setter: setVoteRugbyOpen, color: 'purple' },
+                    ] as const).map(({ key, label, desc, value, setter, color }) => (
+                        <div key={key} className="flex items-center justify-between gap-4 py-3.5">
+                            <div>
+                                <p className="text-gray-800 font-semibold text-sm">{label}</p>
+                                <p className="text-gray-500 text-xs mt-0.5">{desc}</p>
                             </div>
-                        </button>
-                    </div>
+                            <div className="flex items-center gap-2 flex-shrink-0">
+                                <span className={`text-xs font-semibold ${settingsLoading ? 'text-gray-400' : value ? 'text-green-600' : 'text-gray-400'}`}>
+                                    {settingsLoading ? '...' : value ? 'Ouvert' : 'Fermé'}
+                                </span>
+                                <button
+                                    onClick={() => toggleSetting(key, value, setter as (v: boolean) => void)}
+                                    disabled={settingsLoading}
+                                    className="relative flex-shrink-0 disabled:opacity-50"
+                                >
+                                    <div className={`w-12 h-6 rounded-full transition-colors duration-300 ${value ? color === 'purple' ? 'bg-gradient-to-r from-purple-400 to-purple-600' : 'bg-gradient-to-r from-[#ff89b8] to-[#ef6a9f]' : 'bg-gray-200'}`}>
+                                        <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-300 ${value ? 'translate-x-6' : 'translate-x-0'}`} />
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
 
             {/* Accès rapide */}
-            <div className="mb-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="mb-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <Link
                     href="/app/admin/ateliers"
                     className="card-shadow glass-effect rounded-2xl border border-[#ff89b8]/20 p-5 flex items-center gap-4 hover:border-[#ff89b8]/50 hover:scale-[1.02] transition-all duration-200 group"
@@ -246,6 +267,25 @@ export default function AdminPage() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                 </Link>
+
+                <a
+                    href="/api/admin/votes/export"
+                    download
+                    className="card-shadow glass-effect rounded-2xl border border-purple-300/30 p-5 flex items-center gap-4 hover:border-purple-400/50 hover:scale-[1.02] transition-all duration-200 group"
+                >
+                    <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center flex-shrink-0 shadow-md group-hover:shadow-lg transition-shadow">
+                        <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                        <p className="text-gray-800 font-bold text-sm">Export des votes</p>
+                        <p className="text-gray-500 text-xs mt-0.5">Télécharger tous les votes + résultats calculés (.xlsx)</p>
+                    </div>
+                    <svg className="w-4 h-4 text-gray-400 group-hover:text-purple-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                </a>
             </div>
 
             {/* En-tête gestion utilisateurs */}
@@ -331,7 +371,7 @@ export default function AdminPage() {
             )}
 
             {/* Stats */}
-            <div className="grid grid-cols-2 gap-4 mb-6">
+            <div className="grid grid-cols-3 gap-4 mb-6">
                 <div className="card-shadow glass-effect rounded-2xl border border-[#ff89b8]/20 p-4 sm:p-6 text-center animate-fade-in">
                     <p className="text-gray-500 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-1">Total</p>
                     <p className="text-[#ef6a9f] text-4xl sm:text-5xl font-extrabold">{users.length}</p>
@@ -339,6 +379,10 @@ export default function AdminPage() {
                 <div className="card-shadow glass-effect rounded-2xl border border-[#ff89b8]/20 p-4 sm:p-6 text-center animate-fade-in">
                     <p className="text-gray-500 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-1">Admins</p>
                     <p className="text-[#ef6a9f] text-4xl sm:text-5xl font-extrabold">{adminCount}</p>
+                </div>
+                <div className="card-shadow glass-effect rounded-2xl border border-[#ff89b8]/20 p-4 sm:p-6 text-center animate-fade-in">
+                    <p className="text-gray-500 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-1">Jury</p>
+                    <p className="text-purple-500 text-4xl sm:text-5xl font-extrabold">{juryCount}</p>
                 </div>
             </div>
 
@@ -473,6 +517,15 @@ export default function AdminPage() {
                                         </div>
                                     </div>
                                     <span className="text-gray-700 font-medium text-sm">Administrateur</span>
+                                </label>
+                                <label className="flex items-center gap-3 cursor-pointer">
+                                    <div className="relative">
+                                        <input type="checkbox" className="sr-only" checked={form.isJury} onChange={e => setForm(f => ({ ...f, isJury: e.target.checked }))} />
+                                        <div className={`w-11 h-6 rounded-full transition-colors duration-300 ${form.isJury ? 'bg-gradient-to-r from-purple-400 to-purple-600' : 'bg-gray-200'}`}>
+                                            <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-300 ${form.isJury ? 'translate-x-5' : 'translate-x-0'}`} />
+                                        </div>
+                                    </div>
+                                    <span className="text-gray-700 font-medium text-sm">Membre du jury ✨</span>
                                 </label>
 
                                 <div className="flex gap-3 pt-2">

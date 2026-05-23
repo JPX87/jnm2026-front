@@ -391,6 +391,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   User: 'User',
+  Vote: 'Vote',
   Message: 'Message',
   MessageRead: 'MessageRead',
   Setting: 'Setting',
@@ -413,7 +414,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "message" | "messageRead" | "setting" | "activityGroup" | "activity" | "activitySpeaker" | "activityRegistration"
+    modelProps: "user" | "vote" | "message" | "messageRead" | "setting" | "activityGroup" | "activity" | "activitySpeaker" | "activityRegistration"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -480,6 +481,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.UserCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.UserCountAggregateOutputType> | number
+        }
+      }
+    }
+    Vote: {
+      payload: Prisma.$VotePayload<ExtArgs>
+      fields: Prisma.VoteFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.VoteFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VotePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.VoteFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VotePayload>
+        }
+        findFirst: {
+          args: Prisma.VoteFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VotePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.VoteFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VotePayload>
+        }
+        findMany: {
+          args: Prisma.VoteFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VotePayload>[]
+        }
+        create: {
+          args: Prisma.VoteCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VotePayload>
+        }
+        createMany: {
+          args: Prisma.VoteCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.VoteDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VotePayload>
+        }
+        update: {
+          args: Prisma.VoteUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VotePayload>
+        }
+        deleteMany: {
+          args: Prisma.VoteDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.VoteUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.VoteUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VotePayload>
+        }
+        aggregate: {
+          args: Prisma.VoteAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateVote>
+        }
+        groupBy: {
+          args: Prisma.VoteGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.VoteGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.VoteCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.VoteCountAggregateOutputType> | number
         }
       }
     }
@@ -996,10 +1063,25 @@ export const UserScalarFieldEnum = {
   hotelFloor: 'hotelFloor',
   doorCode: 'doorCode',
   isAdmin: 'isAdmin',
+  isJury: 'isJury',
   createdAt: 'createdAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const VoteScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  contest: 'contest',
+  first: 'first',
+  second: 'second',
+  third: 'third',
+  isJury: 'isJury',
+  createdAt: 'createdAt'
+} as const
+
+export type VoteScalarFieldEnum = (typeof VoteScalarFieldEnum)[keyof typeof VoteScalarFieldEnum]
 
 
 export const MessageScalarFieldEnum = {
@@ -1104,6 +1186,16 @@ export const UserOrderByRelevanceFieldEnum = {
 } as const
 
 export type UserOrderByRelevanceFieldEnum = (typeof UserOrderByRelevanceFieldEnum)[keyof typeof UserOrderByRelevanceFieldEnum]
+
+
+export const VoteOrderByRelevanceFieldEnum = {
+  contest: 'contest',
+  first: 'first',
+  second: 'second',
+  third: 'third'
+} as const
+
+export type VoteOrderByRelevanceFieldEnum = (typeof VoteOrderByRelevanceFieldEnum)[keyof typeof VoteOrderByRelevanceFieldEnum]
 
 
 export const MessageOrderByRelevanceFieldEnum = {
@@ -1276,6 +1368,7 @@ export interface PrismaClientOptions {
 }
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
+  vote?: Prisma.VoteOmit
   message?: Prisma.MessageOmit
   messageRead?: Prisma.MessageReadOmit
   setting?: Prisma.SettingOmit

@@ -4,6 +4,10 @@ const nextConfig: NextConfig = {
   output: 'standalone',
   reactCompiler: true,
 
+  turbopack: {
+    root: __dirname,
+  },
+
   // === SEO & PERFORMANCE ===
 
   // Compression GZIP activée par défaut, mais assurons-le explicitement
