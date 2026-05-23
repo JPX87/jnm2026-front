@@ -27,7 +27,7 @@ export default async function DashboardLayout({
                 </div>
 
                 {/* Navigation */}
-                <nav className="flex-1 flex flex-col px-4 lg:px-6 py-6 lg:py-8 gap-2 lg:gap-3">
+                <nav className="flex-1 flex flex-col px-4 lg:px-6 py-6 lg:py-8 gap-2 lg:gap-3 overflow-y-auto">
                     <Link
                         href="/app/profile"
                         className="group flex items-center gap-3 lg:gap-4 px-4 lg:px-5 py-3 lg:py-4 rounded-xl lg:rounded-2xl text-[#ef6a9f] font-semibold hover:bg-gradient-to-r hover:from-[#ff89b8]/10 hover:to-[#ef6a9f]/10 transition-all duration-300"
