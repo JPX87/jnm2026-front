@@ -8,7 +8,7 @@ import { PartnerCarousel } from "@/components/features/PartnerCarousel/PartnerCa
 
 export default function PartenairesPage() {
     return (
-        <PageTemplate variant="theme" className="organigramme !bg-(--color-secondary) dark:!bg-(--color-seconde-black)" titleClassName="!text-(--color-primary)">
+        <PageTemplate parternersSlider={false} variant="theme" className="organigramme !bg-(--color-secondary) dark:!bg-(--color-seconde-black)" titleClassName="!text-(--color-primary)">
             <section className="flex flex-col md:flex-row -mb-10 md:-mb-14">
                 <div className="flex mx-auto md:mx-0">
                     <LogoSvg className="w-32 md:w-42 px-4 !h-auto" fill="var(--color-primary)" />
