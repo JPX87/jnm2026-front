@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
+import { useTheme } from "next-themes";
 
 const partners = [
   { src: "/img/partenaires/soprasteria.png", alt: "Sopra Steria", tier: 0, maxW: "92%", maxH: "90%" },
@@ -21,15 +22,17 @@ const partners = [
 ];
 
 const tierConfig = [
-  { bodyW: 260, bodyH: 200, handleW: 100, handleH: 28, logoW: 210, logoH: 80, maxW: "78%", maxH: "58%", label: "MAJEUR", labelSize: 13 },
-  { bodyW: 200, bodyH: 155, handleW: 78, handleH: 22, logoW: 160, logoH: 62, maxW: "74%", maxH: "54%", label: "LEADER", labelSize: 11 },
-  { bodyW: 158, bodyH: 124, handleW: 62, handleH: 18, logoW: 124, logoH: 48, maxW: "70%", maxH: "50%", label: "ACTEUR", labelSize: 10 },
-  { bodyW: 128, bodyH: 100, handleW: 50, handleH: 14, logoW: 100, logoH: 38, maxW: "66%", maxH: "46%", label: "ASSOCIÉ", labelSize: 9 },
-  { bodyW: 158, bodyH: 124, handleW: 62, handleH: 18, logoW: 124, logoH: 48, maxW: "76%", maxH: "46%", label: "", labelSize: 9 },
+  { bodyW: 200, bodyH: 155, handleW: 78, handleH: 22, logoW: 160, logoH: 62, maxW: "74%", maxH: "54%", label: "MAJEUR", labelSize: 13 },
+  { bodyW: 200, bodyH: 155, handleW: 78, handleH: 22, logoW: 160, logoH: 62, maxW: "74%", maxH: "54%", label: "LEADER", labelSize: 13 },
+  { bodyW: 200, bodyH: 155, handleW: 78, handleH: 22, logoW: 160, logoH: 62, maxW: "74%", maxH: "54%", label: "ACTEUR", labelSize: 13 },
+  { bodyW: 200, bodyH: 155, handleW: 78, handleH: 22, logoW: 160, logoH: 62, maxW: "74%", maxH: "54%", label: "ASSOCIÉ", labelSize: 13 },
+  { bodyW: 200, bodyH: 155, handleW: 78, handleH: 22, logoW: 160, logoH: 62, maxW: "74%", maxH: "54%", label: "", labelSize: 13 },
 ];
 
 const GAP = 40;
-const BG = "#111111";
+const BG_DARK = "#111111";
+const BG_WHITE = "#fff8f3";
+
 const ROLLER_R = 11;
 const LATTE_PITCH = 28;
 const LATTE_W = 3;
@@ -62,7 +65,7 @@ function Valise({ partner }: { partner: (typeof partners)[number] }) {
         width={W}
         height={totalH}
         viewBox={`0 0 ${W} ${totalH}`}
-        style={{ position: "absolute", inset: 0, filter: "drop-shadow(0 6px 16px rgba(0,0,0,0.6))" }}
+        style={{ position: "absolute", inset: 0, filter: `drop-shadow(0 6px 16px rgba(0,0,0,0.4))` }}
       >
         <ellipse cx={W / 2} cy={totalH - 1} rx={W * 0.42} ry={5} fill="rgba(0,0,0,0.4)" />
         <path
@@ -211,6 +214,8 @@ export default function PartenairesCarouselSuitCase() {
   const dragVel = useRef(0);
   const coastVel = useRef(0);
 
+  const { resolvedTheme: currentTheme } = useTheme();
+
   useEffect(() => {
     let raf: number;
 
@@ -263,6 +268,10 @@ export default function PartenairesCarouselSuitCase() {
     // if (moved < 6) router.push("/partenaires"); --> Désactiver le temps de mettre la page online ^^
   };
 
+  const bgColor = useMemo(() => {
+    return currentTheme === 'dark' ? BG_DARK : BG_WHITE;
+  }, [currentTheme]);
+
   return (
     <div style={{ width: "100%" }}>
       {/* Label */}
@@ -287,11 +296,12 @@ export default function PartenairesCarouselSuitCase() {
       <div
         style={{
           width: "100%",
-          backgroundColor: BG,
+          backgroundColor: bgColor || BG_DARK,
           overflow: "hidden",
           position: "relative",
           cursor: "grab",
           userSelect: "none",
+          transition: "all 0.3s ease",
         }}
         className="pt-3 md:pt-5 carousel-belt"
         onPointerDown={onPointerDown}
@@ -320,11 +330,13 @@ export default function PartenairesCarouselSuitCase() {
 
         {/* Dégradés latéraux */}
         <div
+
           style={{
             position: "absolute",
             inset: 0,
             pointerEvents: "none",
-            background: `linear-gradient(90deg, ${BG} 0%, transparent 10%, transparent 90%, ${BG} 100%)`,
+            transition: "all 0.3s ease",
+            background: `linear-gradient(90deg, ${bgColor} 0%, transparent 10%, transparent 90%, ${bgColor} 100%)`,
           }}
         />
       </div>
