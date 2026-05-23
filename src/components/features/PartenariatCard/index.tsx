@@ -1,6 +1,6 @@
 'use client'; // Indispensable pour Three.js dans Next.js
 
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useMemo } from 'react';
 import { Canvas, ThreeEvent, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { Html, RoundedBox } from '@react-three/drei';
@@ -217,6 +217,12 @@ export function PartenaitCard({ data, className = "" }: { data: PartnerData; cla
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isZoomed]);
 
+  const intensity = useMemo(() => {
+    if (currentTheme === 'dark') return 1;
+    if (currentTheme === 'light' && !isZoomed) return 10;
+    return 2;
+  }, [currentTheme]);
+
   return (
     <>
       {/* Version DOM standard (Performance max, 0 WebGL) */}
@@ -255,13 +261,13 @@ export function PartenaitCard({ data, className = "" }: { data: PartnerData; cla
               onClick={handleResetRotation}
               className="px-4 sm:px-6 py-2 bg-white/10 hover:bg-white/20 text-white text-sm sm:text-base backdrop-blur-md border border-white/20 rounded-full font-medium transition-colors shadow-lg cursor-pointer"
             >
-              De face
+              Recto
             </button>
             <button
               onClick={handleFlipCard}
               className="px-4 sm:px-6 py-2 bg-white/10 hover:bg-white/20 text-white text-sm sm:text-base backdrop-blur-md border border-white/20 rounded-full font-medium transition-colors shadow-lg, cursor-pointer"
             >
-              Retourner
+              Verso
             </button>
           </div>
 
@@ -281,7 +287,7 @@ export function PartenaitCard({ data, className = "" }: { data: PartnerData; cla
                 setIsClosing(false);
               }} // Démonte le WebGL
             />
-            <ambientLight intensity={currentTheme === 'dark' ? 0 : 10} />
+            <ambientLight intensity={intensity} />
             <directionalLight position={[5, 5, 5]} intensity={0.7} />
           </Canvas>
         </div>

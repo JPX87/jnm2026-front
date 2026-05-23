@@ -25,7 +25,7 @@ export const majorPartnerData: PartnerData = {
 
 // Partenaires leaders
 export const ledaPartnerData: PartnerData[] = [
-    /*{
+    {
         number: 2,
         partnerType: "Leader",
         mainLogo: <Image src="/img/partenaires/atos.jpg" loading="eager" alt="Atos Logo" className="w-max p-1 !h-auto m-auto" width={300} height={180} />,
@@ -39,10 +39,11 @@ export const ledaPartnerData: PartnerData[] = [
             expirationDate: new Date(2026, 4, 29)
         },
         back: {
+            title: "Impossible n'est pas Atos",
             classNameDescription: "tracking-[0.067em]",
             description: `Le Groupe Atos est un leader mondial de la transformation digitale, au service des organisations les plus exigeantes depuis plus de 25 ans. Présent dans 61 pays avec près de 59 000 collaborateurs, Atos accompagne ses clients sur leurs enjeux stratégiques en cloud, cybersécurité, data, IA et infrastructures critiques. L'agence de Toulouse rassemble 700 collaborateurs(trices) passionné(e)s qui interviennent dans les domaines des Télécom, du Secteur Public et du Transport, de l'ingénierie spatiale et aéronautique, du digital et cloud.`
         }
-    },*/
+    },
     {
         number: 3,
         partnerType: "Leader",
