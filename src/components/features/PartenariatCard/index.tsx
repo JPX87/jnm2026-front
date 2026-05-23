@@ -39,11 +39,12 @@ function MovingRectangle({
   // Calcule la position 3D et l'échelle exacte en fonction de la div HTML
   const getTarget = () => {
     if (!domRect) return { pos: [0, 0, 0], scale: [1, 1, 1] };
-    const pixelX = (domRect.left + domRect.width / 2) - size.width / 2;
-    const pixelY = size.height / 2 - (domRect.top + domRect.height / 2);
-    const x = (pixelX / size.width) * viewport.width;
-    const y = (pixelY / size.height) * viewport.height;
-    const s = (domRect.width * viewport.width) / (MESH_WIDTH * size.width) * 100; // Échelle parfaite avec le HTML
+    // Utilisation de window.innerWidth/Height plutôt que size.width/Height pour éviter le bug de la barre d'adresse WebKit
+    const pixelX = (domRect.left + domRect.width / 2) - window.innerWidth / 2;
+    const pixelY = window.innerHeight / 2 - (domRect.top + domRect.height / 2);
+    const x = (pixelX / window.innerWidth) * viewport.width;
+    const y = (pixelY / window.innerHeight) * viewport.height;
+    const s = (domRect.width * viewport.width) / (MESH_WIDTH * window.innerWidth) * 100;
     return { pos: [x, y, 0], scale: [s, s, s] };
   };
 
@@ -98,13 +99,13 @@ function MovingRectangle({
 
       {/* Faces de la carte HTML */}
       <Html transform position={[0, 0, 0.01]} scale={HTML_SCALE} wrapperClass="[&>div>div]:!pointer-events-none" style={{ pointerEvents: 'none' }}>
-        <div className='scale-[4] select-none'>
+        <div className='scale-[4] select-none w-[314px] h-[200px] flex items-center justify-center origin-center'>
           <FrontCard data={data} />
         </div>
       </Html>
 
       <Html transform position={[0, 0, -0.01]} rotation={[0, Math.PI, 0]} scale={HTML_SCALE} wrapperClass="[&>div>div]:!pointer-events-none" style={{ pointerEvents: 'none' }}>
-        <div className='scale-[4] select-none'>
+        <div className='scale-[4] select-none w-[314px] h-[200px] flex items-center justify-center origin-center'>
           <BackCard data={data} />
         </div>
       </Html>
@@ -240,7 +241,7 @@ export function PartenaitCard({ data, className = "" }: { data: PartnerData; cla
       {/* Overlay 3D monté UNIQUEMENT lors de l'interaction */}
       {isOpen && (
         <div
-          className={`fixed inset-0 w-screen h-[100dvh] transition-all duration-300 ${isClosing ? 'z-10' : 'z-[100]'
+          className={`fixed inset-0 transition-all duration-300 ${isClosing ? 'z-10' : 'z-[100]'
             } ${isZoomed ? 'pointer-events-auto' : 'pointer-events-none'}`}
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
