@@ -2,8 +2,7 @@
 
 import Image from "next/image";
 //import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { useTheme } from "next-themes";
+import { useEffect, useRef } from "react";
 
 const partners = [
   { src: "/img/partenaires/soprasteria.png", alt: "Sopra Steria", tier: 0, maxW: "92%", maxH: "90%" },
@@ -214,11 +213,7 @@ export default function PartenairesCarouselSuitCase() {
   const dragVel = useRef(0);
   const coastVel = useRef(0);
 
-  const { resolvedTheme: currentTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
   useEffect(() => {
-    setMounted(true);
     let raf: number;
 
     const tick = () => {
@@ -270,11 +265,6 @@ export default function PartenairesCarouselSuitCase() {
     // if (moved < 6) router.push("/partenaires"); --> Désactiver le temps de mettre la page online ^^
   };
 
-  const bgColor = useMemo(() => {
-    if (!mounted) return "transparent";
-    return currentTheme === 'dark' ? BG_DARK : BG_WHITE;
-  }, [currentTheme, mounted]);
-
   return (
     <div style={{ width: "100%" }}>
       {/* Label */}
@@ -299,14 +289,13 @@ export default function PartenairesCarouselSuitCase() {
       <div
         style={{
           width: "100%",
-          backgroundColor: bgColor,
           overflow: "hidden",
           position: "relative",
           cursor: "grab",
           userSelect: "none",
           transition: "all 0.3s ease",
         }}
-        className="pt-3 md:pt-5 carousel-belt"
+        className="pt-3 md:pt-5 carousel-belt bg-[#fff8f3] dark:bg-[#111111]"
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
@@ -339,8 +328,8 @@ export default function PartenairesCarouselSuitCase() {
             inset: 0,
             pointerEvents: "none",
             transition: "all 0.3s ease",
-            background: `linear-gradient(90deg, ${bgColor} 0%, transparent 10%, transparent 90%, ${bgColor} 100%)`,
           }}
+          className="carousel-gradient"
           suppressHydrationWarning
         />
       </div>
@@ -350,6 +339,12 @@ export default function PartenairesCarouselSuitCase() {
         @keyframes rouleau-spin {
           0% { transform: rotate(360deg); }
           100%   { transform: rotate(0deg); }
+        }
+        .carousel-gradient {
+          background: linear-gradient(90deg, #fff8f3 0%, transparent 10%, transparent 90%, #fff8f3 100%);
+        }
+        [data-theme='dark'] .carousel-gradient {
+          background: linear-gradient(90deg, #111111 0%, transparent 10%, transparent 90%, #111111 100%);
         }
       `}</style>
     </div>
