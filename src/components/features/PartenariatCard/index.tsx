@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from 'react';
 import { Canvas, ThreeEvent, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { Html, RoundedBox } from '@react-three/drei';
-import { useSpring, a } from '@react-spring/three';
+import { useSpring, a, SpringValue } from '@react-spring/three';
 import { useTheme } from "next-themes";
 import { FrontCard } from './Front';
 import { BackCard } from './Back';
@@ -84,9 +84,9 @@ function MovingRectangle({
   return (
     <a.group
       ref={groupRef}
-      position={position as any}
-      scale={scale as any}
-      rotation={rotation as any}
+      position={position as SpringValue}
+      scale={scale as SpringValue}
+      rotation={rotation as SpringValue}
       onClick={handleClick}
       onPointerOver={() => { if (isZoomed) document.body.style.cursor = 'grab'; }}
       onPointerOut={() => { document.body.style.cursor = 'auto'; }}
