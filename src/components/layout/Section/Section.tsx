@@ -6,7 +6,7 @@ interface SectionProps {
     className?: string;
     contentClassName?: string;
     titleClassName?: string;
-    variant?: 'primary' | 'secondary' | 'tertiary' | 'neutral';
+    variant?: 'primary' | 'secondary' | 'tertiary' | 'none' | 'neutral';
     maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
 }
 
@@ -27,6 +27,7 @@ export default function Section({
                 return 'bg-(--color-secondary) text-(--color-primary)';
             case 'tertiary':
                 return 'bg-(--color-tertiary) text-(--color-secondary) dark:text-(--color-seconde-black)';
+            case 'none':
             case 'neutral':
                 return '';
             default:

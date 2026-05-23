@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function MentionsLegalesPage() {
     return (
-        <PageTemplate title="MENTIONS LÉGALES" className="mentions-legales">
+        <PageTemplate parternersSlider={false} title="MENTIONS LÉGALES" className="mentions-legales">
             {/* Éditeur du site */}
             <Section variant="tertiary" maxWidth="md" contentClassName="gap-4">
                 <h2 className="text-2xl md:text-3xl font-bold">Éditeur du site</h2>
