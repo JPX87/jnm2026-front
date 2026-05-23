@@ -176,7 +176,7 @@ export function PartenaitCard({ data, className = "" }: { data: PartnerData; cla
   const handleFlipCard = (e: React.MouseEvent) => {
     e.stopPropagation();
     setRotationX(-0.01);
-    setRotationY(prev => prev + Math.PI);
+    setRotationY(() => Math.PI);
   };
 
   // Clic pour ouvrir
