@@ -32,17 +32,20 @@ const middle = (logo: React.ReactNode, infos: PartnerInfo) => (
             </div>
         </div>
         <div className="relative z-10 w-11/20 h-full relative">
-            <div className="flex flex-end">
-                <div className="w-2/5">
-                    {info("Type", infos.type)}
-                    {info("Nom", infos.name)}
-                    {info("Siège social", infos.nationality)}
-                    {info("Date de délivrance", formatDateToFrench(infos.issueDate))}
-                </div>
-                <div className="w-3/5">
-                    {info("Adresse agence", infos.address, false, "mt-4")}
-                    {info("Date de naissance", typeof infos.birthDate === "string" ? infos.birthDate : formatDateToFrench(infos.birthDate))}
-                    {info("Date d'expiration", formatDateToFrench(infos.expirationDate))}
+            <div className="absolute inset-0 flex flex-col justify-center">
+                <div className="flex flex-end">
+                    <div className="w-2/5">
+                        {/* info("Type", infos.type) */}
+                        {info("Nom", infos.name, false)}
+                        {/* info("Siège social", infos.nationality) */}
+                        {info("Date de délivrance", formatDateToFrench(infos.issueDate))}
+                    </div>
+                    <div className="w-3/5">
+                        {/* info("Adresse agence", infos.address, false, "mt-4") */}
+                        {/* info("Date de naissance", typeof infos.birthDate === "string" ? infos.birthDate : formatDateToFrench(infos.birthDate)) */}
+                        {/* info("Date d'expiration", formatDateToFrench(infos.expirationDate)) */}
+                        {info("Type", infos.type)}
+                    </div>
                 </div>
             </div>
             <span className="absolute top-1/2 right-3 -rotate-90 translate-x-[50%] -translate-y-1/2 text-[#ff89b8]"
