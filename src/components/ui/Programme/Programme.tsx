@@ -110,9 +110,9 @@ const programme: DaySchedule[] = [
                 borderDisable: true,
             },
             {
-                title: "Ateliers & Intervenants",
+                title: "Ateliers IA & RSE",
                 //   content: "14h - 15h30: Green IT (IA & empreinte carbone / IA conscientisée)\n16h - 18h: E-Sport (Étudiants vs Entreprises avec CGI & EXTIA)",
-                location: "Salles 2A",
+                location: "Bât. 2A",
                 startTime: "14h",
                 duration: 1.5,
                 size: 1.9
@@ -157,7 +157,7 @@ const programme: DaySchedule[] = [
             },
             {
 
-                title: "Jeux de pistes de Toulouse",
+                title: "Jeux de pistes et découverte de Toulouse",
                 location: "Centre-ville",
                 //  content: "Découverte de Toulouse / Jeux de piste\n\nAG CDM en parallèle.",
                 startTime: "9h",
@@ -173,7 +173,7 @@ const programme: DaySchedule[] = [
                 borderDisable: true,
             },
             {
-                title: "Conférences & Ateliers",
+                title: "Conférences Aéro & Cyber",
                 location: "Amphi CONCORDE",
                 //  content: "15h - 16h30: Conférence Table Ronde (Aéronautique / Cyberdéfense)\n16h45 - 18h: Atelier Pitch en ascenseur (Pecha Kucha)",
                 startTime: "15h",
@@ -186,13 +186,13 @@ const programme: DaySchedule[] = [
                 //  content: "15h - 16h30: Conférence Table Ronde (Aéronautique / Cyberdéfense)\n16h45 - 18h: Atelier Pitch en ascenseur (Pecha Kucha)",
                 startTime: "16h45",
                 duration: 1.25,
-                size: 1.5,
-                position: "medium"
+                size: 1.7,
             },
             {
                 title: "PAUSE",
                 startTime: "18h",
                 duration: 2,
+                size: 2.5,
                 borderDisable: true,
             },
             {
@@ -259,7 +259,7 @@ const programme: DaySchedule[] = [
             },
             {
                 title: "GALA",
-                location: "Matabiau",
+                location: "Espace Vanel",
                 startTime: "20h",
                 duration: 6,
             },
