@@ -3,8 +3,16 @@ import { NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
 import * as XLSX from 'xlsx';
 
+type CreatedUser = {
+    id: number;
+    email: string;
+    firstname: string | null;
+    password: string; // plain text — returned to admin only for welcome email
+};
+
 type ImportResult = {
     success: number;
+    created: CreatedUser[];
     errors: { row: number; email: string; reason: string }[];
 };
 
@@ -22,7 +30,7 @@ export async function POST(request: Request) {
         const ws = wb.Sheets[wb.SheetNames[0]];
         const rows = XLSX.utils.sheet_to_json<Record<string, string>>(ws, { defval: '' });
 
-        const result: ImportResult = { success: 0, errors: [] };
+        const result: ImportResult = { success: 0, created: [], errors: [] };
 
         for (let i = 0; i < rows.length; i++) {
             const row = rows[i];
@@ -51,12 +59,13 @@ export async function POST(request: Request) {
                 }
 
                 const hashedPassword = await bcrypt.hash(password, 10);
+                const firstname = String(row['firstname'] ?? '').trim() || null;
 
-                await prisma.user.create({
+                const user = await prisma.user.create({
                     data: {
                         email,
                         password: hashedPassword,
-                        firstname: String(row['firstname'] ?? '').trim() || null,
+                        firstname,
                         lastname: String(row['lastname'] ?? '').trim() || null,
                         miage: String(row['miage'] ?? '').trim() || null,
                         ville: String(row['ville'] ?? '').trim() || null,
@@ -65,9 +74,11 @@ export async function POST(request: Request) {
                         doorCode: String(row['doorCode'] ?? '').trim() || null,
                         isAdmin,
                     },
+                    select: { id: true },
                 });
 
                 result.success++;
+                result.created.push({ id: user.id, email, firstname, password });
             } catch {
                 result.errors.push({ row: rowNum, email, reason: 'Erreur lors de la création' });
             }

@@ -34,6 +34,12 @@ type UserFormData = {
 
 type ImportResult = {
     success: number;
+    created: { id: number; email: string; firstname: string | null; password: string }[];
+    errors: { row: number; email: string; reason: string }[];
+};
+
+type UpdateResult = {
+    updated: number;
     errors: { row: number; email: string; reason: string }[];
 };
 
@@ -53,12 +59,26 @@ export default function AdminPage() {
     const [deleteConfirm, setDeleteConfirm] = useState<number | null>(null);
     const [importing, setImporting] = useState(false);
     const [importResult, setImportResult] = useState<ImportResult | null>(null);
+    const [updating, setUpdating] = useState(false);
+    const [updateResult, setUpdateResult] = useState<UpdateResult | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const updateFileInputRef = useRef<HTMLInputElement>(null);
     const [mounted, setMounted] = useState(false);
     const [loginEnabled, setLoginEnabled] = useState(true);
     const [settingsLoading, setSettingsLoading] = useState(true);
     const [settingsError, setSettingsError] = useState('');
     const [settingsSaved, setSettingsSaved] = useState(false);
+
+    // Email de bienvenue – création unique
+    const [modalStep, setModalStep] = useState<'form' | 'email-confirm'>('form');
+    const [pendingEmailUser, setPendingEmailUser] = useState<{ id: number; email: string; firstname: string; password: string } | null>(null);
+    const [sendingEmail, setSendingEmail] = useState(false);
+    const [emailSent, setEmailSent] = useState(false);
+
+    // Email de bienvenue – import masse
+    const [pendingImportEmails, setPendingImportEmails] = useState<{ id: number; email: string; firstname: string | null; password: string }[]>([]);
+    const [emailProgress, setEmailProgress] = useState<{ sent: number; total: number; errors: string[] } | null>(null);
+    const [sendingImportEmails, setSendingImportEmails] = useState(false);
 
     useEffect(() => { setMounted(true); }, []);
 
@@ -125,7 +145,16 @@ export default function AdminPage() {
         setShowModal(true);
     };
 
-    const closeModal = () => { setShowModal(false); setEditingUser(null); setForm(emptyForm); setError(''); };
+    const closeModal = () => {
+        setShowModal(false);
+        setEditingUser(null);
+        setForm(emptyForm);
+        setError('');
+        setModalStep('form');
+        setPendingEmailUser(null);
+        setSendingEmail(false);
+        setEmailSent(false);
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -147,13 +176,78 @@ export default function AdminPage() {
                 setError(data.error || 'Une erreur est survenue');
                 return;
             }
-            await fetchUsers();
-            closeModal();
+
+            if (editingUser) {
+                await fetchUsers();
+                closeModal();
+            } else {
+                const created = await res.json();
+                await fetchUsers();
+                setPendingEmailUser({ id: created.id, email: created.email, firstname: created.firstname ?? '', password: form.password });
+                setModalStep('email-confirm');
+            }
         } catch {
             setError('Une erreur est survenue');
         } finally {
             setSubmitting(false);
         }
+    };
+
+    const handleUpdate = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        e.target.value = '';
+        setUpdating(true);
+        setUpdateResult(null);
+        try {
+            const formData = new FormData();
+            formData.append('file', file);
+            const res = await apiFetch('/api/admin/users/update', { method: 'POST', body: formData });
+            const result = await res.json();
+            setUpdateResult(result);
+            await fetchUsers();
+        } catch {
+            setUpdateResult({ updated: 0, errors: [{ row: 0, email: '—', reason: 'Erreur réseau' }] });
+        } finally {
+            setUpdating(false);
+        }
+    };
+
+    const handleSendWelcomeEmail = async () => {
+        if (!pendingEmailUser) return;
+        setSendingEmail(true);
+        try {
+            await fetch(`/api/admin/users/${pendingEmailUser.id}/send-welcome`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ password: pendingEmailUser.password }),
+            });
+            setEmailSent(true);
+        } catch {
+            setEmailSent(true); // on ferme quand même
+        } finally {
+            setSendingEmail(false);
+        }
+    };
+
+    const handleSendImportEmails = async () => {
+        if (pendingImportEmails.length === 0) return;
+        setSendingImportEmails(true);
+        setEmailProgress({ sent: 0, total: pendingImportEmails.length, errors: [] });
+        for (const user of pendingImportEmails) {
+            try {
+                await fetch(`/api/admin/users/${user.id}/send-welcome`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password: user.password }),
+                });
+                setEmailProgress(prev => prev ? { ...prev, sent: prev.sent + 1 } : prev);
+            } catch {
+                setEmailProgress(prev => prev ? { ...prev, sent: prev.sent + 1, errors: [...prev.errors, user.email] } : prev);
+            }
+        }
+        setSendingImportEmails(false);
+        setPendingImportEmails([]);
     };
 
     const handleDelete = async (id: number) => {
@@ -172,15 +266,20 @@ export default function AdminPage() {
         e.target.value = '';
         setImporting(true);
         setImportResult(null);
+        setEmailProgress(null);
+        setPendingImportEmails([]);
         try {
             const formData = new FormData();
             formData.append('file', file);
             const res = await apiFetch('/api/admin/users/import', { method: 'POST', body: formData });
             const result = await res.json();
             setImportResult(result);
+            if (result.created?.length > 0) {
+                setPendingImportEmails(result.created);
+            }
             await fetchUsers();
         } catch {
-            setImportResult({ success: 0, errors: [{ row: 0, email: '—', reason: 'Erreur réseau' }] });
+            setImportResult({ success: 0, created: [], errors: [{ row: 0, email: '—', reason: 'Erreur réseau' }] });
         } finally {
             setImporting(false);
         }
@@ -262,6 +361,7 @@ export default function AdminPage() {
                 </div>
 
                 <div className="flex flex-wrap items-center gap-3">
+                    {/* Création en masse */}
                     <a
                         href="/api/admin/users/template"
                         download
@@ -270,9 +370,8 @@ export default function AdminPage() {
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                         </svg>
-                        Template Excel
+                        Template création
                     </a>
-
                     <input ref={fileInputRef} type="file" accept=".xlsx,.xls,.csv" className="hidden" onChange={handleImport} />
                     <button
                         onClick={() => fileInputRef.current?.click()}
@@ -287,6 +386,33 @@ export default function AdminPage() {
                             </svg>
                         )}
                         {importing ? 'Import...' : 'Importer Excel'}
+                    </button>
+
+                    {/* Mise à jour en masse */}
+                    <a
+                        href="/api/admin/users/template-update"
+                        download
+                        className="flex items-center gap-2 bg-white/90 border border-blue-200 text-blue-500 font-semibold px-4 py-2.5 rounded-2xl hover:bg-white transition-all duration-200 text-sm shadow-sm"
+                    >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                        Template mise à jour
+                    </a>
+                    <input ref={updateFileInputRef} type="file" accept=".xlsx,.xls,.csv" className="hidden" onChange={handleUpdate} />
+                    <button
+                        onClick={() => updateFileInputRef.current?.click()}
+                        disabled={updating}
+                        className="flex items-center gap-2 bg-white/90 border border-blue-200 text-blue-500 font-semibold px-4 py-2.5 rounded-2xl hover:bg-white transition-all duration-200 text-sm shadow-sm disabled:opacity-50"
+                    >
+                        {updating ? (
+                            <div className="w-4 h-4 border-2 border-blue-300 border-t-blue-500 rounded-full animate-spin" />
+                        ) : (
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                        )}
+                        {updating ? 'Mise à jour...' : 'Mettre à jour'}
                     </button>
 
                     <button
@@ -327,6 +453,96 @@ export default function AdminPage() {
                             </svg>
                         </button>
                     </div>
+                </div>
+            )}
+
+            {/* Résultat mise à jour */}
+            {updateResult && (
+                <div className="mb-6 card-shadow glass-effect rounded-2xl border border-blue-100 p-5 animate-fade-in">
+                    <div className="flex items-start justify-between gap-4">
+                        <div>
+                            <p className="text-gray-800 font-bold text-base mb-2">Résultat de la mise à jour</p>
+                            <p className="text-gray-600 text-sm">
+                                <span className="font-semibold text-blue-600">{updateResult.updated} utilisateur{updateResult.updated > 1 ? 's' : ''} mis à jour</span>
+                                {updateResult.errors.length > 0 && (
+                                    <span className="text-red-500 ml-3">{updateResult.errors.length} erreur{updateResult.errors.length > 1 ? 's' : ''}</span>
+                                )}
+                            </p>
+                            {updateResult.errors.length > 0 && (
+                                <ul className="mt-3 space-y-1">
+                                    {updateResult.errors.map((e, i) => (
+                                        <li key={i} className="text-xs text-red-500">Ligne {e.row} — {e.email} : {e.reason}</li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
+                        <button onClick={() => setUpdateResult(null)} className="p-1.5 rounded-lg hover:bg-blue-50 text-gray-400 hover:text-blue-500 transition-all flex-shrink-0">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            )}
+
+            {/* Envoi emails import – confirmation */}
+            {pendingImportEmails.length > 0 && !emailProgress && (
+                <div className="mb-6 card-shadow glass-effect rounded-2xl border border-[#ff89b8]/20 p-5 animate-fade-in">
+                    <div className="flex items-center justify-between gap-4">
+                        <div>
+                            <p className="text-gray-800 font-bold text-base">Envoyer les emails de bienvenue</p>
+                            <p className="text-gray-500 text-sm mt-0.5">
+                                {pendingImportEmails.length} utilisateur{pendingImportEmails.length > 1 ? 's' : ''} créé{pendingImportEmails.length > 1 ? 's' : ''}
+                            </p>
+                        </div>
+                        <div className="flex gap-2 flex-shrink-0">
+                            <button
+                                onClick={() => setPendingImportEmails([])}
+                                className="px-4 py-2 rounded-xl border border-gray-200 text-gray-500 text-sm font-semibold hover:bg-gray-50 transition-all"
+                            >
+                                Ignorer
+                            </button>
+                            <button
+                                onClick={handleSendImportEmails}
+                                disabled={sendingImportEmails}
+                                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-[#ff89b8] to-[#ef6a9f] text-white text-sm font-bold shadow hover:shadow-md hover:scale-105 transition-all disabled:opacity-50"
+                            >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                                Envoyer les emails
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Envoi emails import – progress bar */}
+            {emailProgress && (
+                <div className="mb-6 card-shadow glass-effect rounded-2xl border border-[#ff89b8]/20 p-5 animate-fade-in">
+                    <div className="flex items-center justify-between mb-3">
+                        <p className="text-gray-800 font-bold text-base">
+                            {sendingImportEmails ? 'Envoi des emails...' : 'Emails envoyés'}
+                        </p>
+                        <span className="text-sm font-semibold text-[#ef6a9f]">{emailProgress.sent} / {emailProgress.total}</span>
+                    </div>
+                    <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden">
+                        <div
+                            className="h-3 rounded-full bg-gradient-to-r from-[#ff89b8] to-[#ef6a9f] transition-all duration-300"
+                            style={{ width: `${Math.round((emailProgress.sent / emailProgress.total) * 100)}%` }}
+                        />
+                    </div>
+                    {!sendingImportEmails && (
+                        <div className="mt-3 flex items-center justify-between">
+                            <p className="text-sm">
+                                {emailProgress.errors.length === 0
+                                    ? <span className="text-green-600 font-semibold">Tous les emails ont été envoyés ✓</span>
+                                    : <span className="text-orange-500">{emailProgress.errors.length} échec{emailProgress.errors.length > 1 ? 's' : ''}</span>
+                                }
+                            </p>
+                            <button onClick={() => setEmailProgress(null)} className="text-xs text-gray-400 hover:text-gray-600 transition-colors">Fermer</button>
+                        </div>
+                    )}
                 </div>
             )}
 
@@ -439,6 +655,49 @@ export default function AdminPage() {
                                 </button>
                             </div>
 
+                            {modalStep === 'email-confirm' && pendingEmailUser ? (
+                                <div className="text-center py-2">
+                                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#ff89b8] to-[#ef6a9f] flex items-center justify-center mx-auto mb-4 shadow-lg">
+                                        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                        </svg>
+                                    </div>
+                                    {emailSent ? (
+                                        <>
+                                            <p className="text-green-600 font-bold text-lg mb-1">Email envoyé !</p>
+                                            <p className="text-gray-500 text-sm mb-6">Les identifiants ont été envoyés à <span className="font-semibold text-gray-700">{pendingEmailUser.email}</span></p>
+                                            <button onClick={closeModal} className="w-full py-3 rounded-2xl bg-gradient-to-r from-[#ff89b8] to-[#ef6a9f] text-white font-bold shadow-lg hover:shadow-xl hover:scale-105 transition-all">
+                                                Fermer
+                                            </button>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <p className="text-gray-800 font-bold text-lg mb-1">Utilisateur créé ✓</p>
+                                            <p className="text-gray-500 text-sm mb-6">
+                                                Envoyer un email de bienvenue avec ses identifiants à <span className="font-semibold text-gray-700">{pendingEmailUser.email}</span> ?
+                                            </p>
+                                            <div className="flex gap-3">
+                                                <button type="button" onClick={closeModal} className="flex-1 py-3 rounded-2xl border border-gray-200 text-gray-600 font-semibold hover:bg-gray-50 transition-all">
+                                                    Ignorer
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={handleSendWelcomeEmail}
+                                                    disabled={sendingEmail}
+                                                    className="flex-1 py-3 rounded-2xl bg-gradient-to-r from-[#ff89b8] to-[#ef6a9f] text-white font-bold shadow-lg hover:shadow-xl hover:scale-105 transition-all disabled:opacity-50 disabled:scale-100 flex items-center justify-center gap-2"
+                                                >
+                                                    {sendingEmail
+                                                        ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                                        : <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
+                                                    }
+                                                    {sendingEmail ? 'Envoi...' : "Envoyer l'email"}
+                                                </button>
+                                            </div>
+                                        </>
+                                    )}
+                                </div>
+                            ) : (
+                            <>
                             {error && (
                                 <div className="mb-4 px-4 py-3 bg-red-50 border border-red-200 text-red-600 rounded-xl text-sm">{error}</div>
                             )}
@@ -482,6 +741,8 @@ export default function AdminPage() {
                                     </button>
                                 </div>
                             </form>
+                            </>
+                            )}
                         </div>
                     </div>
                 </div>,
