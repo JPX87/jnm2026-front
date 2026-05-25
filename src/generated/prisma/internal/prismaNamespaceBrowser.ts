@@ -51,6 +51,7 @@ export const AnyNull = runtime.objectEnumValues.instances.AnyNull
 export const ModelName = {
   User: 'User',
   Vote: 'Vote',
+  MiageGroup: 'MiageGroup',
   Message: 'Message',
   MessageRead: 'MessageRead',
   Setting: 'Setting',
@@ -107,6 +108,19 @@ export const VoteScalarFieldEnum = {
 } as const
 
 export type VoteScalarFieldEnum = (typeof VoteScalarFieldEnum)[keyof typeof VoteScalarFieldEnum]
+
+
+export const MiageGroupScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  isParisGroup: 'isParisGroup',
+  active: 'active',
+  activeVideo: 'activeVideo',
+  activeRugby: 'activeRugby',
+  order: 'order'
+} as const
+
+export type MiageGroupScalarFieldEnum = (typeof MiageGroupScalarFieldEnum)[keyof typeof MiageGroupScalarFieldEnum]
 
 
 export const MessageScalarFieldEnum = {
@@ -221,6 +235,13 @@ export const VoteOrderByRelevanceFieldEnum = {
 } as const
 
 export type VoteOrderByRelevanceFieldEnum = (typeof VoteOrderByRelevanceFieldEnum)[keyof typeof VoteOrderByRelevanceFieldEnum]
+
+
+export const MiageGroupOrderByRelevanceFieldEnum = {
+  name: 'name'
+} as const
+
+export type MiageGroupOrderByRelevanceFieldEnum = (typeof MiageGroupOrderByRelevanceFieldEnum)[keyof typeof MiageGroupOrderByRelevanceFieldEnum]
 
 
 export const MessageOrderByRelevanceFieldEnum = {

@@ -28,6 +28,11 @@ export type User = Prisma.UserModel
  */
 export type Vote = Prisma.VoteModel
 /**
+ * Model MiageGroup
+ * 
+ */
+export type MiageGroup = Prisma.MiageGroupModel
+/**
  * Model Message
  * 
  */
