@@ -3,8 +3,8 @@ import { apiFetch } from '@/lib/clientFetch';
 import { useEffect, useState, useCallback, useRef } from 'react';
 
 const CONTESTS = {
-    video: { label: 'Concours Vidéo', emoji: '🎬' },
-    rugby: { label: 'Ballons de Rugby', emoji: '🏉' },
+    video: { label: 'Concours Vidéo' },
+    rugby: { label: 'Ballons de Rugby' },
 } as const;
 type ContestKey = keyof typeof CONTESTS;
 
@@ -26,6 +26,7 @@ type VoteData = {
     userCity: string | null;
     totalVotes: number | null;
     totalJuryVotes: number | null;
+    voteOpen: boolean;
     resultsVisible: boolean;
 };
 
@@ -140,7 +141,7 @@ export default function VotesPage() {
 
             {/* Tabs */}
             <div className="flex bg-white/20 backdrop-blur-sm rounded-2xl p-1 mb-6 gap-1">
-                {(Object.entries(CONTESTS) as [ContestKey, typeof CONTESTS[ContestKey]][]).map(([key, { label, emoji }]) => (
+                {(Object.entries(CONTESTS) as [ContestKey, { label: string }][]).map(([key, { label }]) => (
                     <button
                         key={key}
                         onClick={() => setActiveTab(key)}
@@ -150,10 +151,12 @@ export default function VotesPage() {
                                 : 'text-white/80 hover:text-white hover:bg-white/10'
                         }`}
                     >
-                        <span>{emoji}</span>
                         <span>{label}</span>
                         {data[key]?.hasVoted && (
                             <span className="w-2 h-2 rounded-full bg-green-400 flex-shrink-0" />
+                        )}
+                        {data[key] && !data[key]?.voteOpen && !data[key]?.hasVoted && (
+                            <span className="w-2 h-2 rounded-full bg-gray-400/60 flex-shrink-0" />
                         )}
                     </button>
                 ))}
@@ -163,7 +166,21 @@ export default function VotesPage() {
                 <div className="flex items-center justify-center py-20">
                     <div className="w-8 h-8 border-4 border-[#ff89b8]/30 border-t-[#ef6a9f] rounded-full animate-spin" />
                 </div>
-            ) : !currentData ? null : currentData.hasVoted ? (
+            ) : !currentData ? null : !currentData.voteOpen && !currentData.hasVoted ? (
+                /* Vote pas encore ouvert */
+                <div className="card-shadow glass-effect rounded-2xl border-2 border-gray-300/50 bg-white/60 p-10 text-center animate-fade-in">
+                    <div className="w-14 h-14 rounded-2xl bg-gray-100 border-2 border-gray-200 flex items-center justify-center mx-auto mb-5">
+                        <svg className="w-7 h-7 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                    </div>
+                    <p className="text-gray-700 font-bold text-lg mb-2">Vote non ouvert</p>
+                    <p className="text-gray-400 text-sm leading-relaxed">
+                        Les votes pour ce concours ne sont pas encore disponibles.<br />
+                        Revenez plus tard.
+                    </p>
+                </div>
+            ) : currentData.hasVoted ? (
                 <>
                     {/* Vote confirmé */}
                     <div className="mb-6 card-shadow glass-effect rounded-2xl border border-green-300/40 bg-green-50/50 p-5 animate-fade-in">
@@ -191,8 +208,12 @@ export default function VotesPage() {
                         <ResultsPanel data={currentData} />
                     ) : (
                         <div className="card-shadow glass-effect rounded-2xl border border-[#ff89b8]/20 p-8 text-center animate-fade-in">
-                            <div className="text-5xl mb-4">🎉</div>
-                            <p className="text-gray-800 font-bold text-lg mb-2">Les résultats sont sous embargo</p>
+                            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#ff89b8]/20 to-[#ef6a9f]/20 border border-[#ff89b8]/30 flex items-center justify-center mx-auto mb-5">
+                                <svg className="w-7 h-7 text-[#ef6a9f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                </svg>
+                            </div>
+                            <p className="text-gray-800 font-bold text-lg mb-2">Résultats sous embargo</p>
                             <p className="text-gray-500 text-sm leading-relaxed">
                                 Les classements seront dévoilés lors du gala.<br />
                                 Rendez-vous ce soir !

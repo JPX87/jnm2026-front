@@ -51,16 +51,19 @@ export async function GET(_req: Request, { params }: { params: Promise<{ contest
         const payload = token ? await verifyToken(token) : null;
         if (!payload) return NextResponse.json({ error: 'Non authentifié' }, { status: 401 });
 
+        const voteKey = contest === 'video' ? 'voteVideoOpen' : 'voteRugbyOpen';
         const resultsKey = contest === 'video' ? 'resultsVideoVisible' : 'resultsRugbyVisible';
 
-        const [activeGroups, votes, myVote, user, resultsSetting] = await Promise.all([
+        const [activeGroups, votes, myVote, user, voteSetting, resultsSetting] = await Promise.all([
             prisma.miageGroup.findMany({ where: { active: true }, orderBy: { order: 'asc' }, select: { name: true } }),
             prisma.vote.findMany({ where: { contest }, select: { first: true, second: true, third: true, isJury: true } }),
             prisma.vote.findUnique({ where: { userId_contest: { userId: payload.userId, contest } } }),
             prisma.user.findUnique({ where: { id: payload.userId }, select: { miage: true, isJury: true, isAdmin: true } }),
+            prisma.setting.findUnique({ where: { key: voteKey } }),
             prisma.setting.findUnique({ where: { key: resultsKey } }),
         ]);
 
+        const voteOpen = voteSetting?.value === 'true';
         const resultsVisible = resultsSetting?.value === 'true';
 
         return NextResponse.json({
@@ -72,6 +75,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ contest
             userCity: user?.miage ?? null,
             totalVotes: resultsVisible ? votes.filter(v => !v.isJury).length : null,
             totalJuryVotes: resultsVisible ? votes.filter(v => v.isJury).length : null,
+            voteOpen,
             resultsVisible,
         });
     } catch (error) {
