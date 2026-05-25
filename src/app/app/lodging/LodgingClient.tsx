@@ -204,25 +204,25 @@ export default function LodgingClient({ hotelFloor, hotelRoom, doorCode, roommat
 
                         <div className="flex items-center justify-around gap-2 sm:gap-4">
                             <div className="group flex flex-col items-center gap-1.5 sm:gap-2">
-                                <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-full bg-[#1a1a1a] flex items-center justify-center shadow-md group-hover:shadow-xl group-hover:scale-110 transition-all duration-300">
+                                <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-xl bg-[#fd0] flex items-center justify-center shadow-md group-hover:shadow-xl group-hover:scale-110 transition-all duration-300">
                                     <span className="text-white text-lg sm:text-2xl font-bold">B</span>
                                 </div>
                                 <span className="text-[#ef6a9f]/70 text-[10px] sm:text-xs font-semibold uppercase tracking-wider">Arret</span>
                             </div>
                             <div className="group flex flex-col items-center gap-1.5 sm:gap-2">
-                                <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-lg bg-[#6B8E23] flex items-center justify-center shadow-md group-hover:shadow-xl group-hover:scale-110 transition-all duration-300">
+                                <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-lg bg-[#58ac25] flex items-center justify-center shadow-md group-hover:shadow-xl group-hover:scale-110 transition-all duration-300">
                                     <span className="text-white text-base sm:text-xl font-bold">27</span>
                                 </div>
                                 <span className="text-[#ef6a9f]/70 text-[10px] sm:text-xs font-semibold uppercase tracking-wider">Arret</span>
                             </div>
                             <div className="group flex flex-col items-center gap-1.5 sm:gap-2">
-                                <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-lg bg-[#D2691E] flex items-center justify-center shadow-md group-hover:shadow-xl group-hover:scale-110 transition-all duration-300">
+                                <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-lg bg-[#f37021] flex items-center justify-center shadow-md group-hover:shadow-xl group-hover:scale-110 transition-all duration-300">
                                     <span className="text-white text-sm sm:text-lg font-bold">L12</span>
                                 </div>
                                 <span className="text-[#ef6a9f]/70 text-[10px] sm:text-xs font-semibold uppercase tracking-wider">Arret</span>
                             </div>
                             <div className="group flex flex-col items-center gap-1.5 sm:gap-2">
-                                <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-lg bg-[#808080] flex items-center justify-center shadow-md group-hover:shadow-xl group-hover:scale-110 transition-all duration-300">
+                                <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-lg bg-[#16568e] flex items-center justify-center shadow-md group-hover:shadow-xl group-hover:scale-110 transition-all duration-300">
                                     <span className="text-white text-base sm:text-xl font-bold">37</span>
                                 </div>
                                 <span className="text-[#ef6a9f]/70 text-[10px] sm:text-xs font-semibold uppercase tracking-wider">Arret</span>
