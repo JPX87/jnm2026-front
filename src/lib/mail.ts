@@ -133,7 +133,7 @@ export async function sendWelcomeEmail({
 
     await sendMail({
         to,
-        subject: 'Bienvenue aux JNM 2026 – Vos identifiants de connexion',
+        subject: 'Bienvenue aux JNM 2026 - Vos identifiants de connexion',
         html: buildEmailHtml({ title: 'Vos identifiants JNM 2026', body }),
     });
 }

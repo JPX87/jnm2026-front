@@ -35,7 +35,7 @@ export async function POST(request: Request) {
                 title,
                 body: `<p style="margin:0 0 20px;font-size:15px;color:#666;line-height:1.8;white-space:pre-line;">${content.replace(/\n/g, '<br>')}</p>`,
             });
-            await sendMailToAll(emails, `JNM 2026 — ${title}`, html);
+            await sendMailToAll(emails, `JNM 2026 - ${title}`, html);
         }).catch(console.error);
 
         return NextResponse.json(message, { status: 201 });

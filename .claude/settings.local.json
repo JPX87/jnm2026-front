@@ -4,7 +4,8 @@
       "Bash(mkdir -p \"C:\\\\Users\\\\bland\\\\Documents\\\\JNM\\\\jnm2026-front\\\\src\\\\app\\\\api\\\\admin\\\\users\\\\[id]\\\\send-welcome\")",
       "Bash(npx tsc *)",
       "Bash(powershell -Command \"\\(Get-Content 'C:\\\\Users\\\\bland\\\\Documents\\\\JNM\\\\jnm2026-front\\\\public\\\\logo-white.svg'\\) -replace 'fill=\\\\\"#EF6A9F\\\\\"', 'fill=\\\\\"#FFFFFF\\\\\"' | Set-Content 'C:\\\\Users\\\\bland\\\\Documents\\\\JNM\\\\jnm2026-front\\\\public\\\\logo-white.svg'\")",
-      "Bash(del \"C:\\\\Users\\\\bland\\\\Documents\\\\JNM\\\\jnm2026-front\\\\public\\\\logo-white.svg\")"
+      "Bash(del \"C:\\\\Users\\\\bland\\\\Documents\\\\JNM\\\\jnm2026-front\\\\public\\\\logo-white.svg\")",
+      "WebFetch(domain:maps.app.goo.gl)"
     ]
   }
 }

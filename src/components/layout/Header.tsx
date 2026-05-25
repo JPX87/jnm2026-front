@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-export function Header({ title }: { title: string }) {
+export function Header({ title, isAdmin = false }: { title: string; isAdmin?: boolean }) {
     const [unreadCount, setUnreadCount] = useState(0);
     const router = useRouter();
 
@@ -34,7 +34,7 @@ export function Header({ title }: { title: string }) {
     return (
         <header className="w-full glass-effect border-b border-[#ff89b8]/30 flex items-center justify-between py-3 px-4 sm:py-4 sm:px-6 md:py-5 md:px-10 animate-fade-in gap-3">
             <div className="flex items-center gap-3 sm:gap-4 min-w-0">
-                <MobileNav />
+                <MobileNav isAdmin={isAdmin} />
                 <div className="hidden sm:block w-2 h-8 sm:h-10 bg-gradient-to-b from-[#ff89b8] to-[#ef6a9f] rounded-full flex-shrink-0"></div>
                 <h1 className="text-[#ef6a9f] font-bold text-2xl sm:text-3xl md:text-4xl tracking-tight truncate">
                     {title}
