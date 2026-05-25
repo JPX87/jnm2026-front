@@ -54,8 +54,12 @@ export async function GET(_req: Request, { params }: { params: Promise<{ contest
         const voteKey = contest === 'video' ? 'voteVideoOpen' : 'voteRugbyOpen';
         const resultsKey = contest === 'video' ? 'resultsVideoVisible' : 'resultsRugbyVisible';
 
+        const contestGroupFilter = contest === 'video'
+            ? { active: true, activeVideo: true }
+            : { active: true, activeRugby: true };
+
         const [activeGroups, votes, myVote, user, voteSetting, resultsSetting] = await Promise.all([
-            prisma.miageGroup.findMany({ where: { active: true }, orderBy: { order: 'asc' }, select: { name: true } }),
+            prisma.miageGroup.findMany({ where: contestGroupFilter, orderBy: { order: 'asc' }, select: { name: true } }),
             prisma.vote.findMany({ where: { contest }, select: { first: true, second: true, third: true, isJury: true } }),
             prisma.vote.findUnique({ where: { userId_contest: { userId: payload.userId, contest } } }),
             prisma.user.findUnique({ where: { id: payload.userId }, select: { miage: true, isJury: true, isAdmin: true } }),
@@ -69,6 +73,8 @@ export async function GET(_req: Request, { params }: { params: Promise<{ contest
         return NextResponse.json({
             // Les scores ne sont envoyés au client que si les résultats sont publiés
             results: resultsVisible ? computeResults(votes, activeGroups) : [],
+            // Liste des groupes participants à ce concours (pour la grille de vote)
+            groups: activeGroups.map(g => g.name),
             hasVoted: !!myVote,
             myVote: myVote ? { first: myVote.first, second: myVote.second, third: myVote.third } : null,
             isJury: user?.isJury ?? false,
@@ -95,9 +101,13 @@ export async function POST(req: Request, { params }: { params: Promise<{ contest
         if (!payload) return NextResponse.json({ error: 'Non authentifié' }, { status: 401 });
 
         const settingKey = contest === 'video' ? 'voteVideoOpen' : 'voteRugbyOpen';
+        const contestGroupFilter = contest === 'video'
+            ? { active: true, activeVideo: true }
+            : { active: true, activeRugby: true };
+
         const [setting, activeGroups, user] = await Promise.all([
             prisma.setting.findUnique({ where: { key: settingKey } }),
-            prisma.miageGroup.findMany({ where: { active: true }, select: { name: true } }),
+            prisma.miageGroup.findMany({ where: contestGroupFilter, select: { name: true } }),
             prisma.user.findUnique({ where: { id: payload.userId }, select: { miage: true, isJury: true } }),
         ]);
 

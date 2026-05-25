@@ -28,7 +28,7 @@ export async function POST(req: Request) {
     try {
         if (!await requireAdmin()) return NextResponse.json({ error: 'Accès refusé' }, { status: 403 });
 
-        const { name, active, order } = await req.json();
+        const { name, active, activeVideo, activeRugby, order } = await req.json();
         if (!name?.trim()) return NextResponse.json({ error: 'Nom requis' }, { status: 400 });
 
         const existing = await prisma.miageGroup.findUnique({ where: { name: name.trim() } });
@@ -40,6 +40,8 @@ export async function POST(req: Request) {
                 name: name.trim(),
                 isParisGroup: false,
                 active: active ?? true,
+                activeVideo: activeVideo ?? true,
+                activeRugby: activeRugby ?? true,
                 order: order ?? (maxOrder._max.order ?? 0) + 1,
             },
         });

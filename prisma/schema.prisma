@@ -41,6 +41,16 @@ model Vote {
   @@unique([userId, contest])
 }
 
+model MiageGroup {
+  id           Int     @id @default(autoincrement())
+  name         String  @unique
+  isParisGroup Boolean @default(false)
+  active       Boolean @default(true)
+  activeVideo  Boolean @default(true)
+  activeRugby  Boolean @default(true)
+  order        Int     @default(0)
+}
+
 model Message {
   id        Int           @id @default(autoincrement())
   title     String

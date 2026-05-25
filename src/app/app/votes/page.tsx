@@ -8,8 +8,6 @@ const CONTESTS = {
 } as const;
 type ContestKey = keyof typeof CONTESTS;
 
-type MiageGroup = { id: number; name: string };
-
 const RANK_STYLES = [
     { border: 'border-yellow-400', bg: 'bg-yellow-50', text: 'text-yellow-700', badge: '🥇', label: '1er' },
     { border: 'border-gray-300', bg: 'bg-gray-50', text: 'text-gray-600', badge: '🥈', label: '2ème' },
@@ -20,6 +18,7 @@ type ResultCity = { city: string; participantScore: number; juryScore: number; f
 
 type VoteData = {
     results: ResultCity[];
+    groups: string[];
     hasVoted: boolean;
     myVote: { first: string; second: string; third: string } | null;
     isJury: boolean;
@@ -34,15 +33,10 @@ export default function VotesPage() {
     const [activeTab, setActiveTab] = useState<ContestKey>('video');
     const [data, setData] = useState<Partial<Record<ContestKey, VoteData>>>({});
     const [loadingTabs, setLoadingTabs] = useState<Set<ContestKey>>(new Set(['video', 'rugby']));
-    const [miageGroups, setMiageGroups] = useState<MiageGroup[]>([]);
     const [selections, setSelections] = useState<(string | null)[]>([null, null, null]);
     const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState('');
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-    useEffect(() => {
-        apiFetch('/api/miages').then(r => r.json()).then(d => setMiageGroups(d.groups ?? []));
-    }, []);
 
     const fetchContest = useCallback(async (contest: ContestKey, silent = false) => {
         if (!silent) setLoadingTabs(prev => new Set([...prev, contest]));
@@ -261,7 +255,7 @@ export default function VotesPage() {
 
                     {/* City grid */}
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
-                        {miageGroups.map(({ name: city }) => {
+                        {(currentData.groups ?? []).map((city) => {
                             const rankIdx = selections.indexOf(city);
                             const isSelected = rankIdx !== -1;
                             const isExcluded = excluded.includes(city);

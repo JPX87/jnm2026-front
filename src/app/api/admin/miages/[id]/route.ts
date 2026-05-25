@@ -16,12 +16,12 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
         if (!await requireAdmin()) return NextResponse.json({ error: 'Accès refusé' }, { status: 403 });
 
         const { id } = await params;
-        const { name, active, order } = await req.json();
+        const { name, active, activeVideo, activeRugby, order } = await req.json();
         if (!name?.trim()) return NextResponse.json({ error: 'Nom requis' }, { status: 400 });
 
         const group = await prisma.miageGroup.update({
             where: { id: parseInt(id) },
-            data: { name: name.trim(), active, order },
+            data: { name: name.trim(), active, activeVideo, activeRugby, order },
         });
         return NextResponse.json(group);
     } catch (error) {
