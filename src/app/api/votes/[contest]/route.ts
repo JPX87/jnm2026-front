@@ -4,26 +4,20 @@ import { NextResponse } from 'next/server';
 import { verifyToken } from '@/lib/auth';
 import { cookies } from 'next/headers';
 
-const PARIS_GROUP = ['Paris Cité', 'Paris Dauphine', 'Paris Saclay / Evry', 'Paris Saclay / Orsay', 'Paris Sorbonne'];
 const VALID_CONTESTS = ['video', 'rugby'];
-const ALL_CITIES = [
-    'Aix-Marseille', 'Amiens', 'Antilles', 'Bordeaux', 'Grenoble',
-    'Lille', 'Lyon', 'Mulhouse', 'Nancy', 'Nantes', 'Nice',
-    'Paris Cité', 'Paris Dauphine', 'Paris Saclay / Evry', 'Paris Saclay / Orsay',
-    'Paris Sorbonne', 'Rennes',
-];
 
-function getExcludedCities(miage: string | null): string[] {
-    if (!miage) return [];
-    if (PARIS_GROUP.includes(miage)) return PARIS_GROUP;
-    return [miage];
+type ActiveGroup = { name: string };
+
+function getExcludedCities(userMiage: string | null): string[] {
+    if (!userMiage) return [];
+    return [userMiage];
 }
 
 type RawVote = { first: string; second: string; third: string; isJury: boolean };
 
-function computeResults(votes: RawVote[]) {
+function computeResults(votes: RawVote[], allGroups: ActiveGroup[]) {
     const points = new Map<string, { p: number; j: number }>();
-    for (const city of ALL_CITIES) points.set(city, { p: 0, j: 0 });
+    for (const g of allGroups) points.set(g.name, { p: 0, j: 0 });
 
     for (const vote of votes) {
         const add = (city: string, pts: number) => {
@@ -57,14 +51,15 @@ export async function GET(_req: Request, { params }: { params: Promise<{ contest
         const payload = token ? await verifyToken(token) : null;
         if (!payload) return NextResponse.json({ error: 'Non authentifié' }, { status: 401 });
 
-        const [votes, myVote, user] = await Promise.all([
+        const [activeGroups, votes, myVote, user] = await Promise.all([
+            prisma.miageGroup.findMany({ where: { active: true }, orderBy: { order: 'asc' }, select: { name: true } }),
             prisma.vote.findMany({ where: { contest }, select: { first: true, second: true, third: true, isJury: true } }),
             prisma.vote.findUnique({ where: { userId_contest: { userId: payload.userId, contest } } }),
             prisma.user.findUnique({ where: { id: payload.userId }, select: { miage: true, isJury: true } }),
         ]);
 
         return NextResponse.json({
-            results: computeResults(votes),
+            results: computeResults(votes, activeGroups),
             hasVoted: !!myVote,
             myVote: myVote ? { first: myVote.first, second: myVote.second, third: myVote.third } : null,
             isJury: user?.isJury ?? false,
@@ -88,20 +83,27 @@ export async function POST(req: Request, { params }: { params: Promise<{ contest
         const payload = token ? await verifyToken(token) : null;
         if (!payload) return NextResponse.json({ error: 'Non authentifié' }, { status: 401 });
 
-        const { first, second, third } = await req.json() as { first: string; second: string; third: string };
-        if (!first || !second || !third) return NextResponse.json({ error: 'Choix incomplets' }, { status: 400 });
-        if (new Set([first, second, third]).size !== 3) return NextResponse.json({ error: 'Choix dupliqués' }, { status: 400 });
-        if (![first, second, third].every(c => ALL_CITIES.includes(c))) return NextResponse.json({ error: 'Ville invalide' }, { status: 400 });
-
         const settingKey = contest === 'video' ? 'voteVideoOpen' : 'voteRugbyOpen';
-        const setting = await prisma.setting.findUnique({ where: { key: settingKey } });
+        const [setting, activeGroups, user] = await Promise.all([
+            prisma.setting.findUnique({ where: { key: settingKey } }),
+            prisma.miageGroup.findMany({ where: { active: true }, select: { name: true } }),
+            prisma.user.findUnique({ where: { id: payload.userId }, select: { miage: true, isJury: true } }),
+        ]);
+
         if (!setting || setting.value !== 'true') {
             return NextResponse.json({ error: 'Les votes ne sont pas encore ouverts pour ce concours' }, { status: 403 });
         }
 
-        const user = await prisma.user.findUnique({ where: { id: payload.userId }, select: { miage: true, isJury: true } });
-        const excluded = getExcludedCities(user?.miage ?? null);
+        const { first, second, third } = await req.json() as { first: string; second: string; third: string };
+        if (!first || !second || !third) return NextResponse.json({ error: 'Choix incomplets' }, { status: 400 });
+        if (new Set([first, second, third]).size !== 3) return NextResponse.json({ error: 'Choix dupliqués' }, { status: 400 });
 
+        const validNames = new Set(activeGroups.map(g => g.name));
+        if (![first, second, third].every(c => validNames.has(c))) {
+            return NextResponse.json({ error: 'Ville invalide ou non participante' }, { status: 400 });
+        }
+
+        const excluded = getExcludedCities(user?.miage ?? null);
         if ([first, second, third].some(c => excluded.includes(c))) {
             return NextResponse.json({ error: 'Vous ne pouvez pas voter pour votre propre groupe' }, { status: 400 });
         }

@@ -8,13 +8,7 @@ const CONTESTS = {
 } as const;
 type ContestKey = keyof typeof CONTESTS;
 
-const PARIS_GROUP = ['Paris Cité', 'Paris Dauphine', 'Paris Saclay / Evry', 'Paris Saclay / Orsay', 'Paris Sorbonne'];
-const ALL_CITIES = [
-    'Aix-Marseille', 'Amiens', 'Antilles', 'Bordeaux', 'Grenoble',
-    'Lille', 'Lyon', 'Mulhouse', 'Nancy', 'Nantes', 'Nice',
-    'Paris Cité', 'Paris Dauphine', 'Paris Saclay / Evry', 'Paris Saclay / Orsay',
-    'Paris Sorbonne', 'Rennes',
-];
+type MiageGroup = { id: number; name: string };
 
 const RANK_STYLES = [
     { border: 'border-yellow-400', bg: 'bg-yellow-50', text: 'text-yellow-700', badge: '🥇', label: '1er' },
@@ -38,10 +32,15 @@ export default function VotesPage() {
     const [activeTab, setActiveTab] = useState<ContestKey>('video');
     const [data, setData] = useState<Partial<Record<ContestKey, VoteData>>>({});
     const [loadingTabs, setLoadingTabs] = useState<Set<ContestKey>>(new Set(['video', 'rugby']));
+    const [miageGroups, setMiageGroups] = useState<MiageGroup[]>([]);
     const [selections, setSelections] = useState<(string | null)[]>([null, null, null]);
     const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState('');
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+    useEffect(() => {
+        apiFetch('/api/miages').then(r => r.json()).then(d => setMiageGroups(d.groups ?? []));
+    }, []);
 
     const fetchContest = useCallback(async (contest: ContestKey, silent = false) => {
         if (!silent) setLoadingTabs(prev => new Set([...prev, contest]));
@@ -72,8 +71,8 @@ export default function VotesPage() {
 
     const currentData = data[activeTab];
     const isLoading = loadingTabs.has(activeTab);
-    const excluded = !currentData?.userCity ? [] :
-        PARIS_GROUP.includes(currentData.userCity) ? PARIS_GROUP : [currentData.userCity];
+    const userCity = currentData?.userCity ?? null;
+    const excluded = userCity ? [userCity] : [];
 
     const toggleCity = (city: string) => {
         setSelections(prev => {
@@ -214,12 +213,7 @@ export default function VotesPage() {
                                 </p>
                                 {excluded.length > 0 && (
                                     <p className="text-gray-400 text-xs mt-0.5 truncate">
-                                        {currentData.userCity
-                                            ? PARIS_GROUP.includes(currentData.userCity)
-                                                ? 'Groupe Paris exclu · '
-                                                : `${currentData.userCity} exclue · `
-                                            : ''}
-                                        Vote anonyme
+                                        {currentData.userCity ? `${currentData.userCity} exclue · ` : ''}Vote anonyme
                                     </p>
                                 )}
                             </div>
@@ -232,7 +226,7 @@ export default function VotesPage() {
 
                     {/* City grid */}
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
-                        {ALL_CITIES.map(city => {
+                        {miageGroups.map(({ name: city }) => {
                             const rankIdx = selections.indexOf(city);
                             const isSelected = rankIdx !== -1;
                             const isExcluded = excluded.includes(city);
