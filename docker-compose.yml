@@ -60,7 +60,7 @@ services:
       - "traefik.http.routers.monapp-http.middlewares=redirect-to-https"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
       # Coolify variable for domain:
-      - "traefik.http.routers.monapp-http.rule=Host(`${COOLIFY_FQDN}`)"
+      - "traefik.http.routers.monapp-http.rule=Host(`${SERVICE_FQDN_JNM_FRONT}`)"
       
       # Configuration HTTPS (Avec Let's Encrypt)
       - "traefik.http.routers.monapp-https.entrypoints=https"
@@ -69,7 +69,7 @@ services:
       - "traefik.http.services.monapp-https.loadbalancer.server.port=3000"
 
       # Coolify variable for domain:
-      - "traefik.http.routers.monapp-https.rule=Host(`${COOLIFY_FQDN}`)"
+      - "traefik.http.routers.monapp-https.rule=Host(`${SERVICE_FQDN_JNM_FRONT}`)"
     environment:
       - NODE_ENV=${NODE_ENV:-production}
       - DB_HOST=mariadb
