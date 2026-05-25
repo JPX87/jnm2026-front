@@ -1,5 +1,8 @@
 node_modules
 .next
 .git
+.env
 .env.local
+.env.production
 public/_old
+src/generated

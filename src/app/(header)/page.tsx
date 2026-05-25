@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { Metadata } from 'next';
 import Countdown from "@/components/features/Countdown/Countdown";
 import PartenairesCarouselSuitCase from "@/components/ui/PartenairesCarouselSuitCase/PartenairesCarouselSuitCase";
@@ -12,6 +14,8 @@ import {
   SITE_CONFIG
 } from '@/lib/seo';
 import Link from "next/link";
+import { prisma } from '@/lib/prisma';
+import { unstable_noStore as noStore } from 'next/cache';
 
 const dateJNM = "2026-05-26T06:00:00";
 
@@ -50,8 +54,17 @@ export const metadata: Metadata = generateSeoMetadata({
   },
 });
 
-export default function Home() {
+export default async function Home() {
+  noStore();
   const targetDate = new Date(dateJNM);
+
+  let loginEnabled = false;
+  try {
+    const loginSetting = await prisma.setting.findUnique({ where: { key: 'loginEnabled' } });
+    loginEnabled = loginSetting?.value === 'true';
+  } catch {
+    loginEnabled = false;
+  }
 
   return (
     <>
@@ -117,6 +130,16 @@ export default function Home() {
                 CONTACTEZ-NOUS
               </Link>
             </div>
+            {loginEnabled && (
+              <div className="flex justify-center mt-4">
+                <Link
+                  href="/login"
+                  className="block w-max bg-(--color-primary) text-white text-xl sm:text-2xl font-bold rounded-4xl py-2 sm:py-3 px-8 sm:px-10 lg:px-20 hover:opacity-80 transition-all cursor-pointer"
+                >
+                  SE CONNECTER
+                </Link>
+              </div>
+            )}
             <MessageBubble classNameP="absolute top-[-20px] md:top-[-50px] right-5" className="bg-(--color-tertiary) border-(--color-primary) border-4" rounded />
             <MessageBubble classNameP="absolute bottom-[-30px] md:bottom-[-50px] left-5" className="bg-(--color-tertiary) border-(--color-primary) border-4" />
           </div>

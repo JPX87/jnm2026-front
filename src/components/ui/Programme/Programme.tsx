@@ -1,4 +1,5 @@
-import React, { Fragment } from "react";
+import React from "react";
+import { programme, type EventBlock, type DaySchedule } from "@/data/programme";
 
 // Conversion heure -> nombre
 const timeToMinutes = (time: string): number => {
@@ -9,263 +10,10 @@ const timeToMinutes = (time: string): number => {
 // Format heure à partir de minutes depuis minuit
 const minutesToTime = (minutes: number): string => {
     const h = Math.floor(minutes / 60);
-    const hAdjusted = h >= 24 ? h - 24 : h; // Ajuster si dépasse 24h
+    const hAdjusted = h >= 24 ? h - 24 : h;
     const m = minutes % 60;
     return m === 0 ? `${hAdjusted}h` : `${hAdjusted}h${m}`;
 };
-
-interface EventBlock {
-    title?: string;
-    location?: string;
-    content?: string;
-    startTime: string; // Format: "9h", "14h30", etc
-    duration: number; // En heures (peut être 2.5, 3, 4, etc)
-    size?: number;
-    position?: "minimum" | "midium" | "medium";
-    borderDisable?: boolean;
-}
-
-interface DaySchedule {
-    day: string;
-    events: EventBlock[];
-}
-
-const programme: DaySchedule[] = [
-    {
-        day: "Mardi 26/05",
-        events: [
-            {
-                title: "Arrivée des participants → Université de Toulouse",
-                // Midi picnique ou crous
-                content: "Pensez à apporter votre repas du midi ou à prévoir une solution de restauration sur place (Crous, restaurants à proximité, etc).",
-                startTime: "8h",
-                duration: 7.5,
-                size: 7.4,
-            },
-            {
-                title: "Ouverture JNM 2026",
-                location: "Ampi Concorde, Bât. U4",
-                // content: "14h: Étiquetage bagages & jeux d'attente\n15h: Ouverture JNM26 & Discours\n16h - 18h: Activité « Ice Breaker »",
-                startTime: "15h30",
-                duration: 3,
-                size: 2.9
-            },
-            {
-                title: "Cocktail de bienvenue",
-                location: "Upsidum",
-                // content: "Détails à définir",
-                startTime: "18h30",
-                duration: 2.5,
-                size: 2.4,
-            },
-            {
-                title: "Soirée au délirium",
-                location: "Délirium Café",
-                // content: "Détails à définir",
-                startTime: "21h",
-                duration: 3,
-            },
-            {
-                title: "",
-                startTime: "24h",
-                duration: 2,
-                borderDisable: true,
-            },
-        ],
-    },
-    {
-        day: "Mercredi 27/05",
-        events: [
-            {
-                title: "Petit déjeuner",
-                location: "Bât. 2A",
-                startTime: "8h",
-                duration: 1,
-                size: 0.901,
-                position: "minimum"
-            },
-            {
-                title: "Rencontres ALUMNI",
-                location: "Amphi GRIGNARD & Salles 2A",
-                // content: "09h - 10h30: Tables rondes Alumni (Perspectives métiers, carrières, VIE, consulting, influence)\n11h - 12h30: Forum des entreprises (Rencontres MIAGE/Alumni)",
-                startTime: "9h",
-                duration: 1.5,
-                size: 1.4,
-                position: "medium"
-            },
-            {
-                title: "Forum des partenaires*",
-                location: "Bât. U6",
-                // content: "09h - 10h30: Tables rondes Alumni (Perspectives métiers, carrières, VIE, consulting, influence)\n11h - 12h30: Forum des entreprises (Rencontres MIAGE/Alumni)",
-                startTime: "11h",
-                duration: 1.5,
-                position: "medium"
-            },
-            {
-                title: "Repas & Networking",
-                location: "Bât. 2A",
-                //  content: "Buffet avec les partenaires",
-                startTime: "12h30",
-                duration: 1.5,
-                borderDisable: true,
-            },
-            {
-                title: "Ateliers IA & RSE",
-                //   content: "14h - 15h30: Green IT (IA & empreinte carbone / IA conscientisée)\n16h - 18h: E-Sport (Étudiants vs Entreprises avec CGI & EXTIA)",
-                location: "Bât. 2A",
-                startTime: "14h",
-                duration: 1.5,
-                size: 1.9
-            },
-            {
-                title: "Atelier E-sport",
-                //   content: "14h - 15h30: Green IT (IA & empreinte carbone / IA conscientisée)\n16h - 18h: E-Sport (Étudiants vs Entreprises avec CGI & EXTIA)",
-                location: "Bât. 2A",
-                startTime: "16h",
-                duration: 2,
-            },
-            {
-                title: "PAUSE",
-                startTime: "18h",
-                duration: 2,
-                borderDisable: true,
-            },
-            {
-                title: "Soirée étudiante",
-                location: "",
-                startTime: "20h",
-                duration: 4,
-            },
-            {
-                title: "",
-                startTime: "24h",
-                duration: 2,
-                borderDisable: true,
-            },
-        ],
-    },
-    {
-        day: "Jeudi 28/05",
-        events: [
-            {
-                title: "Petit déjeuner",
-                location: "Bât. 2A",
-                startTime: "8h",
-                duration: 1,
-                size: 0.901,
-                position: "minimum"
-            },
-            {
-
-                title: "Jeux de pistes et découverte de Toulouse",
-                location: "Centre-ville",
-                //  content: "Découverte de Toulouse / Jeux de piste\n\nAG CDM en parallèle.",
-                startTime: "9h",
-                duration: 3,
-            },
-            {
-                title: "Dejeuner sur l'herbe",
-                content: "Pique-nique",
-                location: "Prairie des filtres",
-                startTime: "12h",
-                duration: 2,
-                size: 2.5,
-                borderDisable: true,
-            },
-            {
-                title: "Conférences Aéro & Cyber",
-                location: "Amphi CONCORDE",
-                //  content: "15h - 16h30: Conférence Table Ronde (Aéronautique / Cyberdéfense)\n16h45 - 18h: Atelier Pitch en ascenseur (Pecha Kucha)",
-                startTime: "15h",
-                duration: 1.5,
-                size: 1.65,
-            },
-            {
-                title: "Atelier pitch ascenseur",
-                location: "Bât. U6",
-                //  content: "15h - 16h30: Conférence Table Ronde (Aéronautique / Cyberdéfense)\n16h45 - 18h: Atelier Pitch en ascenseur (Pecha Kucha)",
-                startTime: "16h45",
-                duration: 1.25,
-                size: 1.7,
-            },
-            {
-                title: "PAUSE",
-                startTime: "18h",
-                duration: 2,
-                size: 2.5,
-                borderDisable: true,
-            },
-            {
-                title: "Soirée conviviale",
-                location: "« Central » de la fac",
-                // content: "Quizz MIAGE & JNM (Kahoot)",
-                startTime: "20h",
-                duration: 4,
-            },
-            {
-                title: "",
-                startTime: "24h",
-                duration: 2,
-                borderDisable: true,
-            },
-        ],
-    },
-    {
-        day: "Vendredi 29/05",
-        events: [
-            {
-                title: "Petit déjeuner",
-                location: "Amphi Médecine",
-                startTime: "8h",
-                duration: 1,
-                size: 0.9,
-                position: "minimum"
-            },
-            {
-                title: "Concours MIAGE",
-                location: "Amphi Médecine (Allées Jules Guesde)",
-                //   content: "Présentation des vidéos / ballon de rugby Concours MIAGE",
-                startTime: "9h",
-                duration: 2,
-                size: 1.9,
-                position: "medium"
-            },
-            {
-                title: "Activité Vélo Smoothie",
-                location: "Amphi Médecine (Allées Jules Guesde)",
-                startTime: "11h",
-                duration: 1.5,
-                size: 1.7,
-                position: "medium"
-            },
-            {
-                title: "Pique nique",
-                startTime: "12h30",
-                location: "Jardin des Plantes",
-                duration: 1.5,
-                borderDisable: true,
-            },
-            {
-                title: "Clôture des JNM 2026",
-                location: "Amphi Médecine",
-                startTime: "14h",
-                duration: 2,
-            },
-            {
-                title: "PAUSE",
-                startTime: "16h",
-                duration: 4,
-                borderDisable: true,
-            },
-            {
-                title: "GALA",
-                location: "Espace Vanel",
-                startTime: "20h",
-                duration: 6,
-            },
-        ],
-    },
-];
 
 function renderContent(content?: string) {
     if (!content) return null;
@@ -292,10 +40,9 @@ function getDayTimeRange(events: EventBlock[]): { minTime: number; maxTime: numb
     };
 }
 
-// ── Composant réutilisable pour le rendu d'un événement ──
 interface EventCardProps {
     event: EventBlock;
-    isPositioned?: boolean; // Si true, utilise le positionnement absolu (desktop)
+    isPositioned?: boolean;
     minTime?: number;
     maxTime?: number;
     column?: number;
@@ -390,15 +137,14 @@ function EventCard({ event, isPositioned = false, minTime = 0, maxTime = 1440, c
 }
 
 export default function Programme() {
-    // Calculer les heures min/max globales
     const allTimes = programme.flatMap(day => {
         const times = day.events.map(e => timeToMinutes(e.startTime));
         const endTimes = day.events.map(e => timeToMinutes(e.startTime) + e.duration * 60);
         return [...times, ...endTimes];
     });
 
-    const globalMinTime = Math.floor(Math.min(...allTimes) / 60) * 60; // Arrondir à l'heure inf
-    const globalMaxTime = Math.ceil(Math.max(...allTimes) / 60) * 60; // Arrondir à l'heure sup
+    const globalMinTime = Math.floor(Math.min(...allTimes) / 60) * 60;
+    const globalMaxTime = Math.ceil(Math.max(...allTimes) / 60) * 60;
     const totalHours = (globalMaxTime - globalMinTime) / 60;
 
     const renderDayEvents = (day: DaySchedule, minTime: number, maxTime: number) => {
@@ -432,8 +178,6 @@ export default function Programme() {
                     <div className="absolute top-14 bottom-0 left-1/2 -translate-x-1/2 w-[2px] border-l-[2px] border-dotted border-(--color-primary) dark:border-(--color-secondary)" />
                     {Array.from({ length: Math.floor(totalHours) + 1 }).map((_, i) => {
                         const hour = Math.floor(globalMinTime / 60) + i;
-
-                        // If hour is outside 24h range then - 24
                         const adjustedHour = hour >= 24 ? hour - 24 : hour;
                         return (
                             <div
@@ -465,9 +209,7 @@ export default function Programme() {
 
                             <div
                                 className="relative flex-1"
-                                style={{
-                                    minHeight: `${dayHours * 55}px`,
-                                }}
+                                style={{ minHeight: `${dayHours * 55}px` }}
                             >
                                 {renderDayEvents(day, timeRange.minTime, timeRange.maxTime)}
                             </div>

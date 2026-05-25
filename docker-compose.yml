@@ -1,19 +1,108 @@
 services:
+
+  # ── Base de données MariaDB ────────────────────────────────────────────────
+  mariadb:
+    image: mariadb:11
+    container_name: jnm2026-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 3s
+      retries: 15
+      start_period: 70s
+    networks:
+      - jnm-network
+
+  # ── Migrations Prisma (s'exécute une fois avant l'app) ────────────────────
+  migrate:
+    build:
+      context: .
+      dockerfile: dockerfile
+      target: migrate
+    environment:
+      - DATABASE_URL=mysql://${DB_USER}:${DB_PASSWORD}@mariadb:3306/${DB_NAME}
+      - DB_URL=mysql://${DB_USER}:${DB_PASSWORD}@mariadb:3306/${DB_NAME}
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - ADMIN_EMAIL=${ADMIN_EMAIL}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    restart: on-failure
+    networks:
+      - jnm-network
+
+  # ── Application Next.js ───────────────────────────────────────────────────
   jnm-front:
     container_name: jnm2026-front-container
     build:
       context: .
-      dockerfile: Dockerfile
-    # Mappe le port 3000 du conteneur
+      dockerfile: dockerfile
     expose:
-      - 3000
+      - "3000"
+    labels:
+      - "traefik.enable=true"
+      
+      # Configuration HTTP (Redirection vers HTTPS)
+      - "traefik.http.routers.monapp-http.entrypoints=http"
+      - "traefik.http.routers.monapp-http.middlewares=redirect-to-https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      # Coolify variable for domain:
+      - "traefik.http.routers.monapp-http.rule=Host(`${SERVICE_FQDN_JNM_FRONT}`)"
+      
+      # Configuration HTTPS (Avec Let's Encrypt)
+      - "traefik.http.routers.monapp-https.entrypoints=https"
+      - "traefik.http.routers.monapp-https.tls=true"
+      - "traefik.http.routers.monapp-https.tls.certresolver=letsencrypt"
+      - "traefik.http.services.monapp-https.loadbalancer.server.port=3000"
+
+      # Coolify variable for domain:
+      - "traefik.http.routers.monapp-https.rule=Host(`${SERVICE_FQDN_JNM_FRONT}`)"
     environment:
-      - NODE_ENV=production
-    # Redémarre automatiquement le conteneur s'il plante ou si le serveur redémarre
+      - NODE_ENV=${NODE_ENV:-production}
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_URL=mysql://${DB_USER}:${DB_PASSWORD}@mariadb:3306/${DB_NAME}
+      - JWT_SECRET=${JWT_SECRET}
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - SMTP_SECURE=${SMTP_SECURE:-false}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - SMTP_FROM=${SMTP_FROM}
+      - NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL}
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
     restart: unless-stopped
-    # Optionnel : Limite les ressources pour éviter que Node ne mange toute la RAM
+    networks:
+      - jnm-network
     deploy:
       resources:
         limits:
           cpus: '2'
           memory: 2G
+
+volumes:
+  db_data:
+
+networks:
+  jnm-network:
+    driver: bridge
