@@ -346,7 +346,7 @@ function ResultsPanel({ data }: { data: VoteData }) {
                 </div>
                 <span className="text-white/50 text-xs">
                     {data.totalVotes} participant{data.totalVotes !== 1 ? 's' : ''}
-                    {data.totalJuryVotes > 0 && ` · ${data.totalJuryVotes} jury`}
+                    {(data.totalJuryVotes ?? 0) > 0 && ` · ${data.totalJuryVotes} jury`}
                 </span>
             </div>
 
