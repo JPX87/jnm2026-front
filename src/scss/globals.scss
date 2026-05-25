@@ -141,6 +141,71 @@
 }
 
 /*=============================
+=        SCROLLBARS           =
+==============================*/
+
+/* Scrollbar principale (contenu de page) */
+.gradient-bg::-webkit-scrollbar,
+main::-webkit-scrollbar {
+  width: 6px;
+}
+
+.gradient-bg::-webkit-scrollbar-track,
+main::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+}
+
+.gradient-bg::-webkit-scrollbar-thumb,
+main::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  transition: background 0.2s ease;
+}
+
+.gradient-bg::-webkit-scrollbar-thumb:hover,
+main::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+/* Firefox */
+.gradient-bg,
+main {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.15);
+}
+
+/* Scrollbar sidebar */
+aside nav::-webkit-scrollbar,
+.sidebar-nav::-webkit-scrollbar {
+  width: 4px;
+}
+
+aside nav::-webkit-scrollbar-track,
+.sidebar-nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+aside nav::-webkit-scrollbar-thumb,
+.sidebar-nav::-webkit-scrollbar-thumb {
+  background: rgba(239, 106, 159, 0.25);
+  border-radius: 10px;
+  transition: background 0.2s ease;
+}
+
+aside nav::-webkit-scrollbar-thumb:hover,
+.sidebar-nav::-webkit-scrollbar-thumb:hover {
+  background: rgba(239, 106, 159, 0.55);
+}
+
+/* Firefox */
+aside nav,
+.sidebar-nav {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(239, 106, 159, 0.25) transparent;
+}
+
+/*=============================
 =            BASES            =
 ==============================*/
 

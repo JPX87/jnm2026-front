@@ -2,9 +2,9 @@
 
 import { useCallback, useState } from 'react';
 
-const HOTEL_LAT = 43.5600;
-const HOTEL_LNG = 1.4750;
-const HOTEL_QUERY = 'Hotel+Formule+1+Ramonville-Saint-Agne';
+const HOTEL_LAT = 43.554219868640175;
+const HOTEL_LNG = 1.4816546872572;
+const HOTEL_QUERY = 'HotelF1+Toulouse+Ramonville';
 
 type Roommate = {
     firstname: string | null;
@@ -26,9 +26,9 @@ export default function LodgingClient({ hotelFloor, hotelRoom, doorCode, roommat
     const openMap = useCallback(() => {
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
         if (isIOS) {
-            window.open(`maps://maps.apple.com/?q=${HOTEL_QUERY}&ll=${HOTEL_LAT},${HOTEL_LNG}`, '_blank');
+            window.open(`maps://maps.apple.com/?ll=${HOTEL_LAT},${HOTEL_LNG}&q=${HOTEL_QUERY}`, '_blank');
         } else {
-            window.open(`https://www.google.com/maps/search/?api=1&query=${HOTEL_LAT},${HOTEL_LNG}&query_place_id=${HOTEL_QUERY}`, '_blank');
+            window.open(`https://www.google.com/maps?q=${HOTEL_LAT},${HOTEL_LNG}`, '_blank');
         }
     }, []);
 
@@ -157,7 +157,7 @@ export default function LodgingClient({ hotelFloor, hotelRoom, doorCode, roommat
                             onClick={openMap}
                         >
                             <iframe
-                                src={`https://maps.google.com/maps?q=${HOTEL_LAT},${HOTEL_LNG}&z=15&output=embed`}
+                                src={`https://maps.google.com/maps?q=${HOTEL_LAT},${HOTEL_LNG}&z=17&output=embed`}
                                 className="w-full h-36 sm:h-48 border-0 pointer-events-none"
                                 loading="lazy"
                                 allowFullScreen

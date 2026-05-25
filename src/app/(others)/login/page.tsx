@@ -33,7 +33,7 @@ export default function LoginPage() {
         const tl = gsap.timeline({
             defaults: { force3D: true },
             onComplete: () => {
-                router.push('/app/lodging');
+                window.location.replace('/app');
             },
         });
 
