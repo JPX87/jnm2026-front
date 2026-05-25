@@ -60,9 +60,12 @@ export default function AdminPage() {
     const [loginEnabled, setLoginEnabled] = useState(true);
     const [voteVideoOpen, setVoteVideoOpen] = useState(false);
     const [voteRugbyOpen, setVoteRugbyOpen] = useState(false);
+    const [resultsVideoVisible, setResultsVideoVisible] = useState(false);
+    const [resultsRugbyVisible, setResultsRugbyVisible] = useState(false);
     const [settingsLoading, setSettingsLoading] = useState(true);
     const [settingsError, setSettingsError] = useState('');
     const [settingsSaved, setSettingsSaved] = useState(false);
+    const [confirmReveal, setConfirmReveal] = useState<{ key: string; setter: (v: boolean) => void } | null>(null);
 
     useEffect(() => { setMounted(true); }, []);
 
@@ -74,6 +77,8 @@ export default function AdminPage() {
                 setLoginEnabled(data.loginEnabled === 'true');
                 setVoteVideoOpen(data.voteVideoOpen === 'true');
                 setVoteRugbyOpen(data.voteRugbyOpen === 'true');
+                setResultsVideoVisible(data.resultsVideoVisible === 'true');
+                setResultsRugbyVisible(data.resultsRugbyVisible === 'true');
             })
             .catch(() => setSettingsError('Impossible de charger les paramètres'))
             .finally(() => setSettingsLoading(false));
@@ -104,6 +109,25 @@ export default function AdminPage() {
     };
 
     const toggleLogin = () => toggleSetting('loginEnabled', loginEnabled, setLoginEnabled);
+
+    // Pour les résultats : demande confirmation avant d'activer (mais pas avant de désactiver)
+    const handleRevealToggle = (key: string, current: boolean, setter: (v: boolean) => void) => {
+        if (!current) {
+            // On va activer → demander confirmation
+            setConfirmReveal({ key, setter });
+        } else {
+            // On va désactiver → direct
+            toggleSetting(key, current, setter);
+        }
+    };
+
+    const confirmAndReveal = async () => {
+        if (!confirmReveal) return;
+        const { key, setter } = confirmReveal;
+        setConfirmReveal(null);
+        const current = key === 'resultsVideoVisible' ? resultsVideoVisible : resultsRugbyVisible;
+        await toggleSetting(key, current, setter);
+    };
 
     const fetchUsers = useCallback(async () => {
         setLoading(true);
@@ -220,10 +244,12 @@ export default function AdminPage() {
 
                 <div className="space-y-0 divide-y divide-[#ff89b8]/10 pt-2 border-t border-[#ff89b8]/15">
                     {([
-                        { key: 'loginEnabled', label: 'Bouton de connexion', desc: 'Affiche ou masque le bouton "Se connecter" sur la page publique', value: loginEnabled, setter: setLoginEnabled, color: 'pink' },
-                        { key: 'voteVideoOpen', label: '🎬 Vote Concours Vidéo', desc: 'Ouvre ou ferme le vote participants pour le concours vidéo', value: voteVideoOpen, setter: setVoteVideoOpen, color: 'purple' },
-                        { key: 'voteRugbyOpen', label: '🏉 Vote Ballons de Rugby', desc: 'Ouvre ou ferme le vote participants pour le concours rugby', value: voteRugbyOpen, setter: setVoteRugbyOpen, color: 'purple' },
-                    ] as const).map(({ key, label, desc, value, setter, color }) => (
+                        { key: 'loginEnabled', label: 'Bouton de connexion', desc: 'Affiche ou masque le bouton "Se connecter" sur la page publique', value: loginEnabled, setter: setLoginEnabled, color: 'pink', onLabel: 'Ouvert', offLabel: 'Fermé', reveal: false },
+                        { key: 'voteVideoOpen', label: '🎬 Vote Concours Vidéo', desc: 'Ouvre ou ferme le vote participants pour le concours vidéo', value: voteVideoOpen, setter: setVoteVideoOpen, color: 'purple', onLabel: 'Ouvert', offLabel: 'Fermé', reveal: false },
+                        { key: 'voteRugbyOpen', label: '🏉 Vote Ballons de Rugby', desc: 'Ouvre ou ferme le vote participants pour le concours rugby', value: voteRugbyOpen, setter: setVoteRugbyOpen, color: 'purple', onLabel: 'Ouvert', offLabel: 'Fermé', reveal: false },
+                        { key: 'resultsVideoVisible', label: '🎬 Résultats Vidéo', desc: 'Rend visibles les classements du concours vidéo pour tous les participants', value: resultsVideoVisible, setter: setResultsVideoVisible, color: 'amber', onLabel: 'Visible', offLabel: 'Masqué', reveal: true },
+                        { key: 'resultsRugbyVisible', label: '🏉 Résultats Rugby', desc: 'Rend visibles les classements du concours rugby pour tous les participants', value: resultsRugbyVisible, setter: setResultsRugbyVisible, color: 'amber', onLabel: 'Visible', offLabel: 'Masqué', reveal: true },
+                    ] as const).map(({ key, label, desc, value, setter, color, onLabel, offLabel, reveal }) => (
                         <div key={key} className="flex items-center justify-between gap-4 py-3.5">
                             <div>
                                 <p className="text-gray-800 font-semibold text-sm">{label}</p>
@@ -231,14 +257,21 @@ export default function AdminPage() {
                             </div>
                             <div className="flex items-center gap-2 flex-shrink-0">
                                 <span className={`text-xs font-semibold ${settingsLoading ? 'text-gray-400' : value ? 'text-green-600' : 'text-gray-400'}`}>
-                                    {settingsLoading ? '...' : value ? 'Ouvert' : 'Fermé'}
+                                    {settingsLoading ? '...' : value ? onLabel : offLabel}
                                 </span>
                                 <button
-                                    onClick={() => toggleSetting(key, value, setter as (v: boolean) => void)}
+                                    onClick={() => reveal
+                                        ? handleRevealToggle(key, value, setter as (v: boolean) => void)
+                                        : toggleSetting(key, value, setter as (v: boolean) => void)
+                                    }
                                     disabled={settingsLoading}
                                     className="relative flex-shrink-0 disabled:opacity-50"
                                 >
-                                    <div className={`w-12 h-6 rounded-full transition-colors duration-300 ${value ? color === 'purple' ? 'bg-gradient-to-r from-purple-400 to-purple-600' : 'bg-gradient-to-r from-[#ff89b8] to-[#ef6a9f]' : 'bg-gray-200'}`}>
+                                    <div className={`w-12 h-6 rounded-full transition-colors duration-300 ${value
+                                        ? color === 'purple' ? 'bg-gradient-to-r from-purple-400 to-purple-600'
+                                        : color === 'amber' ? 'bg-gradient-to-r from-amber-400 to-orange-500'
+                                        : 'bg-gradient-to-r from-[#ff89b8] to-[#ef6a9f]'
+                                        : 'bg-gray-200'}`}>
                                         <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-300 ${value ? 'translate-x-6' : 'translate-x-0'}`} />
                                     </div>
                                 </button>
@@ -262,6 +295,25 @@ export default function AdminPage() {
                     <div className="flex-1 min-w-0">
                         <p className="text-gray-800 font-bold text-sm">Activités</p>
                         <p className="text-gray-500 text-xs mt-0.5">Gérer les groupes, activités et inscriptions</p>
+                    </div>
+                    <svg className="w-4 h-4 text-gray-400 group-hover:text-[#ef6a9f] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                </Link>
+
+                <Link
+                    href="/app/admin/miages"
+                    className="card-shadow glass-effect rounded-2xl border border-[#ff89b8]/20 p-5 flex items-center gap-4 hover:border-[#ff89b8]/50 hover:scale-[1.02] transition-all duration-200 group"
+                >
+                    <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#ff89b8] to-[#ef6a9f] flex items-center justify-center flex-shrink-0 shadow-md group-hover:shadow-lg transition-shadow">
+                        <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                        <p className="text-gray-800 font-bold text-sm">Groupes MIAGE</p>
+                        <p className="text-gray-500 text-xs mt-0.5">Configurer les villes qui participent aux concours</p>
                     </div>
                     <svg className="w-4 h-4 text-gray-400 group-hover:text-[#ef6a9f] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -465,6 +517,46 @@ export default function AdminPage() {
                     </div>
                 )}
             </div>
+
+            {/* Modale de confirmation dévoilement résultats */}
+            {confirmReveal && mounted && createPortal(
+                <div className="fixed inset-0 flex items-center justify-center p-4" style={{ zIndex: 10001 }}>
+                    <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setConfirmReveal(null)} />
+                    <div className="relative glass-effect border border-amber-300/40 rounded-3xl shadow-2xl w-full max-w-md animate-fade-in">
+                        <div className="p-7 text-center">
+                            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center mx-auto mb-5 shadow-lg">
+                                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                            </div>
+                            <h3 className="text-xl font-bold text-gray-800 mb-3">Dévoiler les résultats ?</h3>
+                            <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 mb-6 text-left">
+                                <p className="text-amber-800 text-sm font-semibold mb-1">⚠️ Attention</p>
+                                <p className="text-amber-700 text-sm leading-relaxed">
+                                    Ces données seront présentées durant le gala. Une fois les résultats visibles, tous les participants pourront les consulter immédiatement.
+                                </p>
+                            </div>
+                            <p className="text-gray-500 text-sm mb-6">Êtes-vous sûr de vouloir rendre les classements publics maintenant ?</p>
+                            <div className="flex gap-3">
+                                <button
+                                    onClick={() => setConfirmReveal(null)}
+                                    className="flex-1 py-3 rounded-2xl border border-gray-200 text-gray-600 font-semibold hover:bg-gray-50 transition-all text-sm"
+                                >
+                                    Annuler
+                                </button>
+                                <button
+                                    onClick={confirmAndReveal}
+                                    className="flex-1 py-3 rounded-2xl bg-gradient-to-r from-amber-400 to-orange-500 text-white font-bold shadow-lg hover:shadow-xl hover:scale-105 transition-all text-sm"
+                                >
+                                    Oui, dévoiler
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>,
+                document.body
+            )}
 
             {/* Modal */}
             {showModal && mounted && createPortal(

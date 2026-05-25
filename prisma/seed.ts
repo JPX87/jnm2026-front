@@ -25,7 +25,29 @@ async function main() {
 
     // Settings
     await prisma.setting.upsert({ where: { key: 'loginEnabled' }, update: {}, create: { key: 'loginEnabled', value: 'true' } });
+    await prisma.setting.upsert({ where: { key: 'voteVideoOpen' }, update: {}, create: { key: 'voteVideoOpen', value: 'false' } });
+    await prisma.setting.upsert({ where: { key: 'voteRugbyOpen' }, update: {}, create: { key: 'voteRugbyOpen', value: 'false' } });
+    await prisma.setting.upsert({ where: { key: 'resultsVideoVisible' }, update: {}, create: { key: 'resultsVideoVisible', value: 'false' } });
+    await prisma.setting.upsert({ where: { key: 'resultsRugbyVisible' }, update: {}, create: { key: 'resultsRugbyVisible', value: 'false' } });
     console.log('Paramètres initialisés.');
+
+    // Groupes MIAGE
+    const PARIS_NAMES = ['Paris Cité', 'Paris Dauphine', 'Paris Saclay / Evry', 'Paris Saclay / Orsay', 'Paris Sorbonne'];
+    const ALL_GROUPS = [
+        'Aix-Marseille', 'Amiens', 'Antilles', 'Bordeaux', 'Grenoble',
+        'Lille', 'Lyon', 'Mulhouse', 'Nancy', 'Nantes', 'Nice',
+        'Paris Cité', 'Paris Dauphine', 'Paris Saclay / Evry', 'Paris Saclay / Orsay',
+        'Paris Sorbonne', 'Rennes',
+    ];
+    for (let i = 0; i < ALL_GROUPS.length; i++) {
+        const name = ALL_GROUPS[i];
+        await prisma.miageGroup.upsert({
+            where: { name },
+            update: {},
+            create: { name, isParisGroup: PARIS_NAMES.includes(name), active: true, order: i + 1 },
+        });
+    }
+    console.log(`${ALL_GROUPS.length} groupes MIAGE initialisés.`);
 
     // Admin user
     const existing = await prisma.user.findUnique({ where: { email: adminEmail } });

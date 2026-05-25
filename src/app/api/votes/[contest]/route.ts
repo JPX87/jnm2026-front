@@ -51,21 +51,28 @@ export async function GET(_req: Request, { params }: { params: Promise<{ contest
         const payload = token ? await verifyToken(token) : null;
         if (!payload) return NextResponse.json({ error: 'Non authentifié' }, { status: 401 });
 
-        const [activeGroups, votes, myVote, user] = await Promise.all([
+        const resultsKey = contest === 'video' ? 'resultsVideoVisible' : 'resultsRugbyVisible';
+
+        const [activeGroups, votes, myVote, user, resultsSetting] = await Promise.all([
             prisma.miageGroup.findMany({ where: { active: true }, orderBy: { order: 'asc' }, select: { name: true } }),
             prisma.vote.findMany({ where: { contest }, select: { first: true, second: true, third: true, isJury: true } }),
             prisma.vote.findUnique({ where: { userId_contest: { userId: payload.userId, contest } } }),
-            prisma.user.findUnique({ where: { id: payload.userId }, select: { miage: true, isJury: true } }),
+            prisma.user.findUnique({ where: { id: payload.userId }, select: { miage: true, isJury: true, isAdmin: true } }),
+            prisma.setting.findUnique({ where: { key: resultsKey } }),
         ]);
 
+        const resultsVisible = resultsSetting?.value === 'true';
+
         return NextResponse.json({
-            results: computeResults(votes, activeGroups),
+            // Les scores ne sont envoyés au client que si les résultats sont publiés
+            results: resultsVisible ? computeResults(votes, activeGroups) : [],
             hasVoted: !!myVote,
             myVote: myVote ? { first: myVote.first, second: myVote.second, third: myVote.third } : null,
             isJury: user?.isJury ?? false,
             userCity: user?.miage ?? null,
-            totalVotes: votes.filter(v => !v.isJury).length,
-            totalJuryVotes: votes.filter(v => v.isJury).length,
+            totalVotes: resultsVisible ? votes.filter(v => !v.isJury).length : null,
+            totalJuryVotes: resultsVisible ? votes.filter(v => v.isJury).length : null,
+            resultsVisible,
         });
     } catch (error) {
         console.error('GET /api/votes/[contest]:', error);

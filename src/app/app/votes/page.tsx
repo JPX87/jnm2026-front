@@ -24,8 +24,9 @@ type VoteData = {
     myVote: { first: string; second: string; third: string } | null;
     isJury: boolean;
     userCity: string | null;
-    totalVotes: number;
-    totalJuryVotes: number;
+    totalVotes: number | null;
+    totalJuryVotes: number | null;
+    resultsVisible: boolean;
 };
 
 export default function VotesPage() {
@@ -61,7 +62,8 @@ export default function VotesPage() {
 
     useEffect(() => {
         if (intervalRef.current) clearInterval(intervalRef.current);
-        if (data[activeTab]?.hasVoted) {
+        // Sondage uniquement si le concours est voté ET les résultats sont publiés
+        if (data[activeTab]?.hasVoted && data[activeTab]?.resultsVisible) {
             intervalRef.current = setInterval(() => fetchContest(activeTab, true), 10000);
         }
         return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
@@ -184,7 +186,19 @@ export default function VotesPage() {
                             </div>
                         )}
                     </div>
-                    <ResultsPanel data={currentData} />
+
+                    {currentData.resultsVisible ? (
+                        <ResultsPanel data={currentData} />
+                    ) : (
+                        <div className="card-shadow glass-effect rounded-2xl border border-[#ff89b8]/20 p-8 text-center animate-fade-in">
+                            <div className="text-5xl mb-4">🎉</div>
+                            <p className="text-gray-800 font-bold text-lg mb-2">Les résultats sont sous embargo</p>
+                            <p className="text-gray-500 text-sm leading-relaxed">
+                                Les classements seront dévoilés lors du gala.<br />
+                                Rendez-vous ce soir !
+                            </p>
+                        </div>
+                    )}
                 </>
             ) : (
                 <>
@@ -293,12 +307,7 @@ export default function VotesPage() {
                         </div>
                     )}
 
-                    {/* Results preview */}
-                    {currentData.results.some(r => r.finalScore > 0) && (
-                        <div className="mt-6">
-                            <ResultsPanel data={currentData} />
-                        </div>
-                    )}
+                    {/* Résultats masqués jusqu'au gala — aucun aperçu avant vote */}
                 </>
             )}
         </div>
