@@ -49,8 +49,8 @@ services:
     build:
       context: .
       dockerfile: dockerfile
-    ports:
-      - "81:3000"
+    expose:
+      - "3000"
     environment:
       - NODE_ENV=production
       - DB_HOST=mariadb
