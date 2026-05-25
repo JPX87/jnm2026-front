@@ -9,6 +9,7 @@ const menuItems = [
     { label: "INSCRIPTION", href: "/inscription" },
     { label: "KESAKO", href: "/kesako" },
     { label: "PROGRAMME", href: "/programme" },
+    { label: "PARTENAIRES", href: "/partenaires" },
     { label: "LES CONCOURS", href: "/concours" },
     { label: "ORGANIGRAMME", href: "/organigramme" },
     { label: "NOUS CONTACTER", href: "/#contact" },

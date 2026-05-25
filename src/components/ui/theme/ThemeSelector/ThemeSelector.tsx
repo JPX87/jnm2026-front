@@ -5,7 +5,7 @@ import { useTheme } from "next-themes"
 
 
 
-export function ThemeSelector({className="", big=false}: {className?: string, big?: boolean}) {
+export function ThemeSelector({ className = "", big = false }: { className?: string, big?: boolean }) {
   const [mounted, setMounted] = React.useState(false)
   const { theme, setTheme } = useTheme()
 
@@ -16,8 +16,8 @@ export function ThemeSelector({className="", big=false}: {className?: string, bi
   if (!mounted) {
     // Mini loading placeholder pour éviter le "flash" au chargement
     return <div className={className}>
-        <div className="w-26 md:w-32 h-10 md:h-12 rounded-full bg-gray-200 dark:bg-black text-center text-2xl">...</div>
-      </div>
+      <div className="w-26 md:w-32 h-10 md:h-12 rounded-full bg-gray-200 dark:bg-black text-center text-2xl">...</div>
+    </div>
   }
 
   // Configuration des options
@@ -32,12 +32,12 @@ export function ThemeSelector({className="", big=false}: {className?: string, bi
   const activeIndex = tabs.findIndex((t) => t.id === theme)
   // Si le thème n'est pas trouvé (ex: au premier chargement), on se met sur system (index 1)
   const safeIndex = activeIndex === -1 ? 1 : activeIndex
-  
+
   // Position gauche en pourcentage : 0%, 33.33%, ou 66.66%
   const translateValue = `${safeIndex * 100}%`
 
   return (
-    <div 
+    <div
       className={`relative flex items-center p-1 rounded-full bg-gray-200 dark:bg-black border border-gray-300 dark:border-gray-700 ${big ? "w-60 h-16" : "w-fit"} ${className}`}
       role="tablist"
       aria-label="Choix du thème"
@@ -67,7 +67,7 @@ export function ThemeSelector({className="", big=false}: {className?: string, bi
               relative z-10 flex items-center justify-center ${big ? "w-22 h-10" : "w-8 sm:w-10 h-8 sm:h-10"} rounded-full 
               transition-colors duration-200
               focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500
-              ${isActive 
+              ${isActive
                 ? "text-black dark:text-white" // Couleur quand actif
                 : "text-gray-500 hover:text-(--color-seconde-black) dark:text-gray-400 dark:hover:text-gray-200 cursor-pointer" // Couleur quand inactif
               }
@@ -82,7 +82,7 @@ export function ThemeSelector({className="", big=false}: {className?: string, bi
 
             {tab.id === "system" && (
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
-                 <path fillRule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2h-2.22l.123.489.804.804A1 1 0 0113 18H7a1 1 0 01-.707-1.707l.804-.804L7.22 15H5a2 2 0 01-2-2V5zm5.771 7H5V5h10v7H8.771z" clipRule="evenodd" />
+                <path fillRule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2h-2.22l.123.489.804.804A1 1 0 0113 18H7a1 1 0 01-.707-1.707l.804-.804L7.22 15H5a2 2 0 01-2-2V5zm5.771 7H5V5h10v7H8.771z" clipRule="evenodd" />
               </svg>
             )}
 
