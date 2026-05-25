@@ -51,6 +51,23 @@ services:
       dockerfile: dockerfile
     expose:
       - "3000"
+    labels:
+      - "traefik.enable=true"
+      
+      # Configuration HTTP (Redirection vers HTTPS)
+      - "traefik.http.routers.monapp-http.rule=Host(`jnm2026-test.jeremypatapy.fr`)"
+      - "traefik.http.routers.monapp-http.entrypoints=http"
+      - "traefik.http.routers.monapp-http.middlewares=redirect-to-https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      
+      # Configuration HTTPS (Avec Let's Encrypt)
+      - "traefik.http.routers.monapp-https.rule=Host(`jnm2026-test.jeremypatapy.fr`)"
+      - "traefik.http.routers.monapp-https.entrypoints=https"
+      - "traefik.http.routers.monapp-https.tls=true"
+      - "traefik.http.routers.monapp-https.tls.certresolver=letsencrypt"
+      
+      # Indiquer le bon port à Traefik (remplacez 3000)
+      - "traefik.http.services.monapp-https.loadbalancer.server.port=3000"
     environment:
       - NODE_ENV=${NODE_ENV:-production}
       - DB_HOST=mariadb
