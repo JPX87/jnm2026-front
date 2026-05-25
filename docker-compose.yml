@@ -4,9 +4,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    # Mappe le port 3002 de votre machine sur le port 3000 du conteneur
-    ports:
-      - "80:3000"
+    # Mappe le port 3000 du conteneur
+    expose:
+      - 3000
     environment:
       - NODE_ENV=production
     # Redémarre automatiquement le conteneur s'il plante ou si le serveur redémarre
