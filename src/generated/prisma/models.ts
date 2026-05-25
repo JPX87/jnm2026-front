@@ -9,6 +9,7 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/User'
+export type * from './models/Vote'
 export type * from './models/Message'
 export type * from './models/MessageRead'
 export type * from './models/Setting'

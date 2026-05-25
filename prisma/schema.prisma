@@ -20,9 +20,35 @@ model User {
   hotelFloor            String?
   doorCode              String?
   isAdmin               Boolean                @default(false)
+  isJury                Boolean                @default(false)
   createdAt             DateTime               @default(now())
   messageReads          MessageRead[]
   activityRegistrations ActivityRegistration[]
+  votes                 Vote[]
+}
+
+model Vote {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  contest   String
+  first     String
+  second    String
+  third     String
+  isJury    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, contest])
+}
+
+model MiageGroup {
+  id           Int     @id @default(autoincrement())
+  name         String  @unique
+  isParisGroup Boolean @default(false)
+  active       Boolean @default(true)
+  activeVideo  Boolean @default(true)
+  activeRugby  Boolean @default(true)
+  order        Int     @default(0)
 }
 
 model Message {

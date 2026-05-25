@@ -18,6 +18,7 @@ export async function GET() {
                 hotelFloor: true,
                 doorCode: true,
                 isAdmin: true,
+                isJury: true,
                 createdAt: true,
             },
             orderBy: { createdAt: 'desc' },
@@ -32,7 +33,7 @@ export async function GET() {
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const { email, password, firstname, lastname, miage, ville, hotelRoom, hotelFloor, doorCode, isAdmin } = body;
+        const { email, password, firstname, lastname, miage, ville, hotelRoom, hotelFloor, doorCode, isAdmin, isJury } = body;
 
         if (!email || !password) {
             return NextResponse.json({ error: 'Email et mot de passe requis' }, { status: 400 });
@@ -57,6 +58,7 @@ export async function POST(request: Request) {
                 hotelFloor: hotelFloor || null,
                 doorCode: doorCode || null,
                 isAdmin: isAdmin ?? false,
+                isJury: isJury ?? false,
             },
             select: {
                 id: true,
@@ -69,6 +71,7 @@ export async function POST(request: Request) {
                 hotelFloor: true,
                 doorCode: true,
                 isAdmin: true,
+                isJury: true,
                 createdAt: true,
             },
         });

@@ -50,6 +50,7 @@ export const AnyNull = runtime.objectEnumValues.instances.AnyNull
 
 export const ModelName = {
   User: 'User',
+  Vote: 'Vote',
   Message: 'Message',
   MessageRead: 'MessageRead',
   Setting: 'Setting',
@@ -87,10 +88,25 @@ export const UserScalarFieldEnum = {
   hotelFloor: 'hotelFloor',
   doorCode: 'doorCode',
   isAdmin: 'isAdmin',
+  isJury: 'isJury',
   createdAt: 'createdAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const VoteScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  contest: 'contest',
+  first: 'first',
+  second: 'second',
+  third: 'third',
+  isJury: 'isJury',
+  createdAt: 'createdAt'
+} as const
+
+export type VoteScalarFieldEnum = (typeof VoteScalarFieldEnum)[keyof typeof VoteScalarFieldEnum]
 
 
 export const MessageScalarFieldEnum = {
@@ -195,6 +211,16 @@ export const UserOrderByRelevanceFieldEnum = {
 } as const
 
 export type UserOrderByRelevanceFieldEnum = (typeof UserOrderByRelevanceFieldEnum)[keyof typeof UserOrderByRelevanceFieldEnum]
+
+
+export const VoteOrderByRelevanceFieldEnum = {
+  contest: 'contest',
+  first: 'first',
+  second: 'second',
+  third: 'third'
+} as const
+
+export type VoteOrderByRelevanceFieldEnum = (typeof VoteOrderByRelevanceFieldEnum)[keyof typeof VoteOrderByRelevanceFieldEnum]
 
 
 export const MessageOrderByRelevanceFieldEnum = {

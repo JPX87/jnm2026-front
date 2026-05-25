@@ -46,6 +46,7 @@ export type UserMinAggregateOutputType = {
   hotelFloor: string | null
   doorCode: string | null
   isAdmin: boolean | null
+  isJury: boolean | null
   createdAt: Date | null
 }
 
@@ -61,6 +62,7 @@ export type UserMaxAggregateOutputType = {
   hotelFloor: string | null
   doorCode: string | null
   isAdmin: boolean | null
+  isJury: boolean | null
   createdAt: Date | null
 }
 
@@ -76,6 +78,7 @@ export type UserCountAggregateOutputType = {
   hotelFloor: number
   doorCode: number
   isAdmin: number
+  isJury: number
   createdAt: number
   _all: number
 }
@@ -101,6 +104,7 @@ export type UserMinAggregateInputType = {
   hotelFloor?: true
   doorCode?: true
   isAdmin?: true
+  isJury?: true
   createdAt?: true
 }
 
@@ -116,6 +120,7 @@ export type UserMaxAggregateInputType = {
   hotelFloor?: true
   doorCode?: true
   isAdmin?: true
+  isJury?: true
   createdAt?: true
 }
 
@@ -131,6 +136,7 @@ export type UserCountAggregateInputType = {
   hotelFloor?: true
   doorCode?: true
   isAdmin?: true
+  isJury?: true
   createdAt?: true
   _all?: true
 }
@@ -233,6 +239,7 @@ export type UserGroupByOutputType = {
   hotelFloor: string | null
   doorCode: string | null
   isAdmin: boolean
+  isJury: boolean
   createdAt: Date
   _count: UserCountAggregateOutputType | null
   _avg: UserAvgAggregateOutputType | null
@@ -271,9 +278,11 @@ export type UserWhereInput = {
   hotelFloor?: Prisma.StringNullableFilter<"User"> | string | null
   doorCode?: Prisma.StringNullableFilter<"User"> | string | null
   isAdmin?: Prisma.BoolFilter<"User"> | boolean
+  isJury?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   messageReads?: Prisma.MessageReadListRelationFilter
   activityRegistrations?: Prisma.ActivityRegistrationListRelationFilter
+  votes?: Prisma.VoteListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -288,9 +297,11 @@ export type UserOrderByWithRelationInput = {
   hotelFloor?: Prisma.SortOrderInput | Prisma.SortOrder
   doorCode?: Prisma.SortOrderInput | Prisma.SortOrder
   isAdmin?: Prisma.SortOrder
+  isJury?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   messageReads?: Prisma.MessageReadOrderByRelationAggregateInput
   activityRegistrations?: Prisma.ActivityRegistrationOrderByRelationAggregateInput
+  votes?: Prisma.VoteOrderByRelationAggregateInput
   _relevance?: Prisma.UserOrderByRelevanceInput
 }
 
@@ -309,9 +320,11 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   hotelFloor?: Prisma.StringNullableFilter<"User"> | string | null
   doorCode?: Prisma.StringNullableFilter<"User"> | string | null
   isAdmin?: Prisma.BoolFilter<"User"> | boolean
+  isJury?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   messageReads?: Prisma.MessageReadListRelationFilter
   activityRegistrations?: Prisma.ActivityRegistrationListRelationFilter
+  votes?: Prisma.VoteListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -326,6 +339,7 @@ export type UserOrderByWithAggregationInput = {
   hotelFloor?: Prisma.SortOrderInput | Prisma.SortOrder
   doorCode?: Prisma.SortOrderInput | Prisma.SortOrder
   isAdmin?: Prisma.SortOrder
+  isJury?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _avg?: Prisma.UserAvgOrderByAggregateInput
@@ -349,6 +363,7 @@ export type UserScalarWhereWithAggregatesInput = {
   hotelFloor?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   doorCode?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   isAdmin?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  isJury?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
 
@@ -363,9 +378,11 @@ export type UserCreateInput = {
   hotelFloor?: string | null
   doorCode?: string | null
   isAdmin?: boolean
+  isJury?: boolean
   createdAt?: Date | string
   messageReads?: Prisma.MessageReadCreateNestedManyWithoutUserInput
   activityRegistrations?: Prisma.ActivityRegistrationCreateNestedManyWithoutUserInput
+  votes?: Prisma.VoteCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -380,9 +397,11 @@ export type UserUncheckedCreateInput = {
   hotelFloor?: string | null
   doorCode?: string | null
   isAdmin?: boolean
+  isJury?: boolean
   createdAt?: Date | string
   messageReads?: Prisma.MessageReadUncheckedCreateNestedManyWithoutUserInput
   activityRegistrations?: Prisma.ActivityRegistrationUncheckedCreateNestedManyWithoutUserInput
+  votes?: Prisma.VoteUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -396,9 +415,11 @@ export type UserUpdateInput = {
   hotelFloor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isJury?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   messageReads?: Prisma.MessageReadUpdateManyWithoutUserNestedInput
   activityRegistrations?: Prisma.ActivityRegistrationUpdateManyWithoutUserNestedInput
+  votes?: Prisma.VoteUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -413,9 +434,11 @@ export type UserUncheckedUpdateInput = {
   hotelFloor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isJury?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   messageReads?: Prisma.MessageReadUncheckedUpdateManyWithoutUserNestedInput
   activityRegistrations?: Prisma.ActivityRegistrationUncheckedUpdateManyWithoutUserNestedInput
+  votes?: Prisma.VoteUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -430,6 +453,7 @@ export type UserCreateManyInput = {
   hotelFloor?: string | null
   doorCode?: string | null
   isAdmin?: boolean
+  isJury?: boolean
   createdAt?: Date | string
 }
 
@@ -444,6 +468,7 @@ export type UserUpdateManyMutationInput = {
   hotelFloor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isJury?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -459,6 +484,7 @@ export type UserUncheckedUpdateManyInput = {
   hotelFloor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isJury?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -480,6 +506,7 @@ export type UserCountOrderByAggregateInput = {
   hotelFloor?: Prisma.SortOrder
   doorCode?: Prisma.SortOrder
   isAdmin?: Prisma.SortOrder
+  isJury?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -499,6 +526,7 @@ export type UserMaxOrderByAggregateInput = {
   hotelFloor?: Prisma.SortOrder
   doorCode?: Prisma.SortOrder
   isAdmin?: Prisma.SortOrder
+  isJury?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -514,6 +542,7 @@ export type UserMinOrderByAggregateInput = {
   hotelFloor?: Prisma.SortOrder
   doorCode?: Prisma.SortOrder
   isAdmin?: Prisma.SortOrder
+  isJury?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -550,6 +579,20 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type UserCreateNestedOneWithoutVotesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutVotesInput, Prisma.UserUncheckedCreateWithoutVotesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutVotesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutVotesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutVotesInput, Prisma.UserUncheckedCreateWithoutVotesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutVotesInput
+  upsert?: Prisma.UserUpsertWithoutVotesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutVotesInput, Prisma.UserUpdateWithoutVotesInput>, Prisma.UserUncheckedUpdateWithoutVotesInput>
+}
+
 export type UserCreateNestedOneWithoutMessageReadsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutMessageReadsInput, Prisma.UserUncheckedCreateWithoutMessageReadsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutMessageReadsInput
@@ -578,6 +621,92 @@ export type UserUpdateOneRequiredWithoutActivityRegistrationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutActivityRegistrationsInput, Prisma.UserUpdateWithoutActivityRegistrationsInput>, Prisma.UserUncheckedUpdateWithoutActivityRegistrationsInput>
 }
 
+export type UserCreateWithoutVotesInput = {
+  email: string
+  firstname?: string | null
+  lastname?: string | null
+  password: string
+  miage?: string | null
+  ville?: string | null
+  hotelRoom: string
+  hotelFloor?: string | null
+  doorCode?: string | null
+  isAdmin?: boolean
+  isJury?: boolean
+  createdAt?: Date | string
+  messageReads?: Prisma.MessageReadCreateNestedManyWithoutUserInput
+  activityRegistrations?: Prisma.ActivityRegistrationCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutVotesInput = {
+  id?: number
+  email: string
+  firstname?: string | null
+  lastname?: string | null
+  password: string
+  miage?: string | null
+  ville?: string | null
+  hotelRoom: string
+  hotelFloor?: string | null
+  doorCode?: string | null
+  isAdmin?: boolean
+  isJury?: boolean
+  createdAt?: Date | string
+  messageReads?: Prisma.MessageReadUncheckedCreateNestedManyWithoutUserInput
+  activityRegistrations?: Prisma.ActivityRegistrationUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutVotesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutVotesInput, Prisma.UserUncheckedCreateWithoutVotesInput>
+}
+
+export type UserUpsertWithoutVotesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutVotesInput, Prisma.UserUncheckedUpdateWithoutVotesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutVotesInput, Prisma.UserUncheckedCreateWithoutVotesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutVotesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutVotesInput, Prisma.UserUncheckedUpdateWithoutVotesInput>
+}
+
+export type UserUpdateWithoutVotesInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  miage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ville?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hotelRoom?: Prisma.StringFieldUpdateOperationsInput | string
+  hotelFloor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  doorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isJury?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  messageReads?: Prisma.MessageReadUpdateManyWithoutUserNestedInput
+  activityRegistrations?: Prisma.ActivityRegistrationUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutVotesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  firstname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  miage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ville?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hotelRoom?: Prisma.StringFieldUpdateOperationsInput | string
+  hotelFloor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  doorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isJury?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  messageReads?: Prisma.MessageReadUncheckedUpdateManyWithoutUserNestedInput
+  activityRegistrations?: Prisma.ActivityRegistrationUncheckedUpdateManyWithoutUserNestedInput
+}
+
 export type UserCreateWithoutMessageReadsInput = {
   email: string
   firstname?: string | null
@@ -589,8 +718,10 @@ export type UserCreateWithoutMessageReadsInput = {
   hotelFloor?: string | null
   doorCode?: string | null
   isAdmin?: boolean
+  isJury?: boolean
   createdAt?: Date | string
   activityRegistrations?: Prisma.ActivityRegistrationCreateNestedManyWithoutUserInput
+  votes?: Prisma.VoteCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutMessageReadsInput = {
@@ -605,8 +736,10 @@ export type UserUncheckedCreateWithoutMessageReadsInput = {
   hotelFloor?: string | null
   doorCode?: string | null
   isAdmin?: boolean
+  isJury?: boolean
   createdAt?: Date | string
   activityRegistrations?: Prisma.ActivityRegistrationUncheckedCreateNestedManyWithoutUserInput
+  votes?: Prisma.VoteUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutMessageReadsInput = {
@@ -636,8 +769,10 @@ export type UserUpdateWithoutMessageReadsInput = {
   hotelFloor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isJury?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   activityRegistrations?: Prisma.ActivityRegistrationUpdateManyWithoutUserNestedInput
+  votes?: Prisma.VoteUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMessageReadsInput = {
@@ -652,8 +787,10 @@ export type UserUncheckedUpdateWithoutMessageReadsInput = {
   hotelFloor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isJury?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   activityRegistrations?: Prisma.ActivityRegistrationUncheckedUpdateManyWithoutUserNestedInput
+  votes?: Prisma.VoteUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutActivityRegistrationsInput = {
@@ -667,8 +804,10 @@ export type UserCreateWithoutActivityRegistrationsInput = {
   hotelFloor?: string | null
   doorCode?: string | null
   isAdmin?: boolean
+  isJury?: boolean
   createdAt?: Date | string
   messageReads?: Prisma.MessageReadCreateNestedManyWithoutUserInput
+  votes?: Prisma.VoteCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutActivityRegistrationsInput = {
@@ -683,8 +822,10 @@ export type UserUncheckedCreateWithoutActivityRegistrationsInput = {
   hotelFloor?: string | null
   doorCode?: string | null
   isAdmin?: boolean
+  isJury?: boolean
   createdAt?: Date | string
   messageReads?: Prisma.MessageReadUncheckedCreateNestedManyWithoutUserInput
+  votes?: Prisma.VoteUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutActivityRegistrationsInput = {
@@ -714,8 +855,10 @@ export type UserUpdateWithoutActivityRegistrationsInput = {
   hotelFloor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isJury?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   messageReads?: Prisma.MessageReadUpdateManyWithoutUserNestedInput
+  votes?: Prisma.VoteUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutActivityRegistrationsInput = {
@@ -730,8 +873,10 @@ export type UserUncheckedUpdateWithoutActivityRegistrationsInput = {
   hotelFloor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isJury?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   messageReads?: Prisma.MessageReadUncheckedUpdateManyWithoutUserNestedInput
+  votes?: Prisma.VoteUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -742,11 +887,13 @@ export type UserUncheckedUpdateWithoutActivityRegistrationsInput = {
 export type UserCountOutputType = {
   messageReads: number
   activityRegistrations: number
+  votes: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   messageReads?: boolean | UserCountOutputTypeCountMessageReadsArgs
   activityRegistrations?: boolean | UserCountOutputTypeCountActivityRegistrationsArgs
+  votes?: boolean | UserCountOutputTypeCountVotesArgs
 }
 
 /**
@@ -773,6 +920,13 @@ export type UserCountOutputTypeCountActivityRegistrationsArgs<ExtArgs extends ru
   where?: Prisma.ActivityRegistrationWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountVotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.VoteWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -786,9 +940,11 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   hotelFloor?: boolean
   doorCode?: boolean
   isAdmin?: boolean
+  isJury?: boolean
   createdAt?: boolean
   messageReads?: boolean | Prisma.User$messageReadsArgs<ExtArgs>
   activityRegistrations?: boolean | Prisma.User$activityRegistrationsArgs<ExtArgs>
+  votes?: boolean | Prisma.User$votesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -806,13 +962,15 @@ export type UserSelectScalar = {
   hotelFloor?: boolean
   doorCode?: boolean
   isAdmin?: boolean
+  isJury?: boolean
   createdAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "firstname" | "lastname" | "password" | "miage" | "ville" | "hotelRoom" | "hotelFloor" | "doorCode" | "isAdmin" | "createdAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "firstname" | "lastname" | "password" | "miage" | "ville" | "hotelRoom" | "hotelFloor" | "doorCode" | "isAdmin" | "isJury" | "createdAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   messageReads?: boolean | Prisma.User$messageReadsArgs<ExtArgs>
   activityRegistrations?: boolean | Prisma.User$activityRegistrationsArgs<ExtArgs>
+  votes?: boolean | Prisma.User$votesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -821,6 +979,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     messageReads: Prisma.$MessageReadPayload<ExtArgs>[]
     activityRegistrations: Prisma.$ActivityRegistrationPayload<ExtArgs>[]
+    votes: Prisma.$VotePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -834,6 +993,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     hotelFloor: string | null
     doorCode: string | null
     isAdmin: boolean
+    isJury: boolean
     createdAt: Date
   }, ExtArgs["result"]["user"]>
   composites: {}
@@ -1177,6 +1337,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   messageReads<T extends Prisma.User$messageReadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$messageReadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MessageReadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   activityRegistrations<T extends Prisma.User$activityRegistrationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$activityRegistrationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActivityRegistrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  votes<T extends Prisma.User$votesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$votesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1217,6 +1378,7 @@ export interface UserFieldRefs {
   readonly hotelFloor: Prisma.FieldRef<"User", 'String'>
   readonly doorCode: Prisma.FieldRef<"User", 'String'>
   readonly isAdmin: Prisma.FieldRef<"User", 'Boolean'>
+  readonly isJury: Prisma.FieldRef<"User", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
 }
     
@@ -1606,6 +1768,30 @@ export type User$activityRegistrationsArgs<ExtArgs extends runtime.Types.Extensi
   take?: number
   skip?: number
   distinct?: Prisma.ActivityRegistrationScalarFieldEnum | Prisma.ActivityRegistrationScalarFieldEnum[]
+}
+
+/**
+ * User.votes
+ */
+export type User$votesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Vote
+   */
+  select?: Prisma.VoteSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Vote
+   */
+  omit?: Prisma.VoteOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.VoteInclude<ExtArgs> | null
+  where?: Prisma.VoteWhereInput
+  orderBy?: Prisma.VoteOrderByWithRelationInput | Prisma.VoteOrderByWithRelationInput[]
+  cursor?: Prisma.VoteWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.VoteScalarFieldEnum | Prisma.VoteScalarFieldEnum[]
 }
 
 /**

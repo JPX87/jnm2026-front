@@ -16,6 +16,7 @@ type User = {
     hotelFloor: string | null;
     doorCode: string | null;
     isAdmin: boolean;
+    isJury: boolean;
     createdAt: string;
 };
 
@@ -30,6 +31,7 @@ type UserFormData = {
     hotelFloor: string;
     doorCode: string;
     isAdmin: boolean;
+    isJury: boolean;
 };
 
 type ImportResult = {
@@ -45,7 +47,7 @@ type UpdateResult = {
 
 const emptyForm: UserFormData = {
     email: '', password: '', firstname: '', lastname: '',
-    miage: '', ville: '', hotelRoom: '', hotelFloor: '', doorCode: '', isAdmin: false,
+    miage: '', ville: '', hotelRoom: '', hotelFloor: '', doorCode: '', isAdmin: false, isJury: false,
 };
 
 export default function AdminPage() {
@@ -65,9 +67,14 @@ export default function AdminPage() {
     const updateFileInputRef = useRef<HTMLInputElement>(null);
     const [mounted, setMounted] = useState(false);
     const [loginEnabled, setLoginEnabled] = useState(true);
+    const [voteVideoOpen, setVoteVideoOpen] = useState(false);
+    const [voteRugbyOpen, setVoteRugbyOpen] = useState(false);
+    const [resultsVideoVisible, setResultsVideoVisible] = useState(false);
+    const [resultsRugbyVisible, setResultsRugbyVisible] = useState(false);
     const [settingsLoading, setSettingsLoading] = useState(true);
     const [settingsError, setSettingsError] = useState('');
     const [settingsSaved, setSettingsSaved] = useState(false);
+    const [confirmReveal, setConfirmReveal] = useState<{ key: string; setter: (v: boolean) => void } | null>(null);
 
     // Email de bienvenue – création unique
     const [modalStep, setModalStep] = useState<'form' | 'email-confirm'>('form');
@@ -88,30 +95,58 @@ export default function AdminPage() {
             .then(data => {
                 if (data.error) throw new Error(data.error);
                 setLoginEnabled(data.loginEnabled === 'true');
+                setVoteVideoOpen(data.voteVideoOpen === 'true');
+                setVoteRugbyOpen(data.voteRugbyOpen === 'true');
+                setResultsVideoVisible(data.resultsVideoVisible === 'true');
+                setResultsRugbyVisible(data.resultsRugbyVisible === 'true');
             })
             .catch(() => setSettingsError('Impossible de charger les paramètres'))
             .finally(() => setSettingsLoading(false));
     }, []);
 
-    const toggleLogin = async () => {
-        const prev = loginEnabled;
-        const next = !loginEnabled;
-        setLoginEnabled(next);
+    const toggleSetting = async (
+        key: string,
+        current: boolean,
+        setter: (v: boolean) => void,
+    ) => {
+        const next = !current;
+        setter(next);
         setSettingsError('');
         setSettingsSaved(false);
         try {
             const res = await apiFetch('/api/admin/settings', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ key: 'loginEnabled', value: String(next) }),
+                body: JSON.stringify({ key, value: String(next) }),
             });
             if (!res.ok) throw new Error();
             setSettingsSaved(true);
             setTimeout(() => setSettingsSaved(false), 2000);
         } catch {
-            setLoginEnabled(prev);
+            setter(current);
             setSettingsError('Erreur lors de la sauvegarde');
         }
+    };
+
+    const toggleLogin = () => toggleSetting('loginEnabled', loginEnabled, setLoginEnabled);
+
+    // Pour les résultats : demande confirmation avant d'activer (mais pas avant de désactiver)
+    const handleRevealToggle = (key: string, current: boolean, setter: (v: boolean) => void) => {
+        if (!current) {
+            // On va activer → demander confirmation
+            setConfirmReveal({ key, setter });
+        } else {
+            // On va désactiver → direct
+            toggleSetting(key, current, setter);
+        }
+    };
+
+    const confirmAndReveal = async () => {
+        if (!confirmReveal) return;
+        const { key, setter } = confirmReveal;
+        setConfirmReveal(null);
+        const current = key === 'resultsVideoVisible' ? resultsVideoVisible : resultsRugbyVisible;
+        await toggleSetting(key, current, setter);
     };
 
     const fetchUsers = useCallback(async () => {
@@ -140,6 +175,7 @@ export default function AdminPage() {
             hotelRoom: user.hotelRoom, hotelFloor: user.hotelFloor ?? '',
             doorCode: user.doorCode ?? '',
             isAdmin: user.isAdmin,
+            isJury: user.isJury,
         });
         setError('');
         setShowModal(true);
@@ -286,6 +322,7 @@ export default function AdminPage() {
     };
 
     const adminCount = users.filter(u => u.isAdmin).length;
+    const juryCount = users.filter(u => u.isJury).length;
 
     return (
         <div className="max-w-7xl mx-auto px-4 sm:px-0">
@@ -301,33 +338,50 @@ export default function AdminPage() {
                     </div>
                     <h2 className="text-lg font-bold text-gray-800">Paramètres</h2>
                 </div>
-                <div className="flex items-center justify-between gap-4 pt-4 border-t border-[#ff89b8]/15">
-                    <div>
-                        <p className="text-gray-800 font-semibold text-sm">Bouton de connexion</p>
-                        <p className="text-gray-500 text-xs mt-0.5">Affiche ou masque le bouton &quot;Se connecter&quot; sur la page d&apos;accueil publique</p>
-                        {settingsError && <p className="text-red-500 text-xs mt-1 font-medium">{settingsError}</p>}
-                        {settingsSaved && <p className="text-green-600 text-xs mt-1 font-medium">Sauvegardé</p>}
-                    </div>
-                    <div className="flex items-center gap-2 flex-shrink-0">
-                        <span className={`text-xs font-semibold ${settingsLoading ? 'text-gray-400' : loginEnabled ? 'text-green-600' : 'text-gray-400'}`}>
-                            {settingsLoading ? 'Chargement...' : loginEnabled ? 'Activé' : 'Désactivé'}
-                        </span>
-                        <button
-                            onClick={toggleLogin}
-                            disabled={settingsLoading}
-                            className="relative flex-shrink-0 disabled:opacity-50"
-                            aria-label="Activer/désactiver le bouton de connexion"
-                        >
-                            <div className={`w-12 h-6 rounded-full transition-colors duration-300 ${loginEnabled ? 'bg-gradient-to-r from-[#ff89b8] to-[#ef6a9f]' : 'bg-gray-200'}`}>
-                                <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-300 ${loginEnabled ? 'translate-x-6' : 'translate-x-0'}`} />
+                {settingsError && <p className="text-red-500 text-xs mb-3 font-medium">{settingsError}</p>}
+                {settingsSaved && <p className="text-green-600 text-xs mb-3 font-medium">Sauvegardé</p>}
+
+                <div className="space-y-0 divide-y divide-[#ff89b8]/10 pt-2 border-t border-[#ff89b8]/15">
+                    {([
+                        { key: 'loginEnabled', label: 'Bouton de connexion', desc: 'Affiche ou masque le bouton "Se connecter" sur la page publique', value: loginEnabled, setter: setLoginEnabled, color: 'pink', onLabel: 'Ouvert', offLabel: 'Fermé', reveal: false },
+                        { key: 'voteVideoOpen', label: '🎬 Vote Concours Vidéo', desc: 'Ouvre ou ferme le vote participants pour le concours vidéo', value: voteVideoOpen, setter: setVoteVideoOpen, color: 'purple', onLabel: 'Ouvert', offLabel: 'Fermé', reveal: false },
+                        { key: 'voteRugbyOpen', label: '🏉 Vote Ballons de Rugby', desc: 'Ouvre ou ferme le vote participants pour le concours rugby', value: voteRugbyOpen, setter: setVoteRugbyOpen, color: 'purple', onLabel: 'Ouvert', offLabel: 'Fermé', reveal: false },
+                        { key: 'resultsVideoVisible', label: '🎬 Résultats Vidéo', desc: 'Rend visibles les classements du concours vidéo pour tous les participants', value: resultsVideoVisible, setter: setResultsVideoVisible, color: 'amber', onLabel: 'Visible', offLabel: 'Masqué', reveal: true },
+                        { key: 'resultsRugbyVisible', label: '🏉 Résultats Rugby', desc: 'Rend visibles les classements du concours rugby pour tous les participants', value: resultsRugbyVisible, setter: setResultsRugbyVisible, color: 'amber', onLabel: 'Visible', offLabel: 'Masqué', reveal: true },
+                    ] as const).map(({ key, label, desc, value, setter, color, onLabel, offLabel, reveal }) => (
+                        <div key={key} className="flex items-center justify-between gap-4 py-3.5">
+                            <div>
+                                <p className="text-gray-800 font-semibold text-sm">{label}</p>
+                                <p className="text-gray-500 text-xs mt-0.5">{desc}</p>
                             </div>
-                        </button>
-                    </div>
+                            <div className="flex items-center gap-2 flex-shrink-0">
+                                <span className={`text-xs font-semibold ${settingsLoading ? 'text-gray-400' : value ? 'text-green-600' : 'text-gray-400'}`}>
+                                    {settingsLoading ? '...' : value ? onLabel : offLabel}
+                                </span>
+                                <button
+                                    onClick={() => reveal
+                                        ? handleRevealToggle(key, value, setter as (v: boolean) => void)
+                                        : toggleSetting(key, value, setter as (v: boolean) => void)
+                                    }
+                                    disabled={settingsLoading}
+                                    className="relative flex-shrink-0 disabled:opacity-50"
+                                >
+                                    <div className={`w-12 h-6 rounded-full transition-colors duration-300 ${value
+                                        ? color === 'purple' ? 'bg-gradient-to-r from-purple-400 to-purple-600'
+                                        : color === 'amber' ? 'bg-gradient-to-r from-amber-400 to-orange-500'
+                                        : 'bg-gradient-to-r from-[#ff89b8] to-[#ef6a9f]'
+                                        : 'bg-gray-200'}`}>
+                                        <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-300 ${value ? 'translate-x-6' : 'translate-x-0'}`} />
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
 
             {/* Accès rapide */}
-            <div className="mb-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="mb-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <Link
                     href="/app/admin/ateliers"
                     className="card-shadow glass-effect rounded-2xl border border-[#ff89b8]/20 p-5 flex items-center gap-4 hover:border-[#ff89b8]/50 hover:scale-[1.02] transition-all duration-200 group"
@@ -345,6 +399,44 @@ export default function AdminPage() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                 </Link>
+
+                <Link
+                    href="/app/admin/miages"
+                    className="card-shadow glass-effect rounded-2xl border border-[#ff89b8]/20 p-5 flex items-center gap-4 hover:border-[#ff89b8]/50 hover:scale-[1.02] transition-all duration-200 group"
+                >
+                    <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#ff89b8] to-[#ef6a9f] flex items-center justify-center flex-shrink-0 shadow-md group-hover:shadow-lg transition-shadow">
+                        <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                        <p className="text-gray-800 font-bold text-sm">Groupes MIAGE</p>
+                        <p className="text-gray-500 text-xs mt-0.5">Configurer les villes qui participent aux concours</p>
+                    </div>
+                    <svg className="w-4 h-4 text-gray-400 group-hover:text-[#ef6a9f] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                </Link>
+
+                <a
+                    href="/api/admin/votes/export"
+                    download
+                    className="card-shadow glass-effect rounded-2xl border border-purple-300/30 p-5 flex items-center gap-4 hover:border-purple-400/50 hover:scale-[1.02] transition-all duration-200 group"
+                >
+                    <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center flex-shrink-0 shadow-md group-hover:shadow-lg transition-shadow">
+                        <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                        <p className="text-gray-800 font-bold text-sm">Export des votes</p>
+                        <p className="text-gray-500 text-xs mt-0.5">Télécharger tous les votes + résultats calculés (.xlsx)</p>
+                    </div>
+                    <svg className="w-4 h-4 text-gray-400 group-hover:text-purple-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                </a>
             </div>
 
             {/* En-tête gestion utilisateurs */}
@@ -547,7 +639,7 @@ export default function AdminPage() {
             )}
 
             {/* Stats */}
-            <div className="grid grid-cols-2 gap-4 mb-6">
+            <div className="grid grid-cols-3 gap-4 mb-6">
                 <div className="card-shadow glass-effect rounded-2xl border border-[#ff89b8]/20 p-4 sm:p-6 text-center animate-fade-in">
                     <p className="text-gray-500 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-1">Total</p>
                     <p className="text-[#ef6a9f] text-4xl sm:text-5xl font-extrabold">{users.length}</p>
@@ -555,6 +647,10 @@ export default function AdminPage() {
                 <div className="card-shadow glass-effect rounded-2xl border border-[#ff89b8]/20 p-4 sm:p-6 text-center animate-fade-in">
                     <p className="text-gray-500 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-1">Admins</p>
                     <p className="text-[#ef6a9f] text-4xl sm:text-5xl font-extrabold">{adminCount}</p>
+                </div>
+                <div className="card-shadow glass-effect rounded-2xl border border-[#ff89b8]/20 p-4 sm:p-6 text-center animate-fade-in">
+                    <p className="text-gray-500 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-1">Jury</p>
+                    <p className="text-purple-500 text-4xl sm:text-5xl font-extrabold">{juryCount}</p>
                 </div>
             </div>
 
@@ -637,6 +733,46 @@ export default function AdminPage() {
                     </div>
                 )}
             </div>
+
+            {/* Modale de confirmation dévoilement résultats */}
+            {confirmReveal && mounted && createPortal(
+                <div className="fixed inset-0 flex items-center justify-center p-4" style={{ zIndex: 10001 }}>
+                    <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setConfirmReveal(null)} />
+                    <div className="relative glass-effect border border-amber-300/40 rounded-3xl shadow-2xl w-full max-w-md animate-fade-in">
+                        <div className="p-7 text-center">
+                            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center mx-auto mb-5 shadow-lg">
+                                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                            </div>
+                            <h3 className="text-xl font-bold text-gray-800 mb-3">Dévoiler les résultats ?</h3>
+                            <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 mb-6 text-left">
+                                <p className="text-amber-800 text-sm font-semibold mb-1">⚠️ Attention</p>
+                                <p className="text-amber-700 text-sm leading-relaxed">
+                                    Ces données seront présentées durant le gala. Une fois les résultats visibles, tous les participants pourront les consulter immédiatement.
+                                </p>
+                            </div>
+                            <p className="text-gray-500 text-sm mb-6">Êtes-vous sûr de vouloir rendre les classements publics maintenant ?</p>
+                            <div className="flex gap-3">
+                                <button
+                                    onClick={() => setConfirmReveal(null)}
+                                    className="flex-1 py-3 rounded-2xl border border-gray-200 text-gray-600 font-semibold hover:bg-gray-50 transition-all text-sm"
+                                >
+                                    Annuler
+                                </button>
+                                <button
+                                    onClick={confirmAndReveal}
+                                    className="flex-1 py-3 rounded-2xl bg-gradient-to-r from-amber-400 to-orange-500 text-white font-bold shadow-lg hover:shadow-xl hover:scale-105 transition-all text-sm"
+                                >
+                                    Oui, dévoiler
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>,
+                document.body
+            )}
 
             {/* Modal */}
             {showModal && mounted && createPortal(
@@ -732,6 +868,15 @@ export default function AdminPage() {
                                         </div>
                                     </div>
                                     <span className="text-gray-700 font-medium text-sm">Administrateur</span>
+                                </label>
+                                <label className="flex items-center gap-3 cursor-pointer">
+                                    <div className="relative">
+                                        <input type="checkbox" className="sr-only" checked={form.isJury} onChange={e => setForm(f => ({ ...f, isJury: e.target.checked }))} />
+                                        <div className={`w-11 h-6 rounded-full transition-colors duration-300 ${form.isJury ? 'bg-gradient-to-r from-purple-400 to-purple-600' : 'bg-gray-200'}`}>
+                                            <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-300 ${form.isJury ? 'translate-x-5' : 'translate-x-0'}`} />
+                                        </div>
+                                    </div>
+                                    <span className="text-gray-700 font-medium text-sm">Membre du jury ✨</span>
                                 </label>
 
                                 <div className="flex gap-3 pt-2">
