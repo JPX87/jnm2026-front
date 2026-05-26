@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import AppProgramme from '@/components/ui/Programme/AppProgramme';
 
 export default function ProgrammePage() {

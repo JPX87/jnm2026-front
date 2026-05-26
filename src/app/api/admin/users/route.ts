@@ -33,7 +33,8 @@ export async function GET() {
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const { email, password, firstname, lastname, miage, ville, hotelRoom, hotelFloor, doorCode, isAdmin, isJury } = body;
+        const { email: rawEmail, password, firstname, lastname, miage, ville, hotelRoom, hotelFloor, doorCode, isAdmin, isJury } = body;
+        const email = (rawEmail ?? '').trim().toLowerCase();
 
         if (!email || !password) {
             return NextResponse.json({ error: 'Email et mot de passe requis' }, { status: 400 });

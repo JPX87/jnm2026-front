@@ -31,14 +31,37 @@ const nextConfig: NextConfig = {
   // Headers pour SEO et performance
   async headers() {
     return [
+      // Routes API et pages app — jamais de cache
+      {
+        source: '/api/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-store, no-cache, must-revalidate',
+          },
+        ],
+      },
+      {
+        source: '/app/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-store, no-cache, must-revalidate',
+          },
+        ],
+      },
+      {
+        source: '/login',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-store, no-cache, must-revalidate',
+          },
+        ],
+      },
       {
         source: '/:path*',
         headers: [
-          // Cache headers pour les assets statiques
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable'
-          },
           // Headers de sécurité (SEO friendly)
           {
             key: 'X-Content-Type-Options',

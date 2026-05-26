@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { prisma } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
@@ -6,7 +8,12 @@ import { createToken } from '@/lib/auth';
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const { email, password } = body;
+        const { email: rawEmail, password } = body;
+        const email = (rawEmail ?? '').trim().toLowerCase();
+
+        if (!email || !password) {
+            return NextResponse.json({ error: 'Email et mot de passe requis' }, { status: 400 });
+        }
 
         const user = await prisma.user.findUnique({
             where: { email },
