@@ -13,14 +13,17 @@ const createPrismaClient = () => {
         user: process.env.DB_USER,
         password: process.env.DB_PASSWORD,
         database: process.env.DB_NAME,
-        connectionLimit: 5,
+        connectionLimit: 10,
+        idleTimeout: 60000,
+        connectTimeout: 10000,
     });
 
     return new PrismaClient({ adapter });
 };
 
-export const prisma = globalForPrisma.prisma ?? createPrismaClient();
-
-if (process.env.NODE_ENV !== 'production') {
-    globalForPrisma.prisma = prisma;
+// Toujours sauvegarder le singleton (dev ET production)
+if (!globalForPrisma.prisma) {
+    globalForPrisma.prisma = createPrismaClient();
 }
+
+export const prisma = globalForPrisma.prisma;
