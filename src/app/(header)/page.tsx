@@ -17,7 +17,7 @@ import Link from "next/link";
 import { prisma } from '@/lib/prisma';
 import { unstable_noStore as noStore } from 'next/cache';
 
-const dateJNM = "2026-05-26T15:30:00";
+const dateJNM = "2026-05-26T13:30:00";
 
 // SEO Metadata pour la page d'accueil
 export const metadata: Metadata = generateSeoMetadata({
