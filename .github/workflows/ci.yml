@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: ['**']
+    branches: ["**"]
   pull_request:
     branches: [main]
 
@@ -59,9 +59,9 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
-# ──────────────────────────────────────────────
-# 3. Build
-# ──────────────────────────────────────────────
+  # ──────────────────────────────────────────────
+  # 3. Build
+  # ──────────────────────────────────────────────
   build:
     name: 🏗️ Build
     runs-on: ubuntu-latest
