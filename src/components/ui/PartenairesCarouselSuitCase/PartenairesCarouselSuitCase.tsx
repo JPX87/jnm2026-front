@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-//import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 
 const partners = [
@@ -11,8 +11,8 @@ const partners = [
   { src: "/img/partenaires/cgi.jpg", alt: "CGI", tier: 1, maxW: "48%", maxH: "36%", backColor: "#fff" },
   { src: "/img/partenaires/extia.png", alt: "Extia", tier: 1, maxW: "48%", maxH: "36%" },
   { src: "/img/partenaires/orange.jpg", alt: "Orange", tier: 1 },
-  { src: "/img/partenaires/pap.png", alt: "ProApro", tier: 2, maxW: "48%", maxH: "36%" },
-  { src: "/img/partenaires/pwc.png", alt: "PwC", tier: 2, maxW: "48%", maxH: "36%" },
+  { src: "/img/partenaires/pap.png", alt: "ProApro", tier: 2, maxW: "45%", maxH: "56%" },
+  { src: "/img/partenaires/pwc.png", alt: "PwC", tier: 2, maxW: "58%", maxH: "56%" },
   { src: "/img/partenaires/AbsysCyborg.png", alt: "AbsysCyborg", tier: 3 },
   { src: "/img/partenaires/agirc-arrco.jpg", alt: "Agirc-Arrco", tier: 3, backColor: "#fff" },
   { src: "/img/partenaires/UT.png", alt: "Université de Toulouse", tier: 4, backColor: "#fff" },
@@ -29,8 +29,6 @@ const tierConfig = [
 ];
 
 const GAP = 40;
-const BG_DARK = "#111111";
-const BG_WHITE = "#fff8f3";
 
 const ROLLER_R = 11;
 const LATTE_PITCH = 28;
@@ -204,7 +202,7 @@ function BeltStrip({ offsetRef }: { offsetRef: React.RefObject<number> }) {
 export default function PartenairesCarouselSuitCase() {
   const doubled = [...partners, ...partners];
 
-  //const router = useRouter();
+  const router = useRouter();
   const trackRef = useRef<HTMLDivElement>(null);
   const offsetRef = useRef(0);
   const isDragging = useRef(false);
@@ -258,11 +256,11 @@ export default function PartenairesCarouselSuitCase() {
   };
 
   const onPointerUp = (e: React.PointerEvent) => {
-    //const moved = Math.abs(e.clientX - startX.current);
+    const moved = Math.abs(e.clientX - startX.current);
     isDragging.current = false;
     coastVel.current = -dragVel.current;
     // clic simple (pas un drag) → redirection
-    // if (moved < 6) router.push("/partenaires"); --> Désactiver le temps de mettre la page online ^^
+    if (moved < 6) router.push("/partenaires");
   };
 
   return (
