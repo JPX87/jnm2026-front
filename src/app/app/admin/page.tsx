@@ -90,6 +90,10 @@ export default function AdminPage() {
     const [emailProgress, setEmailProgress] = useState<{ sent: number; total: number; errors: string[] } | null>(null);
     const [sendingImportEmails, setSendingImportEmails] = useState(false);
 
+    // Renvoi email individuel
+    const [resendingEmail, setResendingEmail] = useState<number | null>(null);
+    const [resendSuccess, setResendSuccess] = useState<number | null>(null);
+
     useEffect(() => { setMounted(true); }, []);
 
     useEffect(() => {
@@ -303,6 +307,22 @@ export default function AdminPage() {
             await fetchUsers();
         } catch {
             setError('Erreur lors de la suppression');
+        }
+    };
+
+    const handleResendWelcome = async (id: number) => {
+        setResendingEmail(id);
+        setResendSuccess(null);
+        try {
+            const res = await apiFetch(`/api/admin/users/${id}/resend-welcome`, { method: 'POST' });
+            if (res.ok) {
+                setResendSuccess(id);
+                setTimeout(() => setResendSuccess(null), 3000);
+            }
+        } catch {
+            // silencieux
+        } finally {
+            setResendingEmail(null);
         }
     };
 
@@ -781,6 +801,24 @@ export default function AdminPage() {
                                                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                                         </svg>
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handleResendWelcome(user.id)}
+                                                        disabled={resendingEmail === user.id}
+                                                        className={`p-2 rounded-lg transition-all ${resendSuccess === user.id ? 'text-green-500 bg-green-50' : 'text-gray-400 hover:text-blue-500 hover:bg-blue-50'} disabled:opacity-50`}
+                                                        title="Renvoyer email de bienvenue (nouveau mot de passe)"
+                                                    >
+                                                        {resendingEmail === user.id ? (
+                                                            <div className="w-4 h-4 border-2 border-blue-300 border-t-blue-500 rounded-full animate-spin" />
+                                                        ) : resendSuccess === user.id ? (
+                                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                                            </svg>
+                                                        ) : (
+                                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                                            </svg>
+                                                        )}
                                                     </button>
                                                     <button onClick={() => setDeleteConfirm(user.id)} className="p-2 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 transition-all" title="Supprimer">
                                                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
