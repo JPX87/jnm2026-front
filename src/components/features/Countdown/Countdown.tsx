@@ -113,7 +113,7 @@ export default function Countdown({ targetDate, className }: CountdownProps) {
         <TimeSection label="SECONDES" value={timeRemaining.seconds} maxDigits={2} />
       </div>
       <button
-        className={`absolute z-9 ${isFinished ? '-bottom-22' : 'bottom-0'} bg-[#ff89b8] text-white text-5xl font-bold py-4 px-6 border-2 border-white rounded-lg cursor-pointer hover:scale-105 transition-all`}
+        className={`absolute z-9 ${isFinished ? '-bottom-15 md:-bottom-22 opacity-100' : 'bottom-0 opacity-0'} bg-[#ff89b8] text-white text-3xl md:text-5xl font-bold py-4 px-6 border-2 border-white rounded-lg cursor-pointer hover:scale-105 transition-all`}
         onClick={goToLogin}
         disabled={!isFinished}>
         J'embarque !
