@@ -53,6 +53,9 @@ const emptyForm: UserFormData = {
 export default function AdminPage() {
     const [users, setUsers] = useState<User[]>([]);
     const [loading, setLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [searchQuery, setSearchQuery] = useState('');
+    const PAGE_SIZE = 10;
     const [showModal, setShowModal] = useState(false);
     const [editingUser, setEditingUser] = useState<User | null>(null);
     const [form, setForm] = useState<UserFormData>(emptyForm);
@@ -152,9 +155,10 @@ export default function AdminPage() {
     const fetchUsers = useCallback(async () => {
         setLoading(true);
         try {
-            const res = await apiFetch('/api/admin/users');
+            const res = await apiFetch(`/api/admin/users?t=${Date.now()}`);
             const data = await res.json();
             setUsers(data);
+            setCurrentPage(1);
         } catch {
             setError('Impossible de charger les utilisateurs');
         } finally {
@@ -329,6 +333,23 @@ export default function AdminPage() {
 
     const adminCount = users.filter(u => u.isAdmin).length;
     const juryCount = users.filter(u => u.isJury).length;
+
+    const filteredUsers = searchQuery.trim()
+        ? users.filter(u => {
+            const q = searchQuery.toLowerCase();
+            const fullName = `${u.firstname ?? ''} ${u.lastname ?? ''}`.toLowerCase();
+            return (
+                fullName.includes(q) ||
+                u.email.toLowerCase().includes(q) ||
+                (u.ville ?? '').toLowerCase().includes(q) ||
+                (u.miage ?? '').toLowerCase().includes(q) ||
+                (u.hotelRoom ?? '').toLowerCase().includes(q)
+            );
+        })
+        : users;
+
+    const totalPages = Math.ceil(filteredUsers.length / PAGE_SIZE);
+    const paginatedUsers = filteredUsers.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
 
     return (
         <div className="max-w-7xl mx-auto px-4 sm:px-0">
@@ -525,6 +546,43 @@ export default function AdminPage() {
                 </div>
             </div>
 
+            {/* Barre de recherche */}
+            <div className="mb-6 flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
+                <div className="relative flex-1">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <svg className="w-4 h-4 text-[#ef6a9f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                    <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
+                        placeholder="Rechercher par nom, email, ville, MIAGE, chambre..."
+                        className="w-full pl-11 pr-10 py-3 bg-white/80 backdrop-blur-sm border border-[#ff89b8]/30 rounded-2xl text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#ef6a9f]/40 focus:border-[#ef6a9f] transition-all duration-200 text-sm shadow-sm"
+                    />
+                    {searchQuery && (
+                        <button
+                            onClick={() => { setSearchQuery(''); setCurrentPage(1); }}
+                            className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-[#ef6a9f] transition-colors"
+                        >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    )}
+                </div>
+                <div className="flex items-center gap-2 text-sm text-white/70 whitespace-nowrap px-1">
+                    {searchQuery ? (
+                        <span>
+                            <span className="font-semibold text-white">{filteredUsers.length}</span> résultat{filteredUsers.length !== 1 ? 's' : ''} sur {users.length}
+                        </span>
+                    ) : (
+                        <span><span className="font-semibold text-white">{users.length}</span> utilisateur{users.length !== 1 ? 's' : ''}</span>
+                    )}
+                </div>
+            </div>
+
             {/* Résultat import */}
             {importResult && (
                 <div className="mb-6 card-shadow glass-effect rounded-2xl border border-[#ff89b8]/20 p-5 animate-fade-in">
@@ -688,7 +746,7 @@ export default function AdminPage() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {users.map((user, i) => (
+                                {paginatedUsers.map((user, i) => (
                                     <tr key={user.id} className="border-b border-[#ff89b8]/10 hover:bg-[#fff0f6]/60 transition-colors duration-150" style={{ animationDelay: `${Math.min(i * 0.05, 0.5)}s` }}>
                                         <td className="px-4 sm:px-6 py-4">
                                             <div className="flex items-center gap-3">
@@ -736,6 +794,84 @@ export default function AdminPage() {
                                 ))}
                             </tbody>
                         </table>
+                    </div>
+                )}
+
+                {/* Pagination */}
+                {!loading && totalPages > 1 && (
+                    <div className="flex items-center justify-between px-4 sm:px-6 py-4 border-t border-[#ff89b8]/10 bg-[#fff8fb]">
+                        <p className="text-xs text-gray-500 font-medium">
+                            {(currentPage - 1) * PAGE_SIZE + 1}–{Math.min(currentPage * PAGE_SIZE, users.length)} sur <span className="font-bold text-[#ef6a9f]">{users.length}</span> utilisateurs
+                        </p>
+                        <div className="flex items-center gap-1">
+                            <button
+                                onClick={() => setCurrentPage(1)}
+                                disabled={currentPage === 1}
+                                className="p-1.5 rounded-lg text-gray-400 hover:text-[#ef6a9f] hover:bg-[#ff89b8]/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                                title="Première page"
+                            >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7M19 19l-7-7 7-7" />
+                                </svg>
+                            </button>
+                            <button
+                                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                                disabled={currentPage === 1}
+                                className="p-1.5 rounded-lg text-gray-400 hover:text-[#ef6a9f] hover:bg-[#ff89b8]/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                                title="Page précédente"
+                            >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                </svg>
+                            </button>
+
+                            {Array.from({ length: totalPages }, (_, i) => i + 1)
+                                .filter(p => p === 1 || p === totalPages || Math.abs(p - currentPage) <= 1)
+                                .reduce<(number | '...')[]>((acc, p, idx, arr) => {
+                                    if (idx > 0 && p - (arr[idx - 1] as number) > 1) acc.push('...');
+                                    acc.push(p);
+                                    return acc;
+                                }, [])
+                                .map((item, idx) =>
+                                    item === '...' ? (
+                                        <span key={`dots-${idx}`} className="px-1 text-gray-400 text-sm">…</span>
+                                    ) : (
+                                        <button
+                                            key={item}
+                                            onClick={() => setCurrentPage(item as number)}
+                                            className={`min-w-[32px] h-8 px-2 rounded-lg text-sm font-semibold transition-all ${
+                                                currentPage === item
+                                                    ? 'bg-gradient-to-r from-[#ff89b8] to-[#ef6a9f] text-white shadow-md'
+                                                    : 'text-gray-500 hover:text-[#ef6a9f] hover:bg-[#ff89b8]/10'
+                                            }`}
+                                        >
+                                            {item}
+                                        </button>
+                                    )
+                                )
+                            }
+
+                            <button
+                                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                                disabled={currentPage === totalPages}
+                                className="p-1.5 rounded-lg text-gray-400 hover:text-[#ef6a9f] hover:bg-[#ff89b8]/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                                title="Page suivante"
+                            >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                </svg>
+                            </button>
+                            <button
+                                onClick={() => setCurrentPage(totalPages)}
+                                disabled={currentPage === totalPages}
+                                className="p-1.5 rounded-lg text-gray-400 hover:text-[#ef6a9f] hover:bg-[#ff89b8]/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                                title="Dernière page"
+                            >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                 )}
             </div>

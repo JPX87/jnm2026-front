@@ -46,30 +46,11 @@ services:
 
   # ── Application Next.js ───────────────────────────────────────────────────
   jnm-front:
-    container_name: jnm2026-front-container
     build:
       context: .
       dockerfile: dockerfile
     expose:
       - "3000"
-    labels:
-      - "traefik.enable=true"
-      
-      # Configuration HTTP (Redirection vers HTTPS)
-      - "traefik.http.routers.monapp-http.entrypoints=http"
-      - "traefik.http.routers.monapp-http.middlewares=redirect-to-https"
-      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
-      # Coolify variable for domain:
-      - "traefik.http.routers.monapp-http.rule=Host(`${SERVICE_FQDN_JNM_FRONT}`)"
-      
-      # Configuration HTTPS (Avec Let's Encrypt)
-      - "traefik.http.routers.monapp-https.entrypoints=https"
-      - "traefik.http.routers.monapp-https.tls=true"
-      - "traefik.http.routers.monapp-https.tls.certresolver=letsencrypt"
-      - "traefik.http.services.monapp-https.loadbalancer.server.port=3000"
-
-      # Coolify variable for domain:
-      - "traefik.http.routers.monapp-https.rule=Host(`${SERVICE_FQDN_JNM_FRONT}`)"
     environment:
       - NODE_ENV=production
       - DB_HOST=mariadb
@@ -95,6 +76,21 @@ services:
     networks:
       - jnm-network
     deploy:
+      labels:
+        - "traefik.enable=true"
+
+        # Configuration HTTP (Redirection vers HTTPS)
+        - "traefik.http.routers.jnm-front-${APP_ENV}-http.entrypoints=http"
+        - "traefik.http.routers.jnm-front-${APP_ENV}-http.middlewares=redirect-to-https-${APP_ENV}"
+        - "traefik.http.middlewares.redirect-to-https-${APP_ENV}.redirectscheme.scheme=https"
+        - "traefik.http.routers.jnm-front-${APP_ENV}-http.rule=Host(`${SERVICE_FQDN_JNM_FRONT}`)"
+
+        # Configuration HTTPS (Avec Let's Encrypt)
+        - "traefik.http.routers.jnm-front-${APP_ENV}-https.entrypoints=https"
+        - "traefik.http.routers.jnm-front-${APP_ENV}-https.tls=true"
+        - "traefik.http.routers.jnm-front-${APP_ENV}-https.tls.certresolver=letsencrypt"
+        - "traefik.http.services.jnm-front-${APP_ENV}-https.loadbalancer.server.port=3000"
+        - "traefik.http.routers.jnm-front-${APP_ENV}-https.rule=Host(`${SERVICE_FQDN_JNM_FRONT}`)"
       resources:
         limits:
           cpus: '2'
