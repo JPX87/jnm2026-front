@@ -36,7 +36,7 @@ export async function POST(request: Request) {
             const row = rows[i];
             const rowNum = i + 2;
 
-            const email = String(row['email'] ?? '').trim();
+            const email = String(row['email'] ?? '').trim().toLowerCase();
             const password = String(row['password'] ?? '').trim();
 
             if (!email) {

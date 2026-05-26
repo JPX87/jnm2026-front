@@ -272,15 +272,21 @@ export default function AdminPage() {
         setEmailProgress({ sent: 0, total: pendingImportEmails.length, errors: [] });
         for (const user of pendingImportEmails) {
             try {
-                await fetch(`/api/admin/users/${user.id}/send-welcome`, {
+                const res = await fetch(`/api/admin/users/${user.id}/send-welcome`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ password: user.password }),
                 });
-                setEmailProgress(prev => prev ? { ...prev, sent: prev.sent + 1 } : prev);
+                if (res.ok) {
+                    setEmailProgress(prev => prev ? { ...prev, sent: prev.sent + 1 } : prev);
+                } else {
+                    setEmailProgress(prev => prev ? { ...prev, sent: prev.sent + 1, errors: [...prev.errors, user.email] } : prev);
+                }
             } catch {
                 setEmailProgress(prev => prev ? { ...prev, sent: prev.sent + 1, errors: [...prev.errors, user.email] } : prev);
             }
+            // Délai entre chaque envoi pour éviter le throttling SMTP (Gmail)
+            await new Promise(resolve => setTimeout(resolve, 500));
         }
         setSendingImportEmails(false);
         setPendingImportEmails([]);
@@ -683,7 +689,7 @@ export default function AdminPage() {
                             </thead>
                             <tbody>
                                 {users.map((user, i) => (
-                                    <tr key={user.id} className="border-b border-[#ff89b8]/10 hover:bg-[#fff0f6]/60 transition-colors duration-150" style={{ animationDelay: `${i * 0.05}s` }}>
+                                    <tr key={user.id} className="border-b border-[#ff89b8]/10 hover:bg-[#fff0f6]/60 transition-colors duration-150" style={{ animationDelay: `${Math.min(i * 0.05, 0.5)}s` }}>
                                         <td className="px-4 sm:px-6 py-4">
                                             <div className="flex items-center gap-3">
                                                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#ff89b8] to-[#ef6a9f] flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
