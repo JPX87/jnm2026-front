@@ -183,8 +183,8 @@ export const programme: DaySchedule[] = [
             {
                 title: 'Soirée conviviale',
                 location: "Bar dream o'clock",
-                startTime: '20h',
-                duration: 4,
+                startTime: '20h30',
+                duration: 3.5,
             },
             {
                 title: '',
