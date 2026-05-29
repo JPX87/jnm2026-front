@@ -26,6 +26,11 @@ const NAV_LINKS = [
         icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 8l2 2 4-4',
     },
     {
+        href: '/app/votes',
+        label: 'Mes votes',
+        icon: 'M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z',
+    },
+    {
         href: '/app/notifications',
         label: 'Notifications',
         icon: 'M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9',
@@ -55,9 +60,8 @@ export function MobileNav({ isAdmin = false }: { isAdmin?: boolean }) {
             )}
 
             <aside
-                className={`fixed top-0 left-0 h-full w-72 bg-white border-r border-[#ff89b8]/20 flex flex-col shadow-2xl transform transition-transform duration-300 ${
-                    isOpen ? 'translate-x-0' : '-translate-x-full'
-                }`}
+                className={`fixed top-0 left-0 h-full w-72 bg-white border-r border-[#ff89b8]/20 flex flex-col shadow-2xl transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-full'
+                    }`}
                 style={{ zIndex: 9999 }}
             >
                 <div className="flex items-center justify-between py-6 px-4 border-b border-[#ff89b8]/10">
